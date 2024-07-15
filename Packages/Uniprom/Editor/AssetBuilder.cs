@@ -13,27 +13,39 @@ namespace Uniprom.Editor
 
 #if UNIPROM_SOURCE_PROJECT
         [MenuItem("Window/Uniprom/Build test of Github Action")]
-        static void StartGithubBuildTest()
+        static async void StartGithubBuildTest()
         {
             var exporter = UnipromSettingsExporter.GetInstance();
             var obj = AssetDatabase.LoadAssetAtPath<TextAsset>(exporter.TestFtpSettingPath);
-            Build(false, obj.text);
+            await Build(false, obj.text);
+            UnipromDebug.Log("Completed build.");
         }
 #endif
 
-        public static void BuildRelease() => Build(true, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
+        public static async void BuildRelease()
+        {
+            await Build(true, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
+            UnipromDebug.Log("Completed build.");
+        }
 
-        public static void BuildTest() => Build(false, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
+        public static async void BuildTest()
+        {
+            await Build(false, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
+            UnipromDebug.Log("Completed build.");
+        }
 
-        public static void Build(bool isRelease, string jsonString = default, Dictionary<string, string> options = default)
+        public static Task Build(bool isRelease, string jsonString = default, Dictionary<string, string> options = default)
         {
             var exporter = UnipromSettingsExporter.GetInstance();
             if (exporter.CuvImporter == default)
             {
                 UnipromDebug.LogError("CuvImporter does not exist. Please complete the setup.");
-                return;
+                return Task.CompletedTask;
             }
+            
+            var tcs = new TaskCompletionSource<bool>();
             var importer = (ICuvImporter) exporter.CuvImporter;
+            
             importer.StartImport(() =>
             {
                 if (isRelease)
@@ -61,22 +73,37 @@ namespace Uniprom.Editor
                 
                 if (isRelease)
                 {
-                    exporter.SendToReleaseServer(jsonString).SafeContinueWith(SendCompleted);
+                    exporter.SendToReleaseServer(jsonString)
+                        .SafeContinueWith(task =>
+                    {
+                        if (task.IsFaulted)
+                        {
+                            tcs.SetException(task.Exception);
+                        }
+                        else
+                        {
+                            tcs.SetResult(true);
+                        }
+                    });
                 }
                 else
                 {
-                    exporter.SendToTestServer(jsonString).SafeContinueWith(SendCompleted);
+                    exporter.SendToTestServer(jsonString)
+                        .SafeContinueWith(task =>
+                        {
+                            if (task.IsFaulted)
+                            {
+                                tcs.SetException(task.Exception);
+                            }
+                            else
+                            {
+                                tcs.SetResult(true);
+                            }
+                        });
                 }
             });
-        }
-
-        static void SendCompleted(Task task)
-        {
-            if (task.Status != TaskStatus.RanToCompletion
-                && task.Exception != default)
-            {
-                UnipromDebug.LogError("SendToServer error: " + task.Exception);
-            }
+            
+            return tcs.Task;
         }
     }
 }

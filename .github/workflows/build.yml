@@ -85,6 +85,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          customImage: ${{ matrix.targetPlatform == 'iOS' && 'unityci/editor:2021.3.38f1-ios-3.1.0' || 'unityci/editor:2021.3.38f1-android-3.1.0' }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
           customParameters: -ftpJsonString ${{ needs.set-value.outputs.SECRET }}
