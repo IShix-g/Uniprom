@@ -11,13 +11,13 @@ namespace Uniprom.Editor
         
         public static void Log(string msg)
         {
-            if (IsBatchMode) Console.WriteLine(msg);
-            else Debug.Log(msg);
+            if (IsBatchMode) Console.WriteLine("[Uniprom] " + msg);
+            else Debug.Log("[Uniprom] " + msg);
         }
 
         public static void LogWarning(string msg)
         {
-            if (IsBatchMode) Console.WriteLine($"::warning:: {msg}");
+            if (IsBatchMode) Console.WriteLine($"::warning:: [Uniprom] {msg}");
             else Debug.LogWarning(msg);
         }
 
@@ -25,7 +25,7 @@ namespace Uniprom.Editor
         {
             if (IsBatchMode)
             {
-                Console.WriteLine($"::error:: {msg}");
+                Console.WriteLine($"::error:: [Uniprom] {msg}");
                 EditorApplication.Exit(100);
             }
             else Debug.LogError(msg);

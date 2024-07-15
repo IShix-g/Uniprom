@@ -49,11 +49,12 @@ namespace Uniprom.Editor
                     && (options == default
                         || !options.TryGetValue(_ftpJsonStringName, out jsonString)))
                 {
+                    UnipromDebug.LogWarning("Could not obtain Json String.");
                     return;
                 }
                 
-                if (isRelease && !exporter.CanISendReleaseServer()
-                    || !isRelease && !exporter.CanISendTestServer())
+                if ((isRelease && !exporter.CanISendReleaseServer())
+                    || (!isRelease && !exporter.CanISendTestServer()))
                 {
                     return;
                 }
