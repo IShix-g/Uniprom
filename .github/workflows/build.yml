@@ -35,20 +35,18 @@ jobs:
     needs: check-input
     name: Set Value - ${{ github.event.inputs.build_mode }}
     runs-on: ubuntu-latest
-    outputs:
-      BUILD_METHOD: ${{ steps.set-value.outputs.BUILD_METHOD}}
     steps:
       - name: Set Value
         id: set-value
         run: |
           if ${{ env.BUILD_MODE == 'Release' }}; then
-            echo "LOAD_DIR=${{ env.LOAD_DIR }}" >> $GITHUB_ENV
-            echo "BUILD_METHOD=${{ env.BUILD_METHOD }}" >> $GITHUB_ENV
-            echo "SECRET=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_ENV
+            echo "LOAD_DIR=${{ env.LOAD_DIR }}" >> $GITHUB_OUTPUT
+            echo "BUILD_METHOD=${{ env.BUILD_METHOD }}" >> $GITHUB_OUTPUT
+            echo "SECRET=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
           else
-            echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_ENV
-            echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_ENV
-            echo "SECRET=${{ secrets.TEST_FTP_JSON_STRING }}" >> $GITHUB_ENV
+            echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_OUTPUT
+            echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_OUTPUT
+            echo "SECRET=${{ secrets.TEST_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
           fi
 
   build_and-deploy:
