@@ -37,8 +37,8 @@ namespace Uniprom.Editor
         public static Task Build(bool isRelease, string jsonString = default, Dictionary<string, string> options = default)
         {
             if (string.IsNullOrEmpty(jsonString)
-                && (options == default
-                    || !options.TryGetValue(_ftpJsonStringName, out jsonString)))
+                && options != default
+                && options.TryGetValue(_ftpJsonStringName, out jsonString))
             {
                 UnipromDebug.Log(jsonString);
             }
