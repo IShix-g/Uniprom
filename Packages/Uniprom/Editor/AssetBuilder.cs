@@ -24,14 +24,12 @@ namespace Uniprom.Editor
 
         public static async void BuildRelease()
         {
-            UnipromDebug.Log("Start release build.");
             await Build(true, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
             UnipromDebug.Log("Completed release build.");
         }
 
         public static async void BuildTest()
         {
-            UnipromDebug.Log("Start test build.");
             await Build(false, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
             UnipromDebug.Log("Completed test build.");
         }
