@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2157237e198f4278a0782161e2f91fa8, type: 3}
+  m_Name: UnipromCuvImporter
+  m_EditorClassIdentifier: 
+  _buildPath: Assets/Uniprom_Google/
+  _languages: 0a00000016000000
+  _client:
+    rid: 3445371402398466050
+  _output:
+    rid: 3445371402398466051
+  _modelListGuilds:
+  - 2141dc8c5e6f84ac1adf76f5b889f9ba
+  - 605381636a32749299051ff7884b1311
+  references:
+    version: 2
+    RefIds:
+    - rid: 3445371402398466050
+      type: {class: UnipromModelsCustomGoogleSheetCuvAddressableClient, ns: Uniprom.GoogleSheet, asm: UniProm}
+      data:
+        _sheetUrl: https://docs.google.com/spreadsheets/d/1djptZlGNu4i-t_ZwXxa4ClEgpNk1gC-BnAIbd6vjwk4/edit?gid=0#gid=0
+        _jsonKeyPath: Assets/Uniprom_Google/light-operator-426308-a9-a87f12062c59.json
+        _addressableSettings:
+          AddressableType: 1
+          CustomGroupName: 
+          Labels:
+          - UnipromItems
+          BuildCompressionMode: 1
+          BundlePackingMode: 1
+          UpdateRestriction: 0
+    - rid: 3445371402398466051
+      type: {class: UnipromModelsCustomGoogleSheetCuvAddressableOutput, ns: Uniprom.GoogleSheet, asm: UniProm}
+      data:
+        _addressableSettings:
+          AddressableType: 1
+          CustomGroupName: 
+          Labels:
+          - UnipromItems
+          BuildCompressionMode: 1
+          BundlePackingMode: 1
+          UpdateRestriction: 0
+        _reference: {fileID: 11400000, guid: f20de800f37144b3b9849c3ea9d1fd52, type: 2}

@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4c6d1cd230248949f382083bd17a34, type: 3}
+  m_Name: UnipromModelsCustomGoogleSheetCuvModelList_English
+  m_EditorClassIdentifier: 
+  _language: 10
+  _models:
+  - Key: com.ishix.catDetective
+    AppName: Mystery Whiskers
+    AppDescription: This is a mystery-solving adventure game featuring Cat Detective
+      Chronicle.
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: 1bdd0225c70474117bcd668c047a1e29
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: cc3dd1091190d4316bb228f86b65c4e8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.giantCat
+    AppName: Giant Whisker World
+    AppDescription: Explore the world from the perspective of a giant cat. What will
+      you find?
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: f339f27e72d1b45a6a6a769c7cd4829f
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: f281e99f65d044f7389503aea010f9a8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.meteor
+    AppName: Meteor Meow
+    AppDescription: Explore the universe with acceleration and bring life to unknown
+      planets.
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: 850313d0140464bb68a8c242fe96a056
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 7e3ee5dd5b33144c8a1065ddbbbed3fe
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.pirateCat
+    AppName: Whiskered Waves
+    AppDescription: As a pirate cat, become fantasy and adventure on the waves of
+      the pavement.
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: d32a690232feb419b9d7c951e94e441a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 9808fafa92d5d4b3cb37688f49e3c501
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: 'com.ishix.catProfessor
+
+'
+    AppName: Cat-astrophysics Chronicle
+    AppDescription: As a cat professor studying the stars, unlock the secrets of
+      the universe and gain new knowledge.
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: dc964b6409c8c48ba8bb71cd7d2dca55
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 36e956b76c4bd4d6d8d11d1c7735cd28
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  SheetID: 1djptZlGNu4i-t_ZwXxa4ClEgpNk1gC-BnAIbd6vjwk4
+  ModifiedDate: 7/10/2024 6:37:14 AM +00:00

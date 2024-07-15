@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2157237e198f4278a0782161e2f91fa8, type: 3}
+  m_Name: UnipromCuvImporter
+  m_EditorClassIdentifier: 
+  _buildPath: Assets/Uniprom/
+  _languages: 0a00000016000000
+  _client:
+    rid: 3445371402398466052
+  _output:
+    rid: 3445371402398466053
+  _modelListGuilds:
+  - 5be8be9d4185f4aefb5d3f898dbe02cd
+  - be044fd532534436c8369f9ca40f3831
+  references:
+    version: 2
+    RefIds:
+    - rid: 3445371402398466052
+      type: {class: UnipromModelsCockpitCuvAddressableClient, ns: Uniprom, asm: UniProm}
+      data:
+        _baseUrl: https://devx.myonick.biz/cockpit/
+        _apiKey: API-b71811e4f1b480a28be007b39cc5b88c3c6e6a93
+        _modelName: UnipromModel
+        _addressableSettings:
+          AddressableType: 1
+          CustomGroupName: 
+          Labels:
+          - UnipromItems
+          BuildCompressionMode: 1
+          BundlePackingMode: 1
+          UpdateRestriction: 0
+    - rid: 3445371402398466053
+      type: {class: UnipromModelsCockpitCuvAddressableOutput, ns: Uniprom, asm: UniProm}
+      data:
+        _addressableSettings:
+          AddressableType: 1
+          CustomGroupName: 
+          Labels:
+          - UnipromItems
+          BuildCompressionMode: 1
+          BundlePackingMode: 1
+          UpdateRestriction: 0
+        _reference: {fileID: 11400000, guid: c662c14775e1a4fffbc69533d26c0ca1, type: 2}

@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c7ba33d331074f67bdee9ed32e477f9, type: 3}
+  m_Name: UnipromModelsCockpitCuvModelList_Japanese
+  m_EditorClassIdentifier: 
+  _language: 22
+  _models:
+  - Key: com.ishix.catProfessor
+    CockpitID: 667eb9ba6ec1834c4d09a060
+    ModifiedDate: 2024-07-10T15:34:52.0000000+09:00
+    AppName: "\u732B\u5929\u4F53\u7269\u7406\u5B66\u30AF\u30ED\u30CB\u30AF\u30EB"
+    AppDescription: "\u661F\u3005\u3092\u7814\u7A76\u3059\u308B\u732B\u6559\u6388\u3068\u3057\u3066\u3001\u5B87\u5B99\u306E\u79D8\u5BC6\u3092\u89E3\u304D\u660E\u304B\u3057\u3001\u65B0\u305F\u306A\u308B\u77E5\u8B58\u3092\u5F97\u3088\u3046\u3002"
+    IOSUrl: https://www.apple.com/jp/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=ja
+    Interstitial:
+      m_AssetGUID: 4a6c23045a55345738ac01c63a3c96f1
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 3bddb6ed2907e4472b09dfb312ea7c97
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.pirateCat
+    CockpitID: 667eba066c5f72fcbd070ac5
+    ModifiedDate: 2024-07-10T15:34:23.0000000+09:00
+    AppName: "\u732B\u6D77\u8CCA"
+    AppDescription: "\u6D77\u8CCA\u732B\u3068\u3057\u3066\u3001\u8217\u88C5\u306E\u6CE2\u3067\u30D5\u30A1\u30F3\u30BF\u30B8\u30FC\u3068\u30A2\u30C9\u30D9\u30F3\u30C1\u30E3\u30FC\u306B\u306A\u308A\u5207\u308D\u3046\u3002"
+    IOSUrl: https://www.apple.com/jp/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=ja
+    Interstitial:
+      m_AssetGUID: 6a1660510351a46d6ae65b718c2742d1
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 3471780a634d342ab97977545f8f1321
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.meteor
+    CockpitID: 667eba0ea5c53788780a36b0
+    ModifiedDate: 2024-07-10T15:33:21.0000000+09:00
+    AppName: "\u30E1\u30C6\u30AA\u30FB\u30CB\u30E3\u30FC"
+    AppDescription: "\u52A0\u901F\u3057\u306A\u304C\u3089\u5B87\u5B99\u3092\u63A2\u7D22\u3057\u3001\u672A\u77E5\u306E\u60D1\u661F\u306B\u751F\u547D\u3092\u3082\u305F\u3089\u305D\u3046\u3002"
+    IOSUrl: https://www.apple.com/jp/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=ja
+    Interstitial:
+      m_AssetGUID: e2e1f0a92fc58409491cf744d5c364f1
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: b6a7dfefba66b474ab69a6813b5a96dc
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.giantCat
+    CockpitID: 667eba155337573b3f0ef875
+    ModifiedDate: 2024-07-10T15:32:40.0000000+09:00
+    AppName: Giant Whisker World
+    AppDescription: "\u5DE8\u5927\u732B\u306E\u8996\u70B9\u3067\u4E16\u754C\u3092\u63A2\u7D22\u3002\u3042\u306A\u305F\u306F\u4F55\u3092\u898B\u3064\u3051\u308B\u304B\u3002"
+    IOSUrl: https://www.apple.com/jp/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=ja
+    Interstitial:
+      m_AssetGUID: 74911dc083001480194a18bbf4ef322e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 6bbfd822378a7435093b2c25dac033ca
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: 'com.ishix.catDetective '
+    CockpitID: 667eba1c4fef2fd8cc0fffe0
+    ModifiedDate: 2024-07-10T15:33:53.0000000+09:00
+    AppName: "\u8B0E\u306E\u3072\u3052"
+    AppDescription: "\u732B\u63A2\u5075\u30AF\u30ED\u30CB\u30AF\u30EB\u304C\u4E3B\u4EBA\u516C\u306E\u8B0E\u89E3\u304D\u30A2\u30C9\u30D9\u30F3\u30C1\u30E3\u30FC\u30B2\u30FC\u30E0\u3002"
+    IOSUrl: https://www.apple.com/jp/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=ja
+    Interstitial:
+      m_AssetGUID: 49f46898546684f99b3f2f601fb2f601
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: c373f9d8963c8477f913bf7dd57074ea
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    OptionText: 
