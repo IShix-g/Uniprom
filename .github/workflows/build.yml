@@ -10,9 +10,8 @@ on:
 env:
   BUILD_MODE: ${{ github.event.inputs.build_mode }}
   # Release
-  LOAD_DIR: "_UnipromReleaseServerData"
-  BUILD_METHOD: "Uniprom.Editor.AssetBuilder.BuildRelease"
-  
+  LOAD_RELEASE_DIR: "_UnipromReleaseServerData"
+  BUILD_RELEASE_METHOD: "Uniprom.Editor.AssetBuilder.BuildRelease"
   # Test
   LOAD_TEST_DIR: "_UnipromTestServerData"
   BUILD_TEST_METHOD: "Uniprom.Editor.AssetBuilder.BuildTest"
@@ -40,8 +39,8 @@ jobs:
         id: set-value
         run: |
           if ${{ env.BUILD_MODE == 'Release' }}; then
-            echo "LOAD_DIR=${{ env.LOAD_DIR }}" >> $GITHUB_ENV
-            echo "BUILD_METHOD=${{ env.BUILD_METHOD }}" >> $GITHUB_ENV
+            echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_ENV
+            echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_ENV
             echo "SECRET=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_ENV
           else
             echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_ENV
@@ -61,7 +60,7 @@ jobs:
       matrix:
         targetPlatform:
           - iOS
-          - Android
+#          - Android
     steps:
       # Checkout
       - name: Checkout repository
