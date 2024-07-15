@@ -1,0 +1,96 @@
+name: Uniprom Assets Build And Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_mode:
+        description: "Build mode : Test / Release"
+        required: true
+
+env:
+  BUILD_MODE: ${{ github.event.inputs.build_mode }}
+  # Release
+  LOAD_DIR: "_UnipromReleaseServerData"
+  BUILD_METHOD: "Uniprom.Editor.AssetBuilder.BuildRelease"
+  
+  # Test
+  LOAD_TEST_DIR: "_UnipromTestServerData"
+  BUILD_TEST_METHOD: "Uniprom.Editor.AssetBuilder.BuildTest"
+
+jobs:
+  check-input:
+    name: Check Input
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Value
+        run: |
+          if ${{ env.BUILD_MODE != 'Test' && env.BUILD_MODE != 'Release' }}; then
+            echo ::error:: "Specify Test or Release. value: ${{ env.BUILD_MODE }}"
+            exit 1
+          else
+            echo "Valid input value"
+          fi
+
+  set-value:
+    needs: check-input
+    name: Set Value - ${{ github.event.inputs.build_mode }}
+    runs-on: ubuntu-latest
+    outputs:
+      BUILD_METHOD: ${{ steps.set-value.outputs.BUILD_METHOD}}
+    steps:
+      - name: Set Value
+        id: set-value
+        run: |
+          if ${{ env.BUILD_MODE == 'Release' }}; then
+            echo "::set-output name=LOAD_DIR::${{ env.LOAD_DIR }}"
+            echo "::set-output name=BUILD_METHOD::${{ env.BUILD_METHOD }}"
+            echo "::set-output name=SECRET::${{ secrets.RELEASE_FTP_JSON_STRING }}"
+          else
+            echo "::set-output name=LOAD_DIR::${{ env.LOAD_TEST_DIR }}"
+            echo "::set-output name=BUILD_METHOD::${{ env.BUILD_TEST_METHOD }}"
+            echo "::set-output name=SECRET::${{ secrets.TEST_FTP_JSON_STRING }}"
+          fi
+
+  build_and-deploy:
+    needs:
+      - check-input
+      - set-value
+    name: Build and Deploy - ${{ matrix.targetPlatform }} - ${{ github.event.inputs.build_mode }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - iOS
+          - Android
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      # Cache
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+      # Build
+      - name: Build - ${{ matrix.targetPlatform }}
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
+          customParameters: -ftpJsonString ${{ needs.set-value.outputs.SECRET }}
+      # Upload artifacts
+      - name: Upload artifacts - ${{ matrix.targetPlatform }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
+          path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*

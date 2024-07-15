@@ -115,8 +115,8 @@ namespace Tests
         [MenuItem("Tests/Create And Set Profile")]
         static void CreateAndSetProfile()
         {
-            AddressableHelper.CreateProfileIfNeeded("Uniprom-Test", "https://devx.myonick.biz/uniprom/addressables/test/[BuildTarget]", true);
-            AddressableHelper.CreateProfileIfNeeded("Uniprom-Release", "https://devx.myonick.biz/uniprom/addressable/release/[BuildTarget]", false);
+            AddressableHelper.CreateProfileIfNeeded("Uniprom-Test", "UnipromReleaseServerData", "https://devx.myonick.biz/uniprom/addressables/test/[BuildTarget]", true);
+            AddressableHelper.CreateProfileIfNeeded("Uniprom-Release", "UnipromTesetServerData", "https://devx.myonick.biz/uniprom/addressable/release/[BuildTarget]", false);
         }
 
         [MenuItem("Tests/Enable Build Remote Catalog")]

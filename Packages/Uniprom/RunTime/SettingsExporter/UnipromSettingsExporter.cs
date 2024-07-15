@@ -28,6 +28,8 @@ namespace Uniprom
         public const string SourceProjectSymbol = "UNIPROM_SOURCE_PROJECT";
         public const string ReleaseProfileName = "Uniprom-Release";
         public const string TestProfileName = "Uniprom-Test";
+        public const string ReleaseRemoteBuildPath = "_UnipromReleaseServerData";
+        public const string TestRemoteBuildPath = "_UnipromTestServerData";
         public const string InterstitialAddressableKey = "UnipromInterstitial";
         public const string InterstitialPrefabName = "UnipromInterstitial.prefab";
         public const string PackageRootPath = "Packages/com.ishix.uniprom/";
@@ -191,8 +193,8 @@ namespace Uniprom
         void SetUpAddressable()
         {
             AddressableHelper.EnableBuildRemoteCatalog(_overridePlayerVersion);
-            AddressableHelper.CreateProfileIfNeeded(ReleaseProfileName, _releaseRemoteLoadUrl, true);
-            AddressableHelper.CreateProfileIfNeeded(TestProfileName, _testRemoteLoadUrl, false);
+            AddressableHelper.CreateProfileIfNeeded(ReleaseProfileName, ReleaseRemoteBuildPath, _releaseRemoteLoadUrl, true);
+            AddressableHelper.CreateProfileIfNeeded(TestProfileName, TestRemoteBuildPath, _testRemoteLoadUrl, false);
         }
 
         static void CopyToItemsIfNeeded()

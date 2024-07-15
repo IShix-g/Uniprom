@@ -28,7 +28,7 @@ namespace Uniprom.Addressable.Editor
             settings.OverridePlayerVersion = overridePlayerVersion;
         }
         
-        public static void CreateProfileIfNeeded(string profileName, string remoteLoadPath, bool isActive)
+        public static void CreateProfileIfNeeded(string profileName, string remoteBuildPath, string remoteLoadPath, bool isActive)
         {
             var settings = GetSettings();
             var profileSettings = settings.profileSettings;
@@ -44,18 +44,28 @@ namespace Uniprom.Addressable.Editor
             {
                 mEvent = AddressableAssetSettings.ModificationEvent.EntryModified;
             }
-
-            if (!remoteLoadPath.EndsWith(BuildTargetPlaceholder))
-            {
-                remoteLoadPath += BuildTargetPlaceholder;
-            }
-            profileSettings.SetValue(profileId, AddressableAssetSettings.kRemoteBuildPath, AddressableAssetSettings.kRemoteBuildPathValue);
-            profileSettings.SetValue(profileId, AddressableAssetSettings.kRemoteLoadPath, remoteLoadPath);
+            
+            profileSettings.SetValue(profileId, AddressableAssetSettings.kRemoteBuildPath, EnsureBuildTargetPlaceholder(remoteBuildPath));
+            profileSettings.SetValue(profileId, AddressableAssetSettings.kRemoteLoadPath, EnsureBuildTargetPlaceholder(remoteLoadPath));
             if (isActive)
             {
                 settings.activeProfileId = profileId;
             }
             settings.SetDirty(mEvent, profileId, true, true);
+
+            static string EnsureBuildTargetPlaceholder(string path)
+            {
+                if (path.EndsWith(BuildTargetPlaceholder))
+                {
+                    return path;
+                }
+                if (!path.EndsWith("/"))
+                {
+                    path += "/";
+                }
+                path += BuildTargetPlaceholder;
+                return path;
+            }
         }
         
         public static Dictionary<AddressableAssetEntry, List<AddressableAssetEntry>> GetGatherModifiedEntries()
