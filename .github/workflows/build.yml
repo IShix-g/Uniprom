@@ -39,13 +39,13 @@ jobs:
         id: set-value
         run: |
           if ${{ env.BUILD_MODE == 'Release' }}; then
-            echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_ENV
-            echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_ENV
-            echo "SECRET=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_ENV
+            echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_OUTPUT
+            echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_OUTPUT
+            echo "SECRET=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
           else
-            echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_ENV
-            echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_ENV
-            echo "FTP_JSON_STRING=${{ secrets.TEST_FTP_JSON_STRING }}" >> $GITHUB_ENV
+            echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_OUTPUT
+            echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_OUTPUT
+            echo "FTP_JSON_STRING=${{ secrets.TEST_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
           fi
 
   build_and-deploy:
@@ -84,11 +84,11 @@ jobs:
         with:
           customImage: ${{ matrix.targetPlatform == 'iOS' && 'unityci/editor:2021.3.38f1-ios-3.1.0' || 'unityci/editor:2021.3.38f1-android-3.1.0' }}
           targetPlatform: ${{ matrix.targetPlatform }}
-          buildMethod: ${{ env.BUILD_METHOD }}
-          customParameters: -ftpJsonString ${{ env.FTP_JSON_STRING }}
+          buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
+          customParameters: -ftpJsonString ${{ needs.set-value.outputs.FTP_JSON_STRING }}
       # Upload artifacts
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
-          path: ./${{ env.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
+          path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
