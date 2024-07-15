@@ -62,12 +62,14 @@ namespace Uniprom.Editor
                         || !options.TryGetValue(_ftpJsonStringName, out jsonString)))
                 {
                     UnipromDebug.LogWarning("Could not obtain Json String.");
+                    tcs.SetResult(true);
                     return;
                 }
                 
                 if ((isRelease && !exporter.CanISendReleaseServer())
                     || (!isRelease && !exporter.CanISendTestServer()))
                 {
+                    tcs.SetResult(true);
                     return;
                 }
                 
