@@ -42,13 +42,13 @@ jobs:
         id: set-value
         run: |
           if ${{ env.BUILD_MODE == 'Release' }}; then
-            echo "::set-output name=LOAD_DIR::${{ env.LOAD_DIR }}"
-            echo "::set-output name=BUILD_METHOD::${{ env.BUILD_METHOD }}"
-            echo "::set-output name=SECRET::${{ secrets.RELEASE_FTP_JSON_STRING }}"
+            echo "LOAD_DIR=${{ env.LOAD_DIR }}" >> $GITHUB_ENV
+            echo "BUILD_METHOD=${{ env.BUILD_METHOD }}" >> $GITHUB_ENV
+            echo "SECRET=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_ENV
           else
-            echo "::set-output name=LOAD_DIR::${{ env.LOAD_TEST_DIR }}"
-            echo "::set-output name=BUILD_METHOD::${{ env.BUILD_TEST_METHOD }}"
-            echo "::set-output name=SECRET::${{ secrets.TEST_FTP_JSON_STRING }}"
+            echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_ENV
+            echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_ENV
+            echo "SECRET=${{ secrets.TEST_FTP_JSON_STRING }}" >> $GITHUB_ENV
           fi
 
   build_and-deploy:

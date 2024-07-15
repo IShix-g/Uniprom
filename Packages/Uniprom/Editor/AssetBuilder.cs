@@ -22,16 +22,18 @@ namespace Uniprom.Editor
         }
 #endif
 
-        public static async void BuildRelease()
+        public static async Task BuildRelease()
         {
+            UnipromDebug.Log("Start release build.");
             await Build(true, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
-            UnipromDebug.Log("Completed build.");
+            UnipromDebug.Log("Completed release build.");
         }
 
-        public static async void BuildTest()
+        public static async Task BuildTest()
         {
+            UnipromDebug.Log("Start test build.");
             await Build(false, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
-            UnipromDebug.Log("Completed build.");
+            UnipromDebug.Log("Completed test build.");
         }
 
         public static Task Build(bool isRelease, string jsonString = default, Dictionary<string, string> options = default)
