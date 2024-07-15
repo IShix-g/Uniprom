@@ -34,6 +34,10 @@ jobs:
     needs: check-input
     name: Set Value - ${{ github.event.inputs.build_mode }}
     runs-on: ubuntu-latest
+    outputs:
+      LOAD_DIR: ${{ steps.set-value.outputs.LOAD_DIR}}
+      BUILD_METHOD: ${{ steps.set-value.outputs.BUILD_METHOD}}
+      FTP_JSON_STRING: ${{ steps.set-value.outputs.FTP_JSON_STRING}}
     steps:
       - name: Set Value
         id: set-value
@@ -41,7 +45,7 @@ jobs:
           if ${{ env.BUILD_MODE == 'Release' }}; then
             echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_OUTPUT
             echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_OUTPUT
-            echo "SECRET=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
+            echo "FTP_JSON_STRING=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
           else
             echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_OUTPUT
             echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_OUTPUT
