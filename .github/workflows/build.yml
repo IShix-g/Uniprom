@@ -56,7 +56,9 @@ jobs:
           fi
 
   build_and-deploy:
-    needs: check-input
+    needs:
+      - check-input
+      - set-value
     name: Build and Deploy - ${{ matrix.targetPlatform }} - ${{ github.event.inputs.build_mode }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
