@@ -79,7 +79,7 @@ jobs:
           lfs: true
       - name: Create FTP config
         run: |
-          echo "${{ needs.set-value.outputs.FTP_JSON_STRING }}" > "${GITHUB_WORKSPACE}/ftp_config.json"
+          echo "${{ needs.set-value.outputs.FTP_JSON_STRING_FILE }}" > "${GITHUB_WORKSPACE}/ftp_config.json"
       - name: Cache
         uses: actions/cache@v3
         with:
