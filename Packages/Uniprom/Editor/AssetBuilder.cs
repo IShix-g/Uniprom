@@ -106,6 +106,8 @@ namespace Uniprom.Editor
                         }
                     }
                     
+                    UnipromDebug.Log(jsonString);
+                    
                     if ((isRelease && !exporter.CanISendReleaseServer())
                         || (!isRelease && !exporter.CanISendTestServer()))
                     {
