@@ -95,13 +95,15 @@ namespace Uniprom.Editor
                     if (string.IsNullOrEmpty(jsonString))
                     {
                         {
-                            var path = Path.GetFullPath(jsonStringPath);
+                            var directoryName = Path.GetDirectoryName(Application.dataPath);
+                            var path = Path.Combine(directoryName, Path.GetFullPath(jsonStringPath));
                             UnipromDebug.Log("path1 Does the json string exist: " + File.Exists(path) + " path: " + path);
                         }
                         
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
-                            var path = Path.GetFullPath(jsonStringPath);
+                            var directoryName = Path.GetDirectoryName(Application.dataPath);
+                            var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
                             jsonString = File.ReadAllText(path);
                             UnipromDebug.Log("Reading Json string path: " + path);
                         }
