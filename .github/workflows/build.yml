@@ -58,7 +58,7 @@ jobs:
         run: |
           ls -la "${{ github.workspace }}"
 
-  build_and-deploy:
+  build-and-deploy:
     needs:
       - check-input
       - set-value
@@ -97,8 +97,8 @@ jobs:
           manualExit: true
           customParameters: -ftpJsonFilePath ${{ needs.set-value.outputs.FTP_JSON_STRING_FILE }}
       - name: List files in the workspace
-      run: |
-        ls -la "${{ github.workspace }}"
+        run: |
+          ls -la "${{ github.workspace }}"
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
