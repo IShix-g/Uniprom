@@ -77,11 +77,11 @@ jobs:
             echo "FTP_JSON_STRING=${{ secrets.TEST_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
           fi
       - name: create-json
-            id: create-json
-            uses: jsdaniell/create-json@v1.2.3
-            with:
-              name: "ftp_config.json"
-              json: ${{ steps.select-ftp-config.outputs.FTP_JSON_STRING }}
+        id: create-json
+        uses: jsdaniell/create-json@v1.2.3
+        with:
+          name: "ftp_config.json"
+          json: ${{ steps.select-ftp-config.outputs.FTP_JSON_STRING }}
       - name: Cache
         uses: actions/cache@v3
         with:
