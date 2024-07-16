@@ -79,9 +79,6 @@ jobs:
             echo "${{ secrets.TEST_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
             echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
           fi
-      - name: List files in the workspace
-        run: |
-          ls -la "${{ github.workspace }}"
       - name: Cache
         uses: actions/cache@v3
         with:
@@ -99,6 +96,7 @@ jobs:
           customImage: ${{ matrix.targetPlatform == 'iOS' && 'unityci/editor:2021.3.38f1-ios-3.1.0' || 'unityci/editor:2021.3.38f1-android-3.1.0' }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
+          allowDirtyBuild: true
           manualExit: true
           customParameters: -ftpJsonFilePath ${{ steps.set-config.outputs.FTP_JSON_STRING_FILE }}
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
