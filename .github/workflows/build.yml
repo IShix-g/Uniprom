@@ -68,15 +68,15 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-      - name: Set Env
+      - name: Set MY_JSON_KEY based on BUILD_MODE
         run: |
           echo "MY_JSON_KEY=${{ env.BUILD_MODE == 'Release' && 'RELEASE_FTP_JSON_STRING' || 'TEST_FTP_JSON_STRING' }}" >> $GITHUB_ENV
       - name: create-json
-          id: create-json
-          uses: jsdaniell/create-json@v1.2.3
-          with:
-            name: "ftp_config.json"
-            json:  ${{ secrets[env.MY_JSON_KEY] }}
+        id: create-json
+        uses: jsdaniell/create-json@v1.2.3
+        with:
+          name: "ftp_config.json"
+          json:  ${{ secrets[env.MY_JSON_KEY] }}
       - name: Cache
         uses: actions/cache@v3
         with:
