@@ -61,22 +61,22 @@ jobs:
       matrix:
         targetPlatform:
           - iOS
-#          - Android
+          - Android
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
-      - name: Set MY_JSON_KEY based on BUILD_MODE
+      - name: Set FTP json key
         run: |
-          echo "MY_JSON_KEY=${{ env.BUILD_MODE == 'Release' && 'RELEASE_FTP_JSON_STRING' || 'TEST_FTP_JSON_STRING' }}" >> $GITHUB_ENV
+          echo "FTP_JSON_KEY=${{ env.BUILD_MODE == 'Release' && 'RELEASE_FTP_JSON_STRING' || 'TEST_FTP_JSON_STRING' }}" >> $GITHUB_ENV
       - name: create-json
         id: create-json
         uses: jsdaniell/create-json@v1.2.3
         with:
           name: "ftp_config.json"
-          json:  ${{ secrets[env.MY_JSON_KEY] }}
+          json:  ${{ secrets[env.FTP_JSON_KEY] }}
       - name: Cache
         uses: actions/cache@v3
         with:
