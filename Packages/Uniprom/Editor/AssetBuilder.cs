@@ -92,6 +92,7 @@ namespace Uniprom.Editor
                     if (!string.IsNullOrEmpty(jsonStringPath))
                     {
                         jsonString = File.ReadAllText(jsonStringPath);
+                        UnipromDebug.Log("Reading Json string path: " + jsonStringPath);
                     }
                     else
                     {
