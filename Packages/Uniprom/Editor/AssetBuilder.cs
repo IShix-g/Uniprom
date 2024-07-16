@@ -123,19 +123,8 @@ namespace Uniprom.Editor
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
                             var directoryName = Path.GetDirectoryName(Application.dataPath);
-                            var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
+                            var path = Path.Combine(directoryName, jsonStringPath);
                             jsonString = File.ReadAllText(path);
-                            
-                            try
-                            {
-                                var json = JObject.Parse(jsonString);
-                                UnipromDebug.Log("JSON parsed successfully.");
-                            }
-                            catch (Exception e)
-                            {
-                                UnipromDebug.LogError("JSON parsing failed: " + e);
-                            }
-                            
                             UnipromDebug.Log("Reading Json string path: " + path);
                         }
                         else
