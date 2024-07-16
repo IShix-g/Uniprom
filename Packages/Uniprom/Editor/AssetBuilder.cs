@@ -11,7 +11,7 @@ namespace Uniprom.Editor
 {
     public static class AssetBuilder
     {
-        const string _ftpJsonStringName = "ftpJsonString";
+        const string _ftpJsonStringName = "ftpJsonFilePath";
 
 #if UNIPROM_SOURCE_PROJECT
         [MenuItem("Window/Uniprom/Build test of Github Action")]
@@ -28,7 +28,7 @@ namespace Uniprom.Editor
         {
             try
             {
-                await Build(true, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
+                await Build(true, default, ArgumentsParser.GetValidatedOptions());
                 UnipromDebug.Log("Completion of release build");
                 EditorApplication.Exit(0);
             }
@@ -43,7 +43,7 @@ namespace Uniprom.Editor
         {
             try
             {
-                await Build(false, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
+                await Build(false, default, ArgumentsParser.GetValidatedOptions());
                 UnipromDebug.Log("Completion of test build");
                 EditorApplication.Exit(0);
             }
