@@ -37,26 +37,17 @@ jobs:
     outputs:
       LOAD_DIR: ${{ steps.set-value.outputs.LOAD_DIR}}
       BUILD_METHOD: ${{ steps.set-value.outputs.BUILD_METHOD}}
-      FTP_JSON_STRING_FILE: ${{ steps.set-value.outputs.FTP_JSON_STRING_FILE }}
     steps:
       - name: Set Value
         id: set-value
         run: |
-          FTP_JSON_STRING_FILE="${GITHUB_WORKSPACE}/ftp_config.json"
           if ${{ env.BUILD_MODE == 'Release' }}; then
-            echo "${{ secrets.RELEASE_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
             echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_OUTPUT
             echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_OUTPUT
-            echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
           else
-            echo "${{ secrets.TEST_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
             echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_OUTPUT
             echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_OUTPUT
-            echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
           fi
-      - name: List files in the workspace
-        run: |
-          ls -la "${{ github.workspace }}"
 
   build-and-deploy:
     needs:
@@ -77,11 +68,19 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-      - name: Print FTP config and directory structure
+      - name: Set FTP config
+        id: set-config
         run: |
-          echo "FTP config contents:"
-          cat "${{ needs.set-value.outputs.FTP_JSON_STRING_FILE }}"
-          echo "Directory contents:"
+          FTP_JSON_STRING_FILE="${GITHUB_WORKSPACE}/ftp_config.json"
+          if ${{ env.BUILD_MODE == 'Release' }}; then
+            echo "${{ secrets.RELEASE_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
+            echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
+          else
+            echo "${{ secrets.TEST_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
+            echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
+          fi
+      - name: List files in the workspace
+        run: |
           ls -la "${{ github.workspace }}"
       - name: Cache
         uses: actions/cache@v3
@@ -101,7 +100,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
           manualExit: true
-          customParameters: -ftpJsonFilePath ${{ needs.set-value.outputs.FTP_JSON_STRING_FILE }}
+          customParameters: -ftpJsonFilePath ${{ steps.set-config.outputs.FTP_JSON_STRING_FILE }}
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
