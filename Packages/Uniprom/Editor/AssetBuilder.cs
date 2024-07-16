@@ -70,6 +70,7 @@ namespace Uniprom.Editor
             
             importer.StartImport(() =>
             {
+                UnipromDebug.Log("Completion of import");
                 try
                 {
                     if (isRelease)
@@ -106,8 +107,6 @@ namespace Uniprom.Editor
                         }
                     }
                     
-                    UnipromDebug.Log(jsonString);
-                    
                     if ((isRelease && !exporter.CanISendReleaseServer())
                         || (!isRelease && !exporter.CanISendTestServer()))
                     {
@@ -117,8 +116,8 @@ namespace Uniprom.Editor
                 }
                 catch (Exception e)
                 {
-                    tcs.SetResult(true);
                     UnipromDebug.LogError(e.ToString());
+                    tcs.SetResult(true);
                     throw;
                 }
                 
