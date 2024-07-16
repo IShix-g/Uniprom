@@ -117,7 +117,7 @@ namespace Uniprom.Editor
                 catch (Exception e)
                 {
                     UnipromDebug.LogError(e.ToString());
-                    tcs.SetResult(true);
+                    tcs.SetException(e);
                     throw;
                 }
                 
