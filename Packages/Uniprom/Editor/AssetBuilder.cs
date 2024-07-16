@@ -66,6 +66,8 @@ namespace Uniprom.Editor
             var tcs = new TaskCompletionSource<bool>();
             var importer = (ICuvImporter) exporter.CuvImporter;
             
+            exporter.ResolveReference();
+            
             importer.StartImport(() =>
             {
                 if (isRelease)
