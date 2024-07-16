@@ -94,7 +94,23 @@ namespace Uniprom.Editor
                     
                     if (string.IsNullOrEmpty(jsonString))
                     {
-                        UnipromDebug.Log("Does the json string exist: " + File.Exists(jsonStringPath));
+                        {
+                            var path = Path.Combine(Application.dataPath, Path.GetFileName(jsonStringPath));
+                            UnipromDebug.Log("path1 Does the json string exist: " + File.Exists(path));
+                        }
+                        {
+                            var path = Path.Combine(Application.dataPath + "/../", Path.GetFileName(jsonStringPath));
+                            UnipromDebug.Log("path2 Does the json string exist: " + File.Exists(path));
+                        }
+                        {
+                            var path = "../" + Path.GetFileName(jsonStringPath);
+                            UnipromDebug.Log("path3 Does the json string exist: " + File.Exists(path));
+                        }
+                        {
+                            var path = "../../" + Path.GetFileName(jsonStringPath);
+                            UnipromDebug.Log("path4 Does the json string exist: " + File.Exists(path));
+                        }
+                        
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
                             jsonString = File.ReadAllText(jsonStringPath);
