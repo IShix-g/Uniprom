@@ -68,8 +68,8 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-      - name: Set FTP config
-        id: set-config
+      - name: Generate FTP config
+        id: generate-ftp-config
         run: |
           FTP_JSON_STRING_FILE="${GITHUB_WORKSPACE}/ftp_config.json"
           if ${{ env.BUILD_MODE == 'Release' }}; then
@@ -98,7 +98,7 @@ jobs:
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
           allowDirtyBuild: true
           manualExit: true
-          customParameters: -ftpJsonFilePath ${{ steps.set-config.outputs.FTP_JSON_STRING_FILE }}
+          customParameters: -ftpJsonFilePath ${{ steps.generate-ftp-config.outputs.FTP_JSON_STRING_FILE }}
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:

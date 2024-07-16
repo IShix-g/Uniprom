@@ -120,19 +120,15 @@ namespace Uniprom.Editor
                     if (string.IsNullOrEmpty(jsonString))
                     {
                         {
-                            var directoryOfUnityProject = Path.GetFullPath(Application.dataPath + "/..");
-                            var relativePathOfJson = jsonStringPath.Replace("/home/runner/work/Uniprom/Uniprom","");
-                            var path = Path.Combine(directoryOfUnityProject, relativePathOfJson);
-                            UnipromDebug.Log("path2 Does the json string exist: " + File.Exists(path) + " path: " + path);
-                        }
-                        {
-                            var path = Path.GetFullPath(jsonStringPath);
-                            UnipromDebug.Log("path2 Does the json string exist: " + File.Exists(path) + " path: " + path);
+                            var directoryName = Path.GetDirectoryName(Application.dataPath);
+                            var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
+                            UnipromDebug.Log("path1 Does the json string exist: " + File.Exists(path) + " path: " + path);
                         }
                         
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
-                            var path = jsonStringPath;
+                            var directoryName = Path.GetDirectoryName(Application.dataPath);
+                            var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
                             jsonString = File.ReadAllText(path);
                             UnipromDebug.Log("Reading Json string path: " + path);
                         }
