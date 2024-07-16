@@ -96,7 +96,7 @@ jobs:
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
           allowDirtyBuild: true
           manualExit: true
-          customParameters: -ftpJsonFilePath ${{ steps.generate-ftp-config.outputs.FTP_JSON_STRING_FILE }}
+          customParameters: -ftpJsonFilePath ftp_config.json
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
