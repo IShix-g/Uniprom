@@ -77,9 +77,12 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-      - name: Print FTP config
+      - name: Print FTP config and directory structure
         run: |
-          echo ${{ needs.set-value.outputs.FTP_JSON_STRING_FILE }}
+          echo "FTP config contents:"
+          cat "${{ needs.set-value.outputs.FTP_JSON_STRING_FILE }}"
+          echo "Directory contents:"
+          ls -la "${{ github.workspace }}"
       - name: Cache
         uses: actions/cache@v3
         with:
