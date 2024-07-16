@@ -119,12 +119,6 @@ namespace Uniprom.Editor
                     
                     if (string.IsNullOrEmpty(jsonString))
                     {
-                        {
-                            var directoryName = Path.GetDirectoryName(Application.dataPath);
-                            var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
-                            UnipromDebug.Log("path1 Does the json string exist: " + File.Exists(path) + " path: " + path);
-                        }
-                        
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
                             var directoryName = Path.GetDirectoryName(Application.dataPath);
@@ -138,13 +132,6 @@ namespace Uniprom.Editor
                             tcs.SetResult(true);
                             return;
                         }
-                    }
-                    
-                    if ((isRelease && !exporter.CanISendReleaseServer())
-                        || (!isRelease && !exporter.CanISendTestServer()))
-                    {
-                        tcs.SetResult(true);
-                        return;
                     }
                 }
                 catch (Exception e)

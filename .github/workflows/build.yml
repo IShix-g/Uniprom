@@ -73,12 +73,11 @@ jobs:
         run: |
           FTP_JSON_STRING_FILE="${GITHUB_WORKSPACE}/ftp_config.json"
           if ${{ env.BUILD_MODE == 'Release' }}; then
-            echo "${{ secrets.RELEASE_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
-            echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
+            echo "${{ secrets.RELEASE_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE          
           else
             echo "${{ secrets.TEST_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
-            echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
           fi
+          echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
       - name: Cache
         uses: actions/cache@v3
         with:
