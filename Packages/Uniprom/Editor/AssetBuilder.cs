@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CMSuniVortex;
@@ -18,31 +19,26 @@ namespace Uniprom.Editor
             var exporter = UnipromSettingsExporter.GetInstance();
             var obj = AssetDatabase.LoadAssetAtPath<TextAsset>(exporter.TestFtpSettingPath);
             await Build(false, obj.text);
-            UnipromDebug.Log("Completed build.");
+            UnipromDebug.Log("Completion of release build");
         }
 #endif
 
         public static async void BuildRelease()
         {
             await Build(true, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
-            UnipromDebug.Log("Completed release build.");
+            UnipromDebug.Log("Completion of release build");
+            EditorApplication.Exit(0);
         }
 
         public static async void BuildTest()
         {
             await Build(false, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
-            UnipromDebug.Log("Completed test build.");
+            UnipromDebug.Log("Completion of test build");
+            EditorApplication.Exit(0);
         }
 
         public static Task Build(bool isRelease, string jsonString = default, Dictionary<string, string> options = default)
         {
-            if (string.IsNullOrEmpty(jsonString)
-                && options != default
-                && options.TryGetValue(_ftpJsonStringName, out jsonString))
-            {
-                UnipromDebug.Log(jsonString);
-            }
-            
             var exporter = UnipromSettingsExporter.GetInstance();
             if (exporter.CuvImporter == default)
             {
@@ -72,12 +68,21 @@ namespace Uniprom.Editor
                     tcs.SetResult(true);
                     return;
                 }
-                
-                if ((isRelease && !exporter.CanISendReleaseServer())
-                    || (!isRelease && !exporter.CanISendTestServer()))
+
+                try
+                {
+                    if ((isRelease && !exporter.CanISendReleaseServer())
+                        || (!isRelease && !exporter.CanISendTestServer()))
+                    {
+                        tcs.SetResult(true);
+                        return;
+                    }
+                }
+                catch (Exception e)
                 {
                     tcs.SetResult(true);
-                    return;
+                    UnipromDebug.LogError(e.ToString());
+                    throw;
                 }
                 
                 if (isRelease)
