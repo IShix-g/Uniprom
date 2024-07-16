@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using CMSuniVortex;
+using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -124,7 +125,17 @@ namespace Uniprom.Editor
                             var directoryName = Path.GetDirectoryName(Application.dataPath);
                             var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
                             jsonString = File.ReadAllText(path);
-                            UnipromDebug.LogError(jsonString);
+                            
+                            try
+                            {
+                                var json = JObject.Parse(jsonString);
+                                UnipromDebug.Log("JSON parsed successfully.");
+                            }
+                            catch (Exception e)
+                            {
+                                UnipromDebug.LogError("JSON parsing failed: " + e);
+                            }
+                            
                             UnipromDebug.Log("Reading Json string path: " + path);
                         }
                         else
