@@ -95,20 +95,13 @@ namespace Uniprom.Editor
                     if (string.IsNullOrEmpty(jsonString))
                     {
                         {
-                            string directoryName = Path.GetFullPath(Path.Combine(Application.dataPath, "..", ".."));
-                            string path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
+                            var path = Path.Combine(Application.dataPath, "ftp_config.json");
                             UnipromDebug.Log("path1 Does the json string exist: " + File.Exists(path) + " path: " + path);
-                        }
-                        {
-                            var directoryName = Path.GetDirectoryName(Path.GetDirectoryName(Application.dataPath));
-                            var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
-                            UnipromDebug.Log("path2 Does the json string exist: " + File.Exists(path) + " path: " + path);
                         }
                         
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
-                            string directoryName = Path.GetFullPath(Path.Combine(Application.dataPath, "..", ".."));
-                            string path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
+                            var path = Path.Combine(Application.dataPath, "ftp_config.json");
                             jsonString = File.ReadAllText(path);
                             UnipromDebug.Log("Reading Json string path: " + path);
                         }
