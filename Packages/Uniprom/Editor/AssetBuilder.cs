@@ -124,6 +124,7 @@ namespace Uniprom.Editor
                             var directoryName = Path.GetDirectoryName(Application.dataPath);
                             var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
                             jsonString = File.ReadAllText(path);
+                            UnipromDebug.LogError(jsonString);
                             UnipromDebug.Log("Reading Json string path: " + path);
                         }
                         else
