@@ -15,43 +15,68 @@ namespace Uniprom.Editor
 
 #if UNIPROM_SOURCE_PROJECT
         [MenuItem("Window/Uniprom/Build test of Github Action")]
-        static async void StartGithubBuildTest()
+        static void StartGithubBuildTest()
         {
             var exporter = UnipromSettingsExporter.GetInstance();
-            var obj = AssetDatabase.LoadAssetAtPath<TextAsset>(exporter.TestFtpSettingPath);
-            await Build(false, obj.text);
-            UnipromDebug.Log("Completion of release build");
+            var asset = AssetDatabase.LoadAssetAtPath<TextAsset>(exporter.TestFtpSettingPath);
+            Build(false, asset.text)
+                .SafeContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    var error = task.Exception != default
+                        ? task.Exception.ToString()
+                        : "Unknown error";
+                    UnipromDebug.LogError(error);
+                }
+                else
+                {
+                    UnipromDebug.Log("Completion of release build");
+                }
+            });
         }
 #endif
 
-        public static async void BuildRelease()
+        public static void BuildRelease()
         {
-            try
-            {
-                await Build(true, default, ArgumentsParser.GetValidatedOptions());
-                UnipromDebug.Log("Completion of release build");
-                EditorApplication.Exit(0);
-            }
-            catch (Exception e)
-            {
-                UnipromDebug.LogError(e.ToString());
-                throw;
-            }
+            var options = ArgumentsParser.GetValidatedOptions();
+            Build(true, default, options)
+                .SafeContinueWith(task =>
+                {
+                    if (task.IsFaulted)
+                    {
+                        var error = task.Exception != default
+                            ? task.Exception.ToString()
+                            : "Unknown error";
+                        UnipromDebug.LogError(error);
+                    }
+                    else
+                    {
+                        UnipromDebug.Log("Completion of release build");
+                        EditorApplication.Exit(0);
+                    }
+                });
         }
 
-        public static async void BuildTest()
+        public static void BuildTest()
         {
-            try
-            {
-                await Build(false, default, ArgumentsParser.GetValidatedOptions());
-                UnipromDebug.Log("Completion of test build");
-                EditorApplication.Exit(0);
-            }
-            catch (Exception e)
-            {
-                UnipromDebug.LogError(e.ToString());
-                throw;
-            }
+            var options = ArgumentsParser.GetValidatedOptions();
+            Build(false, default, options)
+                .SafeContinueWith(task =>
+                {
+                    if (task.IsFaulted)
+                    {
+                        var error = task.Exception != default
+                            ? task.Exception.ToString()
+                            : "Unknown error";
+                        UnipromDebug.LogError(error);
+                    }
+                    else
+                    {
+                        UnipromDebug.Log("Completion of test build");
+                        EditorApplication.Exit(0);
+                    }
+                });
         }
 
         public static Task Build(bool isRelease, string jsonString = default, Dictionary<string, string> options = default)
