@@ -26,7 +26,7 @@ namespace Uniprom.Editor
             if (IsBatchMode)
             {
                 Console.WriteLine($"::error:: [Uniprom] {msg}");
-                EditorApplication.Exit(100);
+                EditorApplication.Exit(222);
             }
             else Debug.LogError(msg);
         }
