@@ -96,7 +96,7 @@ jobs:
           manualExit: true
           customParameters: -ftpJsonFilePath ${{ needs.set-value.outputs.FTP_JSON_STRING_FILE }}
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
           path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
