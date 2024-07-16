@@ -107,9 +107,7 @@ namespace Uniprom.Editor
                         
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
-                            var directoryOfUnityProject = Path.GetFullPath(Application.dataPath + "/..");
-                            var relativePathOfJson = jsonStringPath.Replace("/home/runner/work/Uniprom/Uniprom","");
-                            var path = Path.Combine(directoryOfUnityProject, relativePathOfJson);
+                            var path = jsonStringPath;
                             jsonString = File.ReadAllText(path);
                             UnipromDebug.Log("Reading Json string path: " + path);
                         }

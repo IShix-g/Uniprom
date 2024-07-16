@@ -42,7 +42,7 @@ jobs:
       - name: Set Value
         id: set-value
         run: |
-          FTP_JSON_STRING_FILE="${GITHUB_WORKSPACE}/ftp_config.json"
+          FTP_JSON_STRING_FILE="${github.workspace}/ftp_config.json"
           if ${{ env.BUILD_MODE == 'Release' }}; then
             echo "${{ secrets.RELEASE_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
             echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_OUTPUT
