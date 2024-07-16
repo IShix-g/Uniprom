@@ -78,28 +78,29 @@ jobs:
             echo "${{ secrets.TEST_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
           fi
           echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-
-      - name: Build - ${{ matrix.targetPlatform }}
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-#         https://game.ci/docs/docker/versions/
-          customImage: ${{ matrix.targetPlatform == 'iOS' && 'unityci/editor:2021.3.38f1-ios-3.1.0' || 'unityci/editor:2021.3.38f1-android-3.1.0' }}
-          targetPlatform: ${{ matrix.targetPlatform }}
-          buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
-          allowDirtyBuild: true
-          manualExit: true
-          customParameters: -ftpJsonFilePath ${{ steps.generate-ftp-config.outputs.FTP_JSON_STRING_FILE }}
-      - name: Upload artifacts - ${{ matrix.targetPlatform }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
-          path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
+          cat $FTP_JSON_STRING_FILE
+#      - name: Cache
+#        uses: actions/cache@v3
+#        with:
+#          path: Library
+#          key: Library-${{ matrix.targetPlatform }}
+#          restore-keys: Library-
+#      - name: Build - ${{ matrix.targetPlatform }}
+#        uses: game-ci/unity-builder@v4
+#        env:
+#          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+#          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+#          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+#        with:
+##         https://game.ci/docs/docker/versions/
+#          customImage: ${{ matrix.targetPlatform == 'iOS' && 'unityci/editor:2021.3.38f1-ios-3.1.0' || 'unityci/editor:2021.3.38f1-android-3.1.0' }}
+#          targetPlatform: ${{ matrix.targetPlatform }}
+#          buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
+#          allowDirtyBuild: true
+#          manualExit: true
+#          customParameters: -ftpJsonFilePath ${{ steps.generate-ftp-config.outputs.FTP_JSON_STRING_FILE }}
+#      - name: Upload artifacts - ${{ matrix.targetPlatform }}
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
+#          path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
