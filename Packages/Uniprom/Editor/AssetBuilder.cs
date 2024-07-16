@@ -94,6 +94,7 @@ namespace Uniprom.Editor
                     
                     if (string.IsNullOrEmpty(jsonString))
                     {
+                        UnipromDebug.Log("Does the json string exist: " + File.Exists(jsonStringPath));
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
                             jsonString = File.ReadAllText(jsonStringPath);
