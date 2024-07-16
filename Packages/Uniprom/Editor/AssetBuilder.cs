@@ -95,8 +95,8 @@ namespace Uniprom.Editor
                     if (string.IsNullOrEmpty(jsonString))
                     {
                         {
-                            var directoryName = Path.GetDirectoryName(Application.dataPath);
-                            var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
+                            string directoryName = Path.GetFullPath(Path.Combine(Application.dataPath, "..", ".."));
+                            string path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
                             UnipromDebug.Log("path1 Does the json string exist: " + File.Exists(path) + " path: " + path);
                         }
                         {
@@ -107,8 +107,8 @@ namespace Uniprom.Editor
                         
                         if (!string.IsNullOrEmpty(jsonStringPath))
                         {
-                            var directoryName = Path.GetDirectoryName(Application.dataPath);
-                            var path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
+                            string directoryName = Path.GetFullPath(Path.Combine(Application.dataPath, "..", ".."));
+                            string path = Path.Combine(directoryName, Path.GetFileName(jsonStringPath));
                             jsonString = File.ReadAllText(path);
                             UnipromDebug.Log("Reading Json string path: " + path);
                         }
