@@ -54,6 +54,8 @@ jobs:
             echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_OUTPUT
             echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_OUTPUT
           fi
+      - name: Debug list files
+        run: ls -la "$GITHUB_WORKSPACE"
 
   build_and-deploy:
     needs:

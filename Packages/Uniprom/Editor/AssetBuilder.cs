@@ -70,42 +70,42 @@ namespace Uniprom.Editor
             
             importer.StartImport(() =>
             {
-                if (isRelease)
+                try
                 {
-                    exporter.BuildRelease(true);
-                }
-                else
-                {
-                    exporter.BuildTest(true);
-                }
-
-                var jsonStringPath = default(string);
-                if (string.IsNullOrEmpty(jsonString)
-                    && (options == default
-                        || !options.TryGetValue(_ftpJsonStringName, out jsonStringPath)))
-                {
-                    UnipromDebug.LogWarning("Could not obtain Json string.");
-                    tcs.SetResult(true);
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(jsonString))
-                {
-                    if (!string.IsNullOrEmpty(jsonStringPath))
+                    if (isRelease)
                     {
-                        jsonString = File.ReadAllText(jsonStringPath);
-                        UnipromDebug.Log("Reading Json string path: " + jsonStringPath);
+                        exporter.BuildRelease(true);
                     }
                     else
                     {
-                        UnipromDebug.LogWarning("Could not read Json string.");
+                        exporter.BuildTest(true);
+                    }
+                    
+                    var jsonStringPath = default(string);
+                    if (string.IsNullOrEmpty(jsonString)
+                        && (options == default
+                            || !options.TryGetValue(_ftpJsonStringName, out jsonStringPath)))
+                    {
+                        UnipromDebug.LogWarning("Could not obtain Json string.");
                         tcs.SetResult(true);
                         return;
                     }
-                }
-                
-                try
-                {
+                    
+                    if (string.IsNullOrEmpty(jsonString))
+                    {
+                        if (!string.IsNullOrEmpty(jsonStringPath))
+                        {
+                            jsonString = File.ReadAllText(jsonStringPath);
+                            UnipromDebug.Log("Reading Json string path: " + jsonStringPath);
+                        }
+                        else
+                        {
+                            UnipromDebug.LogWarning("Could not read Json string.");
+                            tcs.SetResult(true);
+                            return;
+                        }
+                    }
+                    
                     if ((isRelease && !exporter.CanISendReleaseServer())
                         || (!isRelease && !exporter.CanISendTestServer()))
                     {
