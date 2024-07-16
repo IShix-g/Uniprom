@@ -60,8 +60,8 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - iOS
           - Android
+          - iOS
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
@@ -71,8 +71,8 @@ jobs:
       - name: Set FTP json key
         run: |
           echo "FTP_JSON_KEY=${{ env.BUILD_MODE == 'Release' && 'RELEASE_FTP_JSON_STRING' || 'TEST_FTP_JSON_STRING' }}" >> $GITHUB_ENV
-      - name: create-json
-        id: create-json
+      - name: Create FTP config
+        id: create-ftp-config
         uses: jsdaniell/create-json@v1.2.3
         with:
           name: "ftp_config.json"

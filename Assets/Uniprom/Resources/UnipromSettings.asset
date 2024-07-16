@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae2c525a0754324b827dd9931eb40ae, type: 3}
   m_Name: UnipromSettings
   m_EditorClassIdentifier: 
-  _buildType: 0
-  _remoteLoadUrl: https://devx.myonick.biz/uniprom/addressables/test/
+  _buildType: 1
+  _remoteLoadUrl: https://devx.myonick.biz/uniprom/addressables/release/
   _assetsCatalogVersion: 1.0.0
   _scriptableObject: {fileID: 11400000, guid: c662c14775e1a4fffbc69533d26c0ca1, type: 2}
