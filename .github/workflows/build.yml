@@ -37,25 +37,26 @@ jobs:
     outputs:
       LOAD_DIR: ${{ steps.set-value.outputs.LOAD_DIR}}
       BUILD_METHOD: ${{ steps.set-value.outputs.BUILD_METHOD}}
-      FTP_JSON_STRING: ${{ steps.set-value.outputs.FTP_JSON_STRING}}
+      FTP_JSON_STRING_FILE: ${{ steps.set-value.outputs.FTP_JSON_STRING_FILE }}
     steps:
       - name: Set Value
         id: set-value
         run: |
+          FTP_JSON_STRING_FILE='ftp_config.json'
           if ${{ env.BUILD_MODE == 'Release' }}; then
-            echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_OUTPUT
-            echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_OUTPUT
-            echo "FTP_JSON_STRING=${{ secrets.RELEASE_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
+            echo "${{ secrets.RELEASE_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
+            echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_ENV
+            echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_ENV
+            echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_ENV
           else
-            echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_OUTPUT
-            echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_OUTPUT
-            echo "FTP_JSON_STRING=${{ secrets.TEST_FTP_JSON_STRING }}" >> $GITHUB_OUTPUT
+            echo "${{ secrets.TEST_FTP_JSON_STRING }}" > $FTP_JSON_STRING_FILE
+            echo "LOAD_DIR=${{ env.LOAD_TEST_DIR }}" >> $GITHUB_ENV
+            echo "BUILD_METHOD=${{ env.BUILD_TEST_METHOD }}" >> $GITHUB_ENV
+            echo "FTP_JSON_STRING_FILE=${FTP_JSON_STRING_FILE}" >> $GITHUB_ENV
           fi
 
   build_and-deploy:
-    needs:
-      - check-input
-      - set-value
+    needs: check-input
     name: Build and Deploy - ${{ matrix.targetPlatform }} - ${{ github.event.inputs.build_mode }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -64,22 +65,19 @@ jobs:
       matrix:
         targetPlatform:
           - iOS
-#          - Android
+    #          - Android
     steps:
-      # Checkout
-      - name: Checkout repository
+      - name: Checkout the repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
-      # Cache
       - name: Cache
         uses: actions/cache@v3
         with:
           path: Library
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: Library-
-      # Build
       - name: Build - ${{ matrix.targetPlatform }}
         uses: game-ci/unity-builder@v4
         env:
@@ -90,8 +88,8 @@ jobs:
           customImage: ${{ matrix.targetPlatform == 'iOS' && 'unityci/editor:2021.3.38f1-ios-3.1.0' || 'unityci/editor:2021.3.38f1-android-3.1.0' }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
-          customParameters: -ftpJsonString ${{ needs.set-value.outputs.FTP_JSON_STRING }}
-      # Upload artifacts
+          manualExit: true
+          customParameters: -ftpJsonFilePath ${{ needs.set-value.outputs.FTP_JSON_STRING_FILE }}
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v2
         with:

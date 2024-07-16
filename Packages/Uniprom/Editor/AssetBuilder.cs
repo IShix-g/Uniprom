@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using CMSuniVortex;
 using UnityEditor;
@@ -25,16 +26,32 @@ namespace Uniprom.Editor
 
         public static async void BuildRelease()
         {
-            await Build(true, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
-            UnipromDebug.Log("Completion of release build");
-            EditorApplication.Exit(0);
+            try
+            {
+                await Build(true, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
+                UnipromDebug.Log("Completion of release build");
+                EditorApplication.Exit(0);
+            }
+            catch (Exception e)
+            {
+                UnipromDebug.LogError(e.ToString());
+                throw;
+            }
         }
 
         public static async void BuildTest()
         {
-            await Build(false, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
-            UnipromDebug.Log("Completion of test build");
-            EditorApplication.Exit(0);
+            try
+            {
+                await Build(false, default, ArgumentsParser.GetValidatedOptions(new []{ _ftpJsonStringName }));
+                UnipromDebug.Log("Completion of test build");
+                EditorApplication.Exit(0);
+            }
+            catch (Exception e)
+            {
+                UnipromDebug.LogError(e.ToString());
+                throw;
+            }
         }
 
         public static Task Build(bool isRelease, string jsonString = default, Dictionary<string, string> options = default)
@@ -59,16 +76,31 @@ namespace Uniprom.Editor
                 {
                     exporter.BuildTest(true);
                 }
-                
+
+                var jsonStringPath = default(string);
                 if (string.IsNullOrEmpty(jsonString)
                     && (options == default
-                        || !options.TryGetValue(_ftpJsonStringName, out jsonString)))
+                        || !options.TryGetValue(_ftpJsonStringName, out jsonStringPath)))
                 {
-                    UnipromDebug.LogWarning("Could not obtain Json String.");
+                    UnipromDebug.LogWarning("Could not obtain Json string.");
                     tcs.SetResult(true);
                     return;
                 }
 
+                if (string.IsNullOrEmpty(jsonString))
+                {
+                    if (!string.IsNullOrEmpty(jsonStringPath))
+                    {
+                        jsonString = File.ReadAllText(jsonStringPath);
+                    }
+                    else
+                    {
+                        UnipromDebug.LogWarning("Could not read Json string.");
+                        tcs.SetResult(true);
+                        return;
+                    }
+                }
+                
                 try
                 {
                     if ((isRelease && !exporter.CanISendReleaseServer())
