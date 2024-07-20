@@ -5,8 +5,8 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Uniprom/UnipromSamples.unity
-    guid: 76df06de75244408cb56f78372b34f6f
+    guid: c8c89db0ae0a9469e9e9ee3051cab2e4
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e452928bb39e643519b4e6a8343b9c74, type: 2}

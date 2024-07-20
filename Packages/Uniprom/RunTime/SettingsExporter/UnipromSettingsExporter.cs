@@ -424,9 +424,9 @@ namespace Uniprom
             return Path.Combine(dir, "Resources", UnipromSettings.SettingsName + ".asset");
         }
         
-        static string GetInterstitialPrefabPath(string rootPath) => Path.Combine(rootPath, "prefabs", InterstitialPrefabName);
+        static string GetInterstitialPrefabPath(string rootPath) => Path.Combine(rootPath, "Prefabs", InterstitialPrefabName);
         
-        static string GetWallPrefabPath(string rootPath) => Path.Combine(rootPath, "prefabs", WallPrefabName);
+        static string GetWallPrefabPath(string rootPath) => Path.Combine(rootPath, "Prefabs", WallPrefabName);
         
         static string GetSampleScenePath(string rootPath) => Path.Combine(rootPath, SampleSceneName);
 
