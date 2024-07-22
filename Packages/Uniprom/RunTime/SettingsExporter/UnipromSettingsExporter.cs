@@ -48,6 +48,7 @@ namespace Uniprom
                 BundlePackingMode = BundledAssetGroupSchema.BundlePackingMode.PackSeparately,
                 BuildCompressionMode = BundledAssetGroupSchema.BundleCompressionMode.LZ4,
                 UpdateRestriction = AddressableCuvSettings.UpdateRestrictionType.CanChangePostRelease,
+                RetryCount = 2,
                 Labels = new []{ UnipromSettings.Label }
             };
         

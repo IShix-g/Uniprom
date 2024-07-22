@@ -1,4 +1,4 @@
-#if DEBUG && ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
+
 using System.Threading;
 using Uniprom;
 using UnityEngine;
@@ -15,4 +15,3 @@ public sealed class SyncTest : MonoBehaviour
         UnipromManager.Instance.ShowInterstitial();
      }
 }
-#endif

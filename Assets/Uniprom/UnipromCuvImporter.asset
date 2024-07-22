@@ -38,6 +38,7 @@ MonoBehaviour:
           BuildCompressionMode: 1
           BundlePackingMode: 1
           UpdateRestriction: 0
+          RetryCount: 2
     - rid: 3445371402398466053
       type: {class: UnipromModelsCockpitCuvAddressableOutput, ns: Uniprom, asm: UniProm}
       data:
@@ -49,4 +50,5 @@ MonoBehaviour:
           BuildCompressionMode: 1
           BundlePackingMode: 1
           UpdateRestriction: 0
+          RetryCount: 2
         _reference: {fileID: 11400000, guid: c662c14775e1a4fffbc69533d26c0ca1, type: 2}

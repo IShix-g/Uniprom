@@ -2,17 +2,12 @@
 using System;
 using System.Collections;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using Object = UnityEngine.Object;
 
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine.AddressableAssets.ResourceLocators;
-using UnityEngine.ResourceManagement.ResourceLocations;
 #endif
 
 namespace Uniprom
@@ -63,7 +58,7 @@ namespace Uniprom
             
             if (downloadSizeHandle.Result > 0)
             {
-                var downloadDependencies = Addressables.DownloadDependenciesAsync(Label);
+                var downloadDependencies = Addressables.DownloadDependenciesAsync(Label, true);
                 yield return downloadDependencies;
             }
             
@@ -76,40 +71,17 @@ namespace Uniprom
             var loadCatalogHandle = Addressables.LoadContentCatalogAsync(RemoteCatalogUrl, true);
             await loadCatalogHandle.Task;
 #endif
-
-            // var handle = Addressables.LoadResourceLocationsAsync(Label);
-            // await handle.Task;
-            // if (handle.Status == AsyncOperationStatus.Succeeded) 
-            // {
-            //     var locations = handle.Result;
-            //     if (locations is {Count: > 0}) 
-            //     {
-            //         foreach (var location in locations) 
-            //         {
-            //             var loadHandle = Addressables.LoadAssetAsync<Object>(location);
-            //             await loadHandle.Task;
-            //             Debug.Log(location.InternalId + " Status: " + loadHandle.Status );
-            //             Addressables.Release(loadHandle);
-            //         }
-            //     }
-            //     else
-            //     {
-            //         Debug.LogWarning("Could not find any locations for this asset reference.");
-            //     }
-            // }
-            // else
-            // {
-            //     Debug.LogError("Could not load resource locations.");
-            // }
-            //
+            
             var downloadSizeHandle = Addressables.GetDownloadSizeAsync(Label);
             await downloadSizeHandle.Task;
 
-            Debug.Log("Download Size:" + downloadSizeHandle.Result);
+#if DEBUG
+            Debug.Log("Addressables assets download size:" + downloadSizeHandle.Result);
+#endif
             
             if (downloadSizeHandle.Result > 0)
             {
-                var downloadDependencies = Addressables.DownloadDependenciesAsync(Label);
+                var downloadDependencies = Addressables.DownloadDependenciesAsync(Label, true);
                 await downloadDependencies.Task;
             }
             
