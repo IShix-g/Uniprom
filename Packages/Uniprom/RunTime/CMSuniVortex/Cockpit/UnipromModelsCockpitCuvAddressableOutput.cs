@@ -1,10 +1,11 @@
 #if ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
+using System.ComponentModel;
 using CMSuniVortex;
 using CMSuniVortex.Cockpit;
 
 namespace Uniprom
 {
-    [CuvDisplayName("Uniprom - Cockpit Output")]
+    [DisplayName("Uniprom - Cockpit Output")]
     public sealed class UnipromModelsCockpitCuvAddressableOutput : CockpitCuvAddressableOutput<
         UnipromCockpitModel,
         UnipromModelsCockpitCuvModelList,

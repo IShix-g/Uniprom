@@ -1,10 +1,11 @@
 #if ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
+using System.ComponentModel;
 using CMSuniVortex;
 using CMSuniVortex.GoogleSheet;
 
 namespace Uniprom.GoogleSheet
 {
-    [CuvDisplayName("Uniprom - Google Sheet Output")]
+    [DisplayName("Uniprom - Google Sheet Output")]
     public sealed class UnipromModelsCustomGoogleSheetCuvAddressableOutput : CustomGoogleSheetCuvAddressableOutput<
         UnipromGoogleSheetModel,
         UnipromModelsCustomGoogleSheetCuvModelList,

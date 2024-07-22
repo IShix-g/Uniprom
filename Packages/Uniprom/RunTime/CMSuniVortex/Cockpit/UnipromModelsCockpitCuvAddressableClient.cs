@@ -1,11 +1,12 @@
 #if ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
+using System.ComponentModel;
 using CMSuniVortex;
 using CMSuniVortex.Cockpit;
 using Newtonsoft.Json;
 
 namespace Uniprom
 {
-    [CuvDisplayName("Uniprom - Cockpit Client")]
+    [DisplayName("Uniprom - Cockpit Client")]
     public sealed class UnipromModelsCockpitCuvAddressableClient : CockpitCuvAddressableClient<UnipromCockpitModel, UnipromModelsCockpitCuvModelList>
     {
         protected override JsonConverter<UnipromCockpitModel> CreateConverter()

@@ -8,7 +8,7 @@
         "com.unity.nuget.newtonsoft-json": "3.2.1",
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "13386d5073f84fb970736597cf987c0464fc37b7"
+      "hash": "a36189ef9a5ab6608948ea527e69df8cafa1ed3c"
     },
     "com.ishix.uniprom": {
       "version": "file:Uniprom",
