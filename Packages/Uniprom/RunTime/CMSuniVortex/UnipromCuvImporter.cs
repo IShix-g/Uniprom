@@ -39,8 +39,8 @@ namespace Uniprom.CMSuniVortex
             base.Reset();
             try
             {
-                SetClient(new UnipromModelsCockpitCuvAddressableClient());
-                SetOutput(new UnipromModelsCockpitCuvAddressableOutput());
+                Client = new UnipromModelsCockpitCuvAddressableClient();
+                Output = new UnipromModelsCockpitCuvAddressableOutput();
                 var dir = Path.GetDirectoryName(AssetDatabase.GetAssetPath(this));
                 SetBuildPath(dir);
             }
