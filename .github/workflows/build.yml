@@ -80,9 +80,9 @@ jobs:
       - name: Set Google json key path
         id: google-json-key-path
         run: |
-          KEY="${{ secrets.GOOGLE_JSON_KEY }}"
+          KEY_BASE64=$(echo -n "${{ secrets.GOOGLE_JSON_KEY }}" | base64)
           
-          if [ ${#KEY} -gt 0 ]; then
+          if [ ${#KEY_BASE64} -gt 0 ]; then
             echo "GOOGLE_JSON_KEY_PATH=google_json_key.json" >> $GITHUB_ENV
           else
             echo "GOOGLE_JSON_KEY_PATH=" >> $GITHUB_ENV
