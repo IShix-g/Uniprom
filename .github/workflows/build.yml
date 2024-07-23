@@ -85,6 +85,8 @@ jobs:
           else
           echo "GOOGLE_JSON_KEY_PATH=" >> $GITHUB_ENV
           fi
+      - name: Show GOOGLE_JSON_KEY_PATH value
+        run: echo ${{ env.GOOGLE_JSON_KEY_PATH }}
       - name: Create Google json key
         if: env.GOOGLE_JSON_KEY_PATH != ''
         id: create-google-json-key
@@ -92,63 +94,63 @@ jobs:
         with:
           name: ${{ env.GOOGLE_JSON_KEY_PATH }}
           json: ${{ secrets.GOOGLE_JSON_KEY }}
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-
-      - name: Free Disk Space for Android
-        if: matrix.targetPlatform == 'Android'
-        run: |
-          sudo swapoff -a
-          sudo rm -f /swapfile
-          sudo apt clean
-          docker rmi $(docker image ls -aq)
-          df -h
-          # Before
-          echo "Disk space before:"
-          df -h
-
-          #echo "Listing 100 largest packages"
-          #dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n | tail -n 100
-          #echo "Removing large packages"
-          #sudo apt-get remove -y '^ghc-8.*'
-          #sudo apt-get remove -y '^dotnet-.*'
-          #sudo apt-get remove -y '^llvm-.*'
-          #sudo apt-get remove -y 'php.*'
-          #sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
-          #sudo apt-get autoremove -y
-          #sudo apt-get clean
-          #df -h
-
-          echo "Removing large directories"
-          # https://github.com/apache/flink/blob/master/tools/azure-pipelines/free_disk_space.sh
-          rm -rf /usr/share/dotnet/
-
-          # https://github.com/actions/virtual-environments/issues/709#issuecomment-612569242
-          rm -rf "/usr/local/share/boost"
-          rm -rf "$AGENT_TOOLSDIRECTORY"
-
-          # After
-          echo "Disk space after:"
-          df -h 
-      - name: Build - ${{ matrix.targetPlatform }}
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-#         https://game.ci/docs/docker/versions/
-          customImage: ${{ matrix.targetPlatform == 'iOS' && 'unityci/editor:2021.3.38f1-ios-3.1.0' || 'unityci/editor:2021.3.38f1-android-3.1.0' }}
-          targetPlatform: ${{ matrix.targetPlatform }}
-          buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
-          allowDirtyBuild: true
-          manualExit: true
-          customParameters: -ftpJsonFilePath ftp_config.json -googleJsonKeyPath ${{ env.GOOGLE_JSON_KEY_PATH }}
-      - name: Upload artifacts - ${{ matrix.targetPlatform }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
-          path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
+#      - name: Cache
+#        uses: actions/cache@v3
+#        with:
+#          path: Library
+#          key: Library-${{ matrix.targetPlatform }}
+#          restore-keys: Library-
+#      - name: Free Disk Space for Android
+#        if: matrix.targetPlatform == 'Android'
+#        run: |
+#          sudo swapoff -a
+#          sudo rm -f /swapfile
+#          sudo apt clean
+#          docker rmi $(docker image ls -aq)
+#          df -h
+#          # Before
+#          echo "Disk space before:"
+#          df -h
+#
+#          #echo "Listing 100 largest packages"
+#          #dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n | tail -n 100
+#          #echo "Removing large packages"
+#          #sudo apt-get remove -y '^ghc-8.*'
+#          #sudo apt-get remove -y '^dotnet-.*'
+#          #sudo apt-get remove -y '^llvm-.*'
+#          #sudo apt-get remove -y 'php.*'
+#          #sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
+#          #sudo apt-get autoremove -y
+#          #sudo apt-get clean
+#          #df -h
+#
+#          echo "Removing large directories"
+#          # https://github.com/apache/flink/blob/master/tools/azure-pipelines/free_disk_space.sh
+#          rm -rf /usr/share/dotnet/
+#
+#          # https://github.com/actions/virtual-environments/issues/709#issuecomment-612569242
+#          rm -rf "/usr/local/share/boost"
+#          rm -rf "$AGENT_TOOLSDIRECTORY"
+#
+#          # After
+#          echo "Disk space after:"
+#          df -h 
+#      - name: Build - ${{ matrix.targetPlatform }}
+#        uses: game-ci/unity-builder@v4
+#        env:
+#          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+#          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+#          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+#        with:
+##         https://game.ci/docs/docker/versions/
+#          customImage: ${{ matrix.targetPlatform == 'iOS' && 'unityci/editor:2021.3.38f1-ios-3.1.0' || 'unityci/editor:2021.3.38f1-android-3.1.0' }}
+#          targetPlatform: ${{ matrix.targetPlatform }}
+#          buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
+#          allowDirtyBuild: true
+#          manualExit: true
+#          customParameters: -ftpJsonFilePath ftp_config.json -googleJsonKeyPath ${{ env.GOOGLE_JSON_KEY_PATH }}
+#      - name: Upload artifacts - ${{ matrix.targetPlatform }}
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
+#          path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
