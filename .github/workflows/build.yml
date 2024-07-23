@@ -79,6 +79,7 @@ jobs:
           json:  ${{ secrets[env.FTP_JSON_KEY] }}
       - name: Set Google json key path
         id: google-json-key-path
+        shell: bash
         run: |
           if [ "${{ secrets.GOOGLE_JSON_KEY }}" != '' ]; then
           echo "GOOGLE_JSON_KEY_PATH=google_json_key.json" >> $GITHUB_ENV
