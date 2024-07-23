@@ -43,6 +43,7 @@ namespace Uniprom.Editor
 
         public static void Build(bool isRelease, Dictionary<string, string> options)
         {
+            UnipromDebug.IsBatchMode = Application.isBatchMode;
             var exporter = UnipromSettingsExporter.GetInstance();
             if (exporter.CuvImporter == default)
             {
