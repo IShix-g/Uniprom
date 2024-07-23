@@ -50,18 +50,21 @@ namespace Uniprom.Editor
                 return;
             }
 
-            if (options.TryGetValue(GoogleJsonKeyPath, out var googleJsonKeyPath)
-                && !string.IsNullOrEmpty(googleJsonKeyPath)
-                && exporter.CuvImporter.Client is UnipromModelsCustomGoogleSheetCuvAddressableClient client)
+            if (exporter.CuvImporter.Client is UnipromModelsCustomGoogleSheetCuvAddressableClient client)
             {
-                var directoryName = Path.GetDirectoryName(Application.dataPath);
-                var path = Path.Combine(directoryName, googleJsonKeyPath);
-                UnipromDebug.Log("Set Google json key path: " + path);
-                client.JsonKeyPath = path;
-            }
-            else
-            {
-                UnipromDebug.Log("Google json key path is not set.");
+                if (options.TryGetValue(GoogleJsonKeyPath, out var googleJsonKeyPath)
+                    && !string.IsNullOrEmpty(googleJsonKeyPath))
+                {
+                    var directoryName = Path.GetDirectoryName(Application.dataPath);
+                    var path = Path.Combine(directoryName, googleJsonKeyPath);
+                    UnipromDebug.Log("Set Google json key path: " + path);
+                    client.JsonKeyPath = path;
+                }
+                else
+                {
+                    UnipromDebug.LogError("Google json key path is not set.");
+                    return;
+                }
             }
             
             var importer = (ICuvImporter) exporter.CuvImporter;
