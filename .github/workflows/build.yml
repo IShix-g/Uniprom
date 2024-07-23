@@ -70,7 +70,7 @@ jobs:
           lfs: true
       - name: Set FTP json key
         run: |
-          echo "FTP_JSON_KEY=${{ env.BUILD_MODE == 'Release' && 'RELEASE_FTP_JSON_STRING' || 'TEST_FTP_JSON_STRING' }}" >> $GITHUB_ENV
+          echo "FTP_JSON_KEY=${{ env.BUILD_MODE == 'Release' && 'RELEASE_FTP_JSON' || 'TEST_FTP_JSON' }}" >> $GITHUB_ENV
       - name: Create FTP config
         id: create-ftp-config
         uses: jsdaniell/create-json@v1.2.3
@@ -81,16 +81,16 @@ jobs:
         id: google-json-key-path
         run: |
           if [ -n "${{ secrets.GOOGLE_JSON_KEY }}" ]; then
-          echo "GOOGLE_JSON_KEY_PATH=google_json_key.json" >> $GITHUB_OUTPUT
+          echo "GOOGLE_JSON_KEY_PATH=google_json_key.json" >> $GITHUB_ENV
           else
-          echo "GOOGLE_JSON_KEY_PATH=" >> $GITHUB_OUTPUT
+          echo "GOOGLE_JSON_KEY_PATH=" >> $GITHUB_ENV
           fi
       - name: Create Google json key
-        if: steps.google-json-key-path.outputs.GOOGLE_JSON_KEY_PATH
+        if: env.GOOGLE_JSON_KEY_PATH
         id: create-google-json-key
         uses: jsdaniell/create-json@v1.2.3
         with:
-          name: ${{ steps.google-json-key-path.outputs.GOOGLE_JSON_KEY_PATH }}
+          name: ${{ env.GOOGLE_JSON_KEY_PATH }}
           json: ${{ secrets.GOOGLE_JSON_KEY }}
       - name: Cache
         uses: actions/cache@v3
@@ -146,7 +146,7 @@ jobs:
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
           allowDirtyBuild: true
           manualExit: true
-          customParameters: -ftpJsonFilePath ftp_config.json -googleJsonKeyPath ${{ steps.google-json-key-path.outputs.GOOGLE_JSON_KEY_PATH }}
+          customParameters: -ftpJsonFilePath ftp_config.json -googleJsonKeyPath ${{ env.GOOGLE_JSON_KEY_PATH }}
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
