@@ -80,12 +80,11 @@ jobs:
       - name: Set Google json key path
         id: google-json-key-path
         run: |
-          echo "Value of secrets key: ${{ secrets.GOOGLE_JSON_KEY }}"
-          if [ ! -z "${{ secrets.GOOGLE_JSON_KEY }}" ]; then
-            echo "Inside if clause"
+          KEY="${{ secrets.GOOGLE_JSON_KEY }}"
+          
+          if [ ${#KEY} -gt 0 ]; then
             echo "GOOGLE_JSON_KEY_PATH=google_json_key.json" >> $GITHUB_ENV
           else
-            echo "Inside else clause"
             echo "GOOGLE_JSON_KEY_PATH=" >> $GITHUB_ENV
           fi
       - name: Create Google json key
