@@ -15,21 +15,20 @@ MonoBehaviour:
   _buildPath: Assets/Uniprom/
   _languages: 0a00000016000000
   _client:
-    rid: 3445371402398466052
+    rid: 3445371893955690496
   _output:
-    rid: 3445371402398466053
+    rid: 3445371893955690497
   _modelListGuilds:
-  - 5be8be9d4185f4aefb5d3f898dbe02cd
-  - be044fd532534436c8369f9ca40f3831
+  - 1056a016df1d3492f8664aa13fb140c9
+  - 7d6c9f79d393d4c5fbb0a9b9d00efa66
   references:
     version: 2
     RefIds:
-    - rid: 3445371402398466052
-      type: {class: UnipromModelsCockpitCuvAddressableClient, ns: Uniprom, asm: UniProm}
+    - rid: 3445371893955690496
+      type: {class: UnipromModelsCustomGoogleSheetCuvAddressableClient, ns: Uniprom.GoogleSheet, asm: UniProm}
       data:
-        _baseUrl: https://devx.myonick.biz/cockpit/
-        _apiKey: API-b71811e4f1b480a28be007b39cc5b88c3c6e6a93
-        _modelName: UnipromModel
+        _sheetUrl: https://docs.google.com/spreadsheets/d/1djptZlGNu4i-t_ZwXxa4ClEgpNk1gC-BnAIbd6vjwk4/edit?gid=0#gid=0
+        _jsonKeyPath: /Users/umac/Harapeco/Apps/IShix/UniProm/UniProm/Assets/Uniprom_Google/light-operator-426308-a9-a87f12062c59.json
         _addressableSettings:
           AddressableType: 1
           CustomGroupName: 
@@ -39,8 +38,8 @@ MonoBehaviour:
           BundlePackingMode: 1
           UpdateRestriction: 0
           RetryCount: 2
-    - rid: 3445371402398466053
-      type: {class: UnipromModelsCockpitCuvAddressableOutput, ns: Uniprom, asm: UniProm}
+    - rid: 3445371893955690497
+      type: {class: UnipromModelsCustomGoogleSheetCuvAddressableOutput, ns: Uniprom.GoogleSheet, asm: UniProm}
       data:
         _addressableSettings:
           AddressableType: 1
@@ -51,4 +50,4 @@ MonoBehaviour:
           BundlePackingMode: 1
           UpdateRestriction: 0
           RetryCount: 2
-        _reference: {fileID: 11400000, guid: c662c14775e1a4fffbc69533d26c0ca1, type: 2}
+        _reference: {fileID: 11400000, guid: eecea2ac021c946a193495271e29ed9f, type: 2}

@@ -16,12 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 23479d08a7b4d4b7c9366d9322aa1404
-  m_SerializeEntries:
-  - m_GUID: 5be8be9d4185f4aefb5d3f898dbe02cd
-    m_Address: Assets/Uniprom/UnipromModelsCockpitCuvModelList_English.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnipromItems
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9f5b00c0dba834f46b6d95e541f8c884, type: 2}
   m_SchemaSet:

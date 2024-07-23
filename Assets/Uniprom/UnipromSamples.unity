@@ -2318,8 +2318,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interstitialButton: {fileID: 1652025773}
   _wallButton: {fileID: 1098019628}
-  _nativeView: {fileID: 507488791}
-  _iconNativeView: {fileID: 1245907046}
 --- !u!1 &1245907041
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,10 +1,10 @@
 
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CMSuniVortex;
-using Newtonsoft.Json.Linq;
+using Uniprom.GoogleSheet;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,84 +12,58 @@ namespace Uniprom.Editor
 {
     public static class AssetBuilder
     {
-        const string _ftpJsonStringName = "ftpJsonFilePath";
+        public const string FtpJsonStringName = "ftpJsonFilePath";
+        public const string GoogleJsonKeyPath = "googleJsonKeyPath";
 
 #if UNIPROM_SOURCE_PROJECT
         [MenuItem("Window/Uniprom/Build test of Github Action")]
         static void StartGithubBuildTest()
         {
             var exporter = UnipromSettingsExporter.GetInstance();
-            var asset = AssetDatabase.LoadAssetAtPath<TextAsset>(exporter.TestFtpSettingPath);
-            Build(false, asset.text)
-                .SafeContinueWith(task =>
+            var options = new Dictionary<string, string> { {FtpJsonStringName, exporter.TestFtpSettingPath} };
+            if (exporter.CuvImporter.Client is UnipromModelsCustomGoogleSheetCuvAddressableClient client)
             {
-                if (task.IsFaulted)
-                {
-                    var error = task.Exception != default
-                        ? task.Exception.ToString()
-                        : "Unknown error";
-                    UnipromDebug.LogError(error);
-                }
-                else
-                {
-                    UnipromDebug.Log("Completion of release build");
-                }
-            });
+                options.Add(GoogleJsonKeyPath, client.JsonKeyPath);
+            }
+            Build(false, options);
         }
 #endif
 
         public static void BuildRelease()
         {
             var options = ArgumentsParser.GetValidatedOptions();
-            Build(true, default, options)
-                .SafeContinueWith(task =>
-                {
-                    if (task.IsFaulted)
-                    {
-                        var error = task.Exception != default
-                            ? task.Exception.ToString()
-                            : "Unknown error";
-                        UnipromDebug.LogError(error);
-                    }
-                    else
-                    {
-                        UnipromDebug.Log("Completion of release build");
-                        EditorApplication.Exit(0);
-                    }
-                });
+            Build(true, options);
         }
 
         public static void BuildTest()
         {
             var options = ArgumentsParser.GetValidatedOptions();
-            Build(false, default, options)
-                .SafeContinueWith(task =>
-                {
-                    if (task.IsFaulted)
-                    {
-                        var error = task.Exception != default
-                            ? task.Exception.ToString()
-                            : "Unknown error";
-                        UnipromDebug.LogError(error);
-                    }
-                    else
-                    {
-                        UnipromDebug.Log("Completion of test build");
-                        EditorApplication.Exit(0);
-                    }
-                });
+            Build(false, options);
         }
 
-        public static Task Build(bool isRelease, string jsonString = default, Dictionary<string, string> options = default)
+        public static void Build(bool isRelease, Dictionary<string, string> options)
         {
             var exporter = UnipromSettingsExporter.GetInstance();
             if (exporter.CuvImporter == default)
             {
                 UnipromDebug.LogError("CuvImporter does not exist. Please complete the setup.");
-                return Task.CompletedTask;
+                return;
+            }
+
+            if (options.TryGetValue(GoogleJsonKeyPath, out var googleJsonKeyPath)
+                && !string.IsNullOrEmpty(googleJsonKeyPath)
+                && exporter.CuvImporter.Client is UnipromModelsCustomGoogleSheetCuvAddressableClient client)
+            {
+                var directoryName = Path.GetDirectoryName(Application.dataPath);
+                var path = Path.Combine(directoryName, googleJsonKeyPath);
+                UnipromDebug.Log("Set Google json key path: " + path);
+                client.JsonKeyPath = path;
+            }
+            else
+            {
+                UnipromDebug.Log("Google json key path is not set.");
             }
             
-            var tcs = new TaskCompletionSource<bool>();
             var importer = (ICuvImporter) exporter.CuvImporter;
             
             exporter.ResolveReference();
@@ -97,6 +71,7 @@ namespace Uniprom.Editor
             importer.StartImport(() =>
             {
                 UnipromDebug.Log("Completion of import");
+                
                 try
                 {
                     if (isRelease)
@@ -108,73 +83,71 @@ namespace Uniprom.Editor
                         exporter.BuildTest(true);
                     }
                     
-                    var jsonStringPath = default(string);
-                    if (string.IsNullOrEmpty(jsonString)
-                        && (options == default
-                            || !options.TryGetValue(_ftpJsonStringName, out jsonStringPath)))
+                    if (!options.TryGetValue(FtpJsonStringName, out var jsonStringPath))
                     {
                         UnipromDebug.LogWarning("Could not obtain Json string.");
-                        tcs.SetResult(true);
                         return;
                     }
                     
-                    if (string.IsNullOrEmpty(jsonString))
+                    var jsonString = default(string);
+                    if (!string.IsNullOrEmpty(jsonStringPath))
                     {
-                        if (!string.IsNullOrEmpty(jsonStringPath))
-                        {
-                            var directoryName = Path.GetDirectoryName(Application.dataPath);
-                            var path = Path.Combine(directoryName, jsonStringPath);
-                            jsonString = File.ReadAllText(path);
-                            UnipromDebug.Log("Reading Json string path: " + path);
-                        }
-                        else
-                        {
-                            UnipromDebug.LogWarning("Could not read Json string.");
-                            tcs.SetResult(true);
-                            return;
-                        }
+                        var directoryName = Path.GetDirectoryName(Application.dataPath);
+                        var path = Path.Combine(directoryName, jsonStringPath);
+                        jsonString = File.ReadAllText(path);
+                        UnipromDebug.Log("Reading Json string path: " + path);
+                    }
+                    else
+                    {
+                        UnipromDebug.LogWarning("Could not read Json string.");
+                        return;
+                    }
+                    
+                    if (isRelease)
+                    {
+                        exporter.SendToReleaseServer(jsonString)
+                            .SafeContinueWith(task =>
+                            {
+                                if (task.Status == TaskStatus.RanToCompletion)
+                                {
+                                    UnipromDebug.Log("Completion of release build");
+                                    if (UnipromDebug.IsBatchMode)
+                                    {
+                                        EditorApplication.Exit(0);
+                                    }
+                                }
+                                else if (task.IsFaulted)
+                                {
+                                    UnipromDebug.LogError(task.Exception != default ? task.Exception.ToString() : "Unknown error");
+                                }
+                            });
+                    }
+                    else
+                    {
+                        exporter.SendToTestServer(jsonString)
+                            .SafeContinueWith(task =>
+                            {
+                                if (task.Status == TaskStatus.RanToCompletion)
+                                {
+                                    UnipromDebug.Log("Completion of test build");
+                                    if (UnipromDebug.IsBatchMode)
+                                    {
+                                        EditorApplication.Exit(0);
+                                    }
+                                }
+                                else if (task.IsFaulted)
+                                {
+                                    UnipromDebug.LogError(task.Exception != default ? task.Exception.ToString() : "Unknown error");
+                                }
+                            });
                     }
                 }
                 catch (Exception e)
                 {
                     UnipromDebug.LogError(e.ToString());
-                    tcs.SetException(e);
                     throw;
                 }
-                
-                if (isRelease)
-                {
-                    exporter.SendToReleaseServer(jsonString)
-                        .SafeContinueWith(task =>
-                    {
-                        if (task.IsFaulted)
-                        {
-                            tcs.SetException(task.Exception);
-                        }
-                        else
-                        {
-                            tcs.SetResult(true);
-                        }
-                    });
-                }
-                else
-                {
-                    exporter.SendToTestServer(jsonString)
-                        .SafeContinueWith(task =>
-                        {
-                            if (task.IsFaulted)
-                            {
-                                tcs.SetException(task.Exception);
-                            }
-                            else
-                            {
-                                tcs.SetResult(true);
-                            }
-                        });
-                }
             });
-            
-            return tcs.Task;
         }
     }
 }

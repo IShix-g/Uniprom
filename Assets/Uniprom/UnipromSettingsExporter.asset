@@ -18,5 +18,5 @@ MonoBehaviour:
   _releaseFtpSettingPath: Assets/FtpSettings/ftp-setting-release.json
   _testFtpSettingPath: Assets/FtpSettings/ftp-setting-test.json
   _cuvImporter: {fileID: 11400000, guid: 581851435fee043ef985dbd151ec87f2, type: 2}
-  _reference: {fileID: 11400000, guid: c662c14775e1a4fffbc69533d26c0ca1, type: 2}
+  _reference: {fileID: 11400000, guid: eecea2ac021c946a193495271e29ed9f, type: 2}
   _settings: {fileID: 11400000, guid: e2c5fa70581ae45d794263ed1a6db6f9, type: 2}

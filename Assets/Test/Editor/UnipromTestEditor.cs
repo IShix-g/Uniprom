@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using System.Linq;
 using Uniprom;
 using Uniprom.Addressable.Editor;
@@ -16,15 +17,15 @@ namespace Tests
         [MenuItem("Tests/Build Asset Test - Release")]
         static void BuildAssetTestRelease()
         {
-            var obj = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/FtpSettings/ftp-setting-release.json");
-            AssetBuilder.Build(true, obj.text);
+            var options = new Dictionary<string, string>() {{AssetBuilder.FtpJsonStringName, "Assets/FtpSettings/ftp-setting-release.json"}};
+            AssetBuilder.Build(true, options);
         }
         
         [MenuItem("Tests/Build Asset Test - Test")]
         static void BuildAssetTestTest()
         {
-            var obj = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/FtpSettings/ftp-setting-test.json");
-            AssetBuilder.Build(false, obj.text);
+            var options = new Dictionary<string, string>() {{AssetBuilder.FtpJsonStringName, "Assets/FtpSettings/ftp-setting-test.json"}};
+            AssetBuilder.Build(false, options);
         }
         
         [MenuItem("Tests/Create Canvas")]

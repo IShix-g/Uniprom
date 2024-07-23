@@ -8,8 +8,6 @@ namespace Uniprom.Samples
     {
         [SerializeField] Button _interstitialButton;
         [SerializeField] Button _wallButton;
-        [SerializeField] UnipromNativeView _nativeView;
-        [SerializeField] UnipromIconNativeView _iconNativeView;
         
         void Awake()
         {
@@ -81,18 +79,9 @@ namespace Uniprom.Samples
                 });
         }
         
-        void ClickNative()
-        {
-            if (_nativeView.CanReload)
-            {
-                _nativeView.Reload();
-            }
-        }
-
         void OnInitialized()
         {
             Debug.Log("Initialized");
-            
             _interstitialButton.interactable = true;
             _wallButton.interactable = true;
         }
