@@ -17,6 +17,8 @@ namespace Uniprom.Editor
     {
         public const string FtpJsonStringName = "ftpJsonFilePath";
         public const string GoogleJsonKeyPath = "googleJsonKeyPath";
+        
+        static readonly string s_eol = Environment.NewLine;
 
 #if UNIPROM_SOURCE_PROJECT
         [MenuItem("Window/Uniprom/Build test of Github Action")]
@@ -127,9 +129,8 @@ namespace Uniprom.Editor
                             {
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
-                                    UnipromDebug.Log("Completion of release build");
-                                    UnipromDebug.Log(GetBuildInfo(exporter));
-                                    
+                                    UnipromDebug.Log("Completion of release build\n" + GetUnipromSettingsString(exporter));
+
                                     if (UnipromDebug.IsBatchMode)
                                     {
                                         EditorApplication.Exit(0);
@@ -148,8 +149,7 @@ namespace Uniprom.Editor
                             {
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
-                                    UnipromDebug.Log("Completion of test build");
-                                    UnipromDebug.Log(GetBuildInfo(exporter));
+                                    UnipromDebug.Log("Completion of test build\n" + GetUnipromSettingsString(exporter));
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
@@ -171,9 +171,17 @@ namespace Uniprom.Editor
             });
         }
 
-        static string GetBuildInfo(UnipromSettingsExporter exporter)
+        static string GetUnipromSettingsString(UnipromSettingsExporter exporter)
         {
             var sb = new StringBuilder();
+            
+            sb.Append(
+                $"{s_eol}" +
+                $"###########################{s_eol}" +
+                $"#    Uniprom settings     #{s_eol}" +
+                $"###########################{s_eol}" +
+                $"{s_eol}"
+            );
             sb.Append("Build type: ");
             sb.Append(exporter.Settings.BuildType);
             sb.Append("\n");
