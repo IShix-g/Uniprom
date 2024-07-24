@@ -94,7 +94,7 @@ jobs:
           name: ${{ needs.set-value.outputs.GOOGLE_JSON_KEY_PATH }}
           json: ${{ secrets.GOOGLE_JSON_KEY }}
       - name: Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ matrix.targetPlatform }}
