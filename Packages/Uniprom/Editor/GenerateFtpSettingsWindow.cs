@@ -7,7 +7,6 @@ namespace Uniprom.Editor
 {
     public class GenerateFtpSettingsWindow : EditorWindow
     {
-        // [MenuItem("Window/Uniprom/open Generate Ftp Settings Window")]
         public static void ShowWindow()
         {
             var window = GetWindow<GenerateFtpSettingsWindow>("Generate Ftp Settings Window");

@@ -122,11 +122,11 @@ namespace Uniprom.Addressable.Editor
             {
                 return Array.Empty<string>();
             }
-
+            
             var files = catalog.InternalIds
                 .Where(x => x.StartsWith(remoteLoadUrl))
                 .Select(x => x.Replace(remoteLoadUrl, rootPath));
-
+            
             return new []
                 {
                     catalogPath,

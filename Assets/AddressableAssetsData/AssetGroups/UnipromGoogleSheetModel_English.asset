@@ -17,10 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d35bb19683dc04ae4b2a2dd13264b9f7
   m_SerializeEntries:
-  - m_GUID: 2141dc8c5e6f84ac1adf76f5b889f9ba
-    m_Address: Assets/Uniprom_Google/UnipromModelsCustomGoogleSheetCuvModelList_English.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 1056a016df1d3492f8664aa13fb140c9
     m_Address: Assets/Uniprom/UnipromModelsCustomGoogleSheetCuvModelList_English.asset
     m_ReadOnly: 0

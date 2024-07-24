@@ -56,9 +56,19 @@ namespace Uniprom.Editor
                 if (options.TryGetValue(GoogleJsonKeyPath, out var googleJsonKeyPath)
                     && !string.IsNullOrEmpty(googleJsonKeyPath))
                 {
-                    var directoryName = Path.GetDirectoryName(Application.dataPath);
-                    var path = Path.Combine(directoryName, googleJsonKeyPath);
+                    var path = default(string);
+                    if (UnipromDebug.IsBatchMode)
+                    {
+                        var directoryName = Path.GetDirectoryName(Application.dataPath);
+                        path = Path.Combine(directoryName, googleJsonKeyPath);
+                    }
+                    else
+                    {
+                        path = googleJsonKeyPath;
+                    }
+                    
                     UnipromDebug.Log("Set Google json key path: " + path);
+                    
                     client.JsonKeyPath = path;
                 }
                 else
@@ -80,11 +90,11 @@ namespace Uniprom.Editor
                 {
                     if (isRelease)
                     {
-                        exporter.BuildRelease(true);
+                        exporter.BuildRelease();
                     }
                     else
                     {
-                        exporter.BuildTest(true);
+                        exporter.BuildTest();
                     }
                     
                     if (!options.TryGetValue(FtpJsonStringName, out var jsonStringPath))

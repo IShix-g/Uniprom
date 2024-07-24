@@ -70,9 +70,13 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
 ServerData
-Assets/FtpSettings
-Assets/Uniprom_Google/light-operator-426308-a9-a87f12062c59.json
-Assets/Uniprom_Google/light-operator-426308-a9-a87f12062c59.json.meta
 _UnipromReleaseServerData
 _UnipromTestServerData
+Assets/FtpSettings
+Assets/FtpSettings.meta
+Assets/ClientSettings
+Assets/ClientSettings.meta
+Assets/Uniprom/light-operator-426308-a9-a87f12062c59.json
+Assets/Uniprom/light-operator-426308-a9-a87f12062c59.json.meta

@@ -123,7 +123,7 @@ namespace Uniprom
             return true;
         }
         
-        public void BuildTest(bool isBatchMode = false)
+        public void BuildTest()
         {
             UnipromDebug.IsBatchMode = Application.isBatchMode;
             if (string.IsNullOrEmpty(_testRemoteLoadUrl))
@@ -132,7 +132,7 @@ namespace Uniprom
                 return;
             }
 
-            if (!isBatchMode)
+            if (!UnipromDebug.IsBatchMode)
             {
                 CopyToItemsIfNeeded();
             }
@@ -151,13 +151,13 @@ namespace Uniprom
             SetUpAddressable();
             UnipromDebug.Log("Build Path:" + settingsPath);
             AddressableHelper.StartNewBuildByProfileName(TestProfileName);
-            if (!isBatchMode && !Application.isBatchMode)
+            if (!Application.isBatchMode)
             {
                 AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
             }
         }
 
-        public void BuildRelease(bool isBatchMode = false)
+        public void BuildRelease()
         {
             UnipromDebug.IsBatchMode = Application.isBatchMode;
             if (string.IsNullOrEmpty(_releaseRemoteLoadUrl))
@@ -166,7 +166,7 @@ namespace Uniprom
                 return;
             }
 
-            if (!isBatchMode)
+            if (!UnipromDebug.IsBatchMode)
             {
                 CopyToItemsIfNeeded();
             }
@@ -185,7 +185,7 @@ namespace Uniprom
             SetUpAddressable();
             UnipromDebug.Log("Build Path:" + settingsPath);
             AddressableHelper.StartNewBuildByProfileName(ReleaseProfileName);
-            if (!isBatchMode && !Application.isBatchMode)
+            if (!Application.isBatchMode)
             {
                 AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
             }
@@ -285,7 +285,7 @@ namespace Uniprom
         public void SendToTestServer()
         {
             var asset = AssetDatabase.LoadAssetAtPath<TextAsset>(_testFtpSettingPath);
-            SendToReleaseServer(asset.text)
+            SendToTestServer(asset.text)
                 .SafeContinueWith(task =>
                 {
                     if (task.Status == TaskStatus.RanToCompletion)
