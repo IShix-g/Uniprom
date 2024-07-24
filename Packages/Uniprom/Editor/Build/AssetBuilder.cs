@@ -129,7 +129,7 @@ namespace Uniprom.Editor
                             {
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
-                                    UnipromDebug.Log("Completion of release build\n" + GetUnipromSettingsString(exporter));
+                                    UnipromDebug.Log("Completion of release build\n\n" + GetUnipromSettingsString(exporter));
 
                                     if (UnipromDebug.IsBatchMode)
                                     {
@@ -149,7 +149,7 @@ namespace Uniprom.Editor
                             {
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
-                                    UnipromDebug.Log("Completion of test build\n" + GetUnipromSettingsString(exporter));
+                                    UnipromDebug.Log("Completion of test build\n\n" + GetUnipromSettingsString(exporter));
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
@@ -214,6 +214,8 @@ namespace Uniprom.Editor
                     : type.Name;
                 sb.Append(name);
             }
+            sb.Append("\n");
+            sb.Append("\n");
             
             return sb.ToString();
         }
