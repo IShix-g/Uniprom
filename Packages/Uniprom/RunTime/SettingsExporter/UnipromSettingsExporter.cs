@@ -63,11 +63,15 @@ namespace Uniprom
         [SerializeField, CuvReadOnly] UnipromCuvImporter _cuvImporter;
         [SerializeField, CuvReadOnly] ScriptableObject _reference;
         [SerializeField, CuvReadOnly] UnipromSettings _settings;
-        
+
+        public string TestRemoteLoadUrl => _testRemoteLoadUrl;
+        public string ReleaseRemoteLoadUrl => _releaseRemoteLoadUrl;
+        public string OverridePlayerVersion => _overridePlayerVersion;
         public UnipromCuvImporter CuvImporter => _cuvImporter;
-        public bool IsSendingFiles { get; private set; }
         public string ReleaseFtpSettingPath => _releaseFtpSettingPath;
         public string TestFtpSettingPath => _testFtpSettingPath;
+        public UnipromSettings Settings => _settings;
+        public bool IsSendingFiles { get; private set; }
 
         public static UnipromSettingsExporter GetInstance()
             => AssetDatabase.LoadAssetAtPath<UnipromSettingsExporter>(ExporterPath);

@@ -2,6 +2,9 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using CMSuniVortex;
 using Uniprom.GoogleSheet;
@@ -125,6 +128,8 @@ namespace Uniprom.Editor
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
                                     UnipromDebug.Log("Completion of release build");
+                                    UnipromDebug.Log(GetBuildInfo(exporter));
+                                    
                                     if (UnipromDebug.IsBatchMode)
                                     {
                                         EditorApplication.Exit(0);
@@ -144,6 +149,8 @@ namespace Uniprom.Editor
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
                                     UnipromDebug.Log("Completion of test build");
+                                    UnipromDebug.Log(GetBuildInfo(exporter));
+                                    
                                     if (UnipromDebug.IsBatchMode)
                                     {
                                         EditorApplication.Exit(0);
@@ -162,6 +169,45 @@ namespace Uniprom.Editor
                     throw;
                 }
             });
+        }
+
+        static string GetBuildInfo(UnipromSettingsExporter exporter)
+        {
+            var sb = new StringBuilder();
+            sb.Append("Build type: ");
+            sb.Append(exporter.Settings.BuildType);
+            sb.Append("\n");
+            sb.Append("TestRemoteLoadUrl: ");
+            sb.Append(exporter.TestRemoteLoadUrl);
+            sb.Append("\n");
+            sb.Append("ReleaseRemoteLoadUrl: ");
+            sb.Append(exporter.ReleaseRemoteLoadUrl);
+            sb.Append("\n");
+            sb.Append("OverridePlayerVersion: ");
+            sb.Append(exporter.OverridePlayerVersion);
+            sb.Append("\n");
+            sb.Append("Languages: ");
+            sb.Append(exporter.CuvImporter.Languages.Select(x => x.ToString()).Aggregate((a, b) => a + ", " + b));
+            sb.Append("\n");
+            sb.Append("Client: ");
+            {
+                var type = exporter.CuvImporter.Client.GetType();
+                var name = Attribute.IsDefined(type, typeof(DisplayNameAttribute))
+                    ? ((DisplayNameAttribute)Attribute.GetCustomAttribute(type, typeof(DisplayNameAttribute))).DisplayName
+                    : type.Name;
+                sb.Append(name);
+            }
+            sb.Append("\n");
+            sb.Append("Output: ");
+            {
+                var type = exporter.CuvImporter.Output.GetType();
+                var name = Attribute.IsDefined(type, typeof(DisplayNameAttribute))
+                    ? ((DisplayNameAttribute)Attribute.GetCustomAttribute(type, typeof(DisplayNameAttribute))).DisplayName
+                    : type.Name;
+                sb.Append(name);
+            }
+            
+            return sb.ToString();
         }
     }
 }
