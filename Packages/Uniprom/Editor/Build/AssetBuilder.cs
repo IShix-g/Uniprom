@@ -177,28 +177,21 @@ namespace Uniprom.Editor
         {
             var sb = new StringBuilder();
             
-            sb.Append(
-                $"{s_eol}" +
-                $"###########################{s_eol}" +
-                $"#    Uniprom settings     #{s_eol}" +
-                $"###########################{s_eol}" +
-                $"{s_eol}"
-            );
             sb.Append("Build type: ");
             sb.Append(exporter.Settings.BuildType);
-            sb.Append("\n");
+            sb.Append(" | ");
             sb.Append("TestRemoteLoadUrl: ");
             sb.Append(exporter.TestRemoteLoadUrl);
-            sb.Append("\n");
+            sb.Append(" | ");
             sb.Append("ReleaseRemoteLoadUrl: ");
             sb.Append(exporter.ReleaseRemoteLoadUrl);
-            sb.Append("\n");
+            sb.Append(" | ");
             sb.Append("OverridePlayerVersion: ");
             sb.Append(exporter.OverridePlayerVersion);
-            sb.Append("\n");
+            sb.Append(" | ");
             sb.Append("Languages: ");
             sb.Append(exporter.CuvImporter.Languages.Select(x => x.ToString()).Aggregate((a, b) => a + ", " + b));
-            sb.Append("\n");
+            sb.Append(" | ");
             sb.Append("Client: ");
             {
                 var type = exporter.CuvImporter.Client.GetType();
@@ -207,7 +200,7 @@ namespace Uniprom.Editor
                     : type.Name;
                 sb.Append(name);
             }
-            sb.Append("\n");
+            sb.Append(" | ");
             sb.Append("Output: ");
             {
                 var type = exporter.CuvImporter.Output.GetType();
@@ -216,8 +209,6 @@ namespace Uniprom.Editor
                     : type.Name;
                 sb.Append(name);
             }
-            sb.Append("\n");
-            sb.Append("\n");
             
             return sb.ToString();
         }
