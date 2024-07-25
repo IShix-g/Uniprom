@@ -129,8 +129,9 @@ namespace Uniprom.Editor
                             {
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
-                                    UnipromDebug.Log("Completion of release build\n\n" + GetUnipromSettingsString(exporter));
-
+                                    UnipromDebug.Log("Completion of release build");
+                                    UnipromDebug.LogWarning(GetUnipromSettingsString(exporter));
+                                    
                                     if (UnipromDebug.IsBatchMode)
                                     {
                                         EditorApplication.Exit(0);
@@ -149,7 +150,8 @@ namespace Uniprom.Editor
                             {
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
-                                    UnipromDebug.Log("Completion of test build\n\n" + GetUnipromSettingsString(exporter));
+                                    UnipromDebug.Log("Completion of test build");
+                                    UnipromDebug.LogWarning(GetUnipromSettingsString(exporter));
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
