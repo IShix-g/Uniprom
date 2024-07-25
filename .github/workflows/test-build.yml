@@ -1,4 +1,4 @@
-name: Uniprom Test Build And Deploy
+name: Test Build And Deploy
 
 on:
   workflow_dispatch:

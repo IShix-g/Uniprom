@@ -1,4 +1,4 @@
-name: Uniprom Assets Build And Deploy
+name: Build And Deploy
 
 on:
   workflow_dispatch:

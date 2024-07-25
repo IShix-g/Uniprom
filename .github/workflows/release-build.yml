@@ -1,4 +1,4 @@
-name: Uniprom Release Build And Deploy
+name: Release Build And Deploy
 
 on:
   workflow_dispatch:
