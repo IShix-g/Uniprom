@@ -4,11 +4,25 @@ on:
   workflow_call:
     inputs:
       build-mode:
+        description: "Build mode : Test / Release"
         required: true
         type: string
+    secrets:
+      RELEASE_FTP_JSON:
+        required: true
+      TEST_FTP_JSON:
+        required: true
+      UNITY_LICENSE:
+        required: true
+      UNITY_EMAIL:
+        required: true
+      UNITY_PASSWORD:
+        required: true
+      GOOGLE_JSON_KEY:
+        required: false
 
 env:
-  BUILD_MODE: ${{ github.event.inputs.build_mode }}
+  BUILD_MODE: ${{ inputs.build-mode }}
   # Release
   LOAD_RELEASE_DIR: "_UnipromReleaseServerData"
   BUILD_RELEASE_METHOD: "Uniprom.Editor.AssetBuilder.BuildRelease"
@@ -23,8 +37,8 @@ jobs:
     steps:
       - name: Check Value
         run: |
-          if ${{ inputs.build-mode != 'Test' && inputs.build-mode != 'Release' }}; then
-            echo ::error:: "Specify Test or Release. value: ${{ inputs.build-mode }}"
+          if ${{ env.BUILD_MODE != 'Test' && env.BUILD_MODE != 'Release' }}; then
+            echo ::error:: "Specify Test or Release. value: ${{ env.BUILD_MODE }}"
             exit 1
           else
             echo "Valid input value"
@@ -42,7 +56,7 @@ jobs:
       - name: Set Value
         id: set-value
         run: |
-          if ${{ inputs.build-mode == 'Release' }}; then
+          if ${{ env.BUILD_MODE == 'Release' }}; then
             echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_OUTPUT
             echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_OUTPUT
           else
@@ -79,7 +93,7 @@ jobs:
           lfs: true
       - name: Set FTP json key
         run: |
-          echo "FTP_JSON_KEY=${{ inputs.build-mode == 'Release' && 'RELEASE_FTP_JSON' || 'TEST_FTP_JSON' }}" >> $GITHUB_ENV
+          echo "FTP_JSON_KEY=${{ env.BUILD_MODE == 'Release' && 'RELEASE_FTP_JSON' || 'TEST_FTP_JSON' }}" >> $GITHUB_ENV
       - name: Create FTP config
         id: create-ftp-config
         uses: jsdaniell/create-json@v1.2.3
@@ -151,5 +165,5 @@ jobs:
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.targetPlatform }}_${{ inputs.build-mode }}
+          name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
           path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*

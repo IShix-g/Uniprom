@@ -8,3 +8,10 @@ jobs:
     uses: IShix-g/Uniprom/.github/workflows/build.yml@main
     with:
       build-mode: Release
+    secrets:
+      RELEASE_FTP_JSON: ${{ secrets.RELEASE_FTP_JSON }}
+      TEST_FTP_JSON: ${{ secrets.TEST_FTP_JSON }}
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_EMAIL }}
+      GOOGLE_JSON_KEY: ${{ secrets.GOOGLE_JSON_KEY }}
