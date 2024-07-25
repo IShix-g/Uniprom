@@ -1,0 +1,10 @@
+name: Uniprom Release Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-workflow-passing-data:
+    uses: IShix-g/Uniprom/.github/workflows/build.yml@main
+    with:
+      build-mode: Release

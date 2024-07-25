@@ -1,11 +1,11 @@
 name: Uniprom Assets Build And Deploy
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      build_mode:
-        description: "Build mode : Test / Release"
+      build-mode:
         required: true
+        type: string
 
 env:
   BUILD_MODE: ${{ github.event.inputs.build_mode }}
@@ -23,8 +23,8 @@ jobs:
     steps:
       - name: Check Value
         run: |
-          if ${{ env.BUILD_MODE != 'Test' && env.BUILD_MODE != 'Release' }}; then
-            echo ::error:: "Specify Test or Release. value: ${{ env.BUILD_MODE }}"
+          if ${{ inputs.build-mode != 'Test' && inputs.build-mode != 'Release' }}; then
+            echo ::error:: "Specify Test or Release. value: ${{ inputs.build-mode }}"
             exit 1
           else
             echo "Valid input value"
@@ -42,7 +42,7 @@ jobs:
       - name: Set Value
         id: set-value
         run: |
-          if ${{ env.BUILD_MODE == 'Release' }}; then
+          if ${{ inputs.build-mode == 'Release' }}; then
             echo "LOAD_DIR=${{ env.LOAD_RELEASE_DIR }}" >> $GITHUB_OUTPUT
             echo "BUILD_METHOD=${{ env.BUILD_RELEASE_METHOD }}" >> $GITHUB_OUTPUT
           else
@@ -79,7 +79,7 @@ jobs:
           lfs: true
       - name: Set FTP json key
         run: |
-          echo "FTP_JSON_KEY=${{ env.BUILD_MODE == 'Release' && 'RELEASE_FTP_JSON' || 'TEST_FTP_JSON' }}" >> $GITHUB_ENV
+          echo "FTP_JSON_KEY=${{ inputs.build-mode == 'Release' && 'RELEASE_FTP_JSON' || 'TEST_FTP_JSON' }}" >> $GITHUB_ENV
       - name: Create FTP config
         id: create-ftp-config
         uses: jsdaniell/create-json@v1.2.3
@@ -151,5 +151,5 @@ jobs:
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.targetPlatform }}_${{ env.BUILD_MODE }}
+          name: ${{ matrix.targetPlatform }}_${{ inputs.build-mode }}
           path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
