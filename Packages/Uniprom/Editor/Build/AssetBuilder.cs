@@ -130,10 +130,10 @@ namespace Uniprom.Editor
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
                                     UnipromDebug.Log("Completion of release build");
-                                    UnipromDebug.LogWarning(GetUnipromSettingsString(exporter));
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
+                                        UnipromDebug.Log(GetUnipromSettingsString(exporter));
                                         EditorApplication.Exit(0);
                                     }
                                 }
@@ -151,10 +151,10 @@ namespace Uniprom.Editor
                                 if (task.Status == TaskStatus.RanToCompletion)
                                 {
                                     UnipromDebug.Log("Completion of test build");
-                                    UnipromDebug.LogWarning(GetUnipromSettingsString(exporter));
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
+                                        UnipromDebug.Log(GetUnipromSettingsString(exporter));
                                         EditorApplication.Exit(0);
                                     }
                                 }
@@ -177,21 +177,28 @@ namespace Uniprom.Editor
         {
             var sb = new StringBuilder();
             
+            sb.Append(
+                $"{s_eol}" +
+                $"###########################{s_eol}" +
+                $"#    Uniprom settings     #{s_eol}" +
+                $"###########################{s_eol}" +
+                $"{s_eol}"
+            );
             sb.Append("Build type: ");
             sb.Append(exporter.Settings.BuildType);
-            sb.Append(" | ");
+            sb.Append(s_eol);
             sb.Append("TestRemoteLoadUrl: ");
             sb.Append(exporter.TestRemoteLoadUrl);
-            sb.Append(" | ");
+            sb.Append(s_eol);
             sb.Append("ReleaseRemoteLoadUrl: ");
             sb.Append(exporter.ReleaseRemoteLoadUrl);
-            sb.Append(" | ");
+            sb.Append(s_eol);
             sb.Append("OverridePlayerVersion: ");
             sb.Append(exporter.OverridePlayerVersion);
-            sb.Append(" | ");
+            sb.Append(s_eol);
             sb.Append("Languages: ");
             sb.Append(exporter.CuvImporter.Languages.Select(x => x.ToString()).Aggregate((a, b) => a + ", " + b));
-            sb.Append(" | ");
+            sb.Append(s_eol);
             sb.Append("Client: ");
             {
                 var type = exporter.CuvImporter.Client.GetType();
@@ -200,7 +207,7 @@ namespace Uniprom.Editor
                     : type.Name;
                 sb.Append(name);
             }
-            sb.Append(" | ");
+            sb.Append(s_eol);
             sb.Append("Output: ");
             {
                 var type = exporter.CuvImporter.Output.GetType();
@@ -209,6 +216,8 @@ namespace Uniprom.Editor
                     : type.Name;
                 sb.Append(name);
             }
+            sb.Append(s_eol);
+            sb.Append(s_eol);
             
             return sb.ToString();
         }
