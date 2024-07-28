@@ -166,6 +166,8 @@ jobs:
           allowDirtyBuild: true
           manualExit: true
           customParameters: -ftpJsonFilePath ftp_config.json -buildInfoPath build_info.text -googleJsonKeyPath ${{ needs.set-value.outputs.GOOGLE_JSON_KEY_PATH }}
+          volumes:
+            - ${{ github.workspace }}:/github/workspace
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
@@ -175,7 +177,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          annotation=$(jq -c . /github/workspace/build_info.text)
+          annotation=$(jq -c . build_info.text)
           
           check_run_id=$(curl --silent -X GET \
                   -H 'accept: application/vnd.github.v3+json' \
