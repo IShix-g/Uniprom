@@ -115,7 +115,7 @@ namespace Uniprom.Addressable.Editor
             var catalogPath = UnipromSettings.GetCatalogPath(rootPath, catalogVersion);
             if (!File.Exists(catalogPath))
             {
-                throw new OperationException("catalog.json does not exist. path:" + catalogPath + "assetsCatalogVersion:" + catalogVersion + " remoteLoadUrl:" + remoteLoadUrl + " remoteBuildPath:" + remoteBuildPath);
+                throw new OperationException("catalog.json does not exist. path:" + catalogPath + " assetsCatalogVersion:" + catalogVersion + " remoteLoadUrl:" + remoteLoadUrl + " remoteBuildPath:" + remoteBuildPath);
             }
             var catalog = GetCatalogDataByPath(catalogPath);
             if (catalog.InternalIds.Length == 0)

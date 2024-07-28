@@ -16,64 +16,64 @@ MonoBehaviour:
   _models:
   - Key: com.ishix.catDetective
     AppName: "\u8B0E\u306E\u3072\u3052"
-    AppDescription: "\u732B\u63A2\u5075\u30AF\u30ED\u30CB\u30AF\u30EB\u304C\u4E3B\u4EBA\u516C\u306E\u8B0E\u89E3\u304D\u30A2\u30C9\u30D9\u30F3\u30C1\u30E3\u30FC\u30B2\u30FC\u30E0"
+    AppDescription: "\u732B\u63A2\u5075\u30AF\u30ED\u30CB\u30AF\u30EB\u304C\u4E3B\u4EBA\u516C\u306E\u8B0E\u89E3\u304D\u30A2\u30C9\u30D9\u30F3\u30C1\u30E3\u30FC\u30B2\u30FC\u30E0\u3002"
     IOSUrl: https://www.apple.com/app-store/
     AndroidUrl: https://play.google.com/store/apps?hl=en
     Interstitial:
-      m_AssetGUID: 49f46898546684f99b3f2f601fb2f601
+      m_AssetGUID: f51351bf0e74e4b78b480f1a9f7e48c4
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Icon:
-      m_AssetGUID: c373f9d8963c8477f913bf7dd57074ea
+      m_AssetGUID: 9046926376d0648faa429021d2de7bb7
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     OptionText: 
   - Key: com.ishix.giantCat
     AppName: Giant Whisker World
-    AppDescription: "\u5DE8\u5927\u732B\u306E\u8996\u70B9\u3067\u4E16\u754C\u3092\u63A2\u7D22\u3002\u3042\u306A\u305F\u306F\u4F55\u3092\u898B\u3064\u3051\u308B\u304B"
+    AppDescription: "\u5DE8\u5927\u732B\u306E\u8996\u70B9\u3067\u4E16\u754C\u3092\u63A2\u7D22\u3002\u3042\u306A\u305F\u306F\u4F55\u3092\u898B\u3064\u3051\u308B\u304B\u3002"
     IOSUrl: https://www.apple.com/app-store/
     AndroidUrl: https://play.google.com/store/apps?hl=en
     Interstitial:
-      m_AssetGUID: 74911dc083001480194a18bbf4ef322e
+      m_AssetGUID: 0df4220eaa27f4bbb963d014158042e9
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Icon:
-      m_AssetGUID: 6bbfd822378a7435093b2c25dac033ca
+      m_AssetGUID: 2e4c6d6aec21b4661a83cdb3f84ac7b8
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     OptionText: 
   - Key: com.ishix.meteor
     AppName: "\u30E1\u30C6\u30AA\u30FB\u30CB\u30E3\u30FC"
-    AppDescription: "\u52A0\u901F\u3057\u306A\u304C\u3089\u5B87\u5B99\u3092\u63A2\u7D22\u3057\u3001\u672A\u77E5\u306E\u60D1\u661F\u306B\u751F\u547D\u3092\u3082\u305F\u3089\u305D\u3046"
+    AppDescription: "\u52A0\u901F\u3057\u306A\u304C\u3089\u5B87\u5B99\u3092\u63A2\u7D22\u3057\u3001\u672A\u77E5\u306E\u60D1\u661F\u306B\u751F\u547D\u3092\u3082\u305F\u3089\u305D\u3046\u3002"
     IOSUrl: https://www.apple.com/app-store/
     AndroidUrl: https://play.google.com/store/apps?hl=en
     Interstitial:
-      m_AssetGUID: e2e1f0a92fc58409491cf744d5c364f1
+      m_AssetGUID: 3595233c91aab486cbf7e0b4d75196c1
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Icon:
-      m_AssetGUID: b6a7dfefba66b474ab69a6813b5a96dc
+      m_AssetGUID: c7c3cfd0b97664d68ac5af6dca1976a4
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     OptionText: 
   - Key: com.ishix.pirateCat
     AppName: "\u732B\u6D77\u8CCA"
-    AppDescription: "\u6D77\u8CCA\u732B\u3068\u3057\u3066\u3001\u8217\u88C5\u306E\u6CE2\u3067\u30D5\u30A1\u30F3\u30BF\u30B8\u30FC\u3068\u30A2\u30C9\u30D9\u30F3\u30C1\u30E3\u30FC\u306B\u306A\u308A\u5207\u308D\u3046"
+    AppDescription: "\u6D77\u8CCA\u732B\u3068\u3057\u3066\u3001\u8217\u88C5\u306E\u6CE2\u3067\u30D5\u30A1\u30F3\u30BF\u30B8\u30FC\u3068\u30A2\u30C9\u30D9\u30F3\u30C1\u30E3\u30FC\u306B\u306A\u308A\u5207\u308D\u3046\u3002"
     IOSUrl: https://www.apple.com/app-store/
     AndroidUrl: https://play.google.com/store/apps?hl=en
     Interstitial:
-      m_AssetGUID: 6a1660510351a46d6ae65b718c2742d1
+      m_AssetGUID: dd36611c3be9d4bbc8fa3742f1eb5ed0
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Icon:
-      m_AssetGUID: 3471780a634d342ab97977545f8f1321
+      m_AssetGUID: 8452c64f128d249bdb9e5ce5cbfb9c8e
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
@@ -82,19 +82,19 @@ MonoBehaviour:
 
 '
     AppName: "\u732B\u5929\u4F53\u7269\u7406\u5B66\u30AF\u30ED\u30CB\u30AF\u30EB"
-    AppDescription: "\u661F\u3005\u3092\u7814\u7A76\u3059\u308B\u732B\u6559\u6388\u3068\u3057\u3066\u3001\u5B87\u5B99\u306E\u79D8\u5BC6\u3092\u89E3\u304D\u660E\u304B\u3057\u3001\u65B0\u305F\u306A\u308B\u77E5\u8B58\u3092\u5F97\u3088\u3046"
+    AppDescription: "\u661F\u3005\u3092\u7814\u7A76\u3059\u308B\u732B\u6559\u6388\u3068\u3057\u3066\u3001\u5B87\u5B99\u306E\u79D8\u5BC6\u3092\u89E3\u304D\u660E\u304B\u3057\u3001\u65B0\u305F\u306A\u308B\u77E5\u8B58\u3092\u5F97\u3088\u3046\u3002"
     IOSUrl: https://www.apple.com/app-store/
     AndroidUrl: https://play.google.com/store/apps?hl=en
     Interstitial:
-      m_AssetGUID: 4a6c23045a55345738ac01c63a3c96f1
+      m_AssetGUID: 66b7049a68bff4417b81c79f2873f934
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     Icon:
-      m_AssetGUID: 3bddb6ed2907e4472b09dfb312ea7c97
+      m_AssetGUID: c98a91ee9501e47a793b19dc5a51631c
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     OptionText: 
   SheetID: 1djptZlGNu4i-t_ZwXxa4ClEgpNk1gC-BnAIbd6vjwk4
-  ModifiedDate: 7/24/2024 3:14:53 PM +00:00
+  ModifiedDate: 7/28/2024 10:08:21 AM +00:00
