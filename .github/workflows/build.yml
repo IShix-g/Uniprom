@@ -175,7 +175,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          annotation=$(jq -c . build_info.text)
+          annotation=$(cat build_info.text | jq -R .)
+          payload=$(jq -n --arg message "$annotation" --arg path "build_info.text" --arg start_line 1 --arg end_line 1 '{"path":$path, "start_line": $start_line, "end_line": $end_line, "annotation_level": "notice", "message": $message}')
           
           check_run_id=$(curl --silent -X GET \
                   -H 'accept: application/vnd.github.v3+json' \
@@ -186,5 +187,5 @@ jobs:
               -H 'accept: application/vnd.github.v3+json' \
               -H "Authorization: Bearer ${GITHUB_TOKEN}" \
               -H 'Content-Type: application/json' \
-              -d "${annotation}" \
+              -d "$payload" \
               "https://api.github.com/repos/${GITHUB_REPOSITORY}/check-runs/${check_run_id}/annotations"
