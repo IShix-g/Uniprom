@@ -181,7 +181,7 @@ jobs:
           check_run_id=$(curl --silent -X GET \
                   -H 'accept: application/vnd.github.v3+json' \
                   -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                  "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/check-runs" | jq '.check_runs | .[0] | .id')
+                  "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${inputs.github_sha}/check-runs" | jq '.check_runs | .[0] | .id')
           
           curl --silent -X POST \
               -H 'accept: application/vnd.github.v3+json' \
