@@ -17,7 +17,6 @@ namespace Uniprom.Editor
     {
         public const string FtpJsonStringName = "ftpJsonFilePath";
         public const string GoogleJsonKeyPath = "googleJsonKeyPath";
-        public const string BuildInfoPath = "buildInfoPath";
         
 #if UNIPROM_SOURCE_PROJECT
         [MenuItem("Window/Uniprom/Build test of Github Action")]
@@ -132,17 +131,7 @@ namespace Uniprom.Editor
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
-                                        if (options.TryGetValue(BuildInfoPath, out var buildInfoPath)
-                                            && !string.IsNullOrEmpty(buildInfoPath))
-                                        {
-                                            var directoryName = Path.GetDirectoryName(Application.dataPath);
-                                            var path = Path.Combine(directoryName, buildInfoPath);
-                                            WriteUnipromSettings(exporter, path);
-                                        }
-                                        else
-                                        {
-                                            UnipromDebug.LogWarning("BuildInfoPath does not exist.");
-                                        }
+                                        WriteUnipromSettings(exporter);
                                         EditorApplication.Exit(0);
                                     }
                                 }
@@ -163,17 +152,7 @@ namespace Uniprom.Editor
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
-                                        if (options.TryGetValue(BuildInfoPath, out var buildInfoPath)
-                                            && !string.IsNullOrEmpty(buildInfoPath))
-                                        {
-                                            var directoryName = Path.GetDirectoryName(Application.dataPath);
-                                            var path = Path.Combine(directoryName, buildInfoPath);
-                                            WriteUnipromSettings(exporter, path);
-                                        }
-                                        else
-                                        {
-                                            UnipromDebug.LogWarning("BuildInfoPath does not exist.");
-                                        }
+                                        WriteUnipromSettings(exporter);
                                         EditorApplication.Exit(0);
                                     }
                                 }
@@ -192,11 +171,9 @@ namespace Uniprom.Editor
             });
         }
 
-        static void WriteUnipromSettings(UnipromSettingsExporter exporter, string path)
+        static void WriteUnipromSettings(UnipromSettingsExporter exporter)
         {
             var content = GetUnipromSettingsString(exporter);
-            File.WriteAllText(path, content);
-            UnipromDebug.Log("UnipromSettings written to a text file path: " + path);
             UnipromDebug.Log(content);
         }
 

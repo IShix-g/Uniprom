@@ -165,11 +165,9 @@ jobs:
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
           allowDirtyBuild: true
           manualExit: true
-          customParameters: -ftpJsonFilePath ftp_config.json -buildInfoPath build_info.text -googleJsonKeyPath ${{ needs.set-value.outputs.GOOGLE_JSON_KEY_PATH }}
+          customParameters: -ftpJsonFilePath ftp_config.json -googleJsonKeyPath ${{ needs.set-value.outputs.GOOGLE_JSON_KEY_PATH }}
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.targetPlatform }}_${{ inputs.build-mode }}
-          path: |
-            ${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
-            build_info.text
+          path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
