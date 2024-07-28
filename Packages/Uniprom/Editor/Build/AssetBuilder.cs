@@ -196,7 +196,7 @@ namespace Uniprom.Editor
         {
             var content = GetUnipromSettingsString(exporter);
             File.WriteAllText(path, content);
-            UnipromDebug.Log("UnipromSettings written to a text file");
+            UnipromDebug.Log("UnipromSettings written to a text file path: " + path);
             UnipromDebug.Log(content);
         }
 
