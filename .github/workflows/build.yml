@@ -12,9 +12,6 @@ on:
       build-mode:
         required: true
         type: string
-      github_sha:
-        required: true
-        type: string
     secrets:
       RELEASE_FTP_JSON:
         required: true
@@ -173,22 +170,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.targetPlatform }}_${{ inputs.build-mode }}
-          path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
-      - name: Annotate with build info
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          annotation=$(cat build_info.text | jq -R .)
-          payload=$(jq -n --arg message "$annotation" --arg path "build_info.text" --arg start_line 1 --arg end_line 1 '{"path":$path, "start_line": $start_line, "end_line": $end_line, "annotation_level": "notice", "message": $message}')
-          
-          check_run_id=$(curl --silent -X GET \
-                  -H 'accept: application/vnd.github.v3+json' \
-                  -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                  "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${inputs.github_sha}/check-runs" | jq '.check_runs | .[0] | .id')
-          
-          curl --silent -X POST \
-              -H 'accept: application/vnd.github.v3+json' \
-              -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-              -H 'Content-Type: application/json' \
-              -d "$payload" \
-              "https://api.github.com/repos/${GITHUB_REPOSITORY}/check-runs/${check_run_id}/annotations"
+          path: |
+            ${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
+            build_info.text
