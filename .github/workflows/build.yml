@@ -12,6 +12,9 @@ on:
       build-mode:
         required: true
         type: string
+      github_sha:
+        required: true
+        type: string
     secrets:
       RELEASE_FTP_JSON:
         required: true
