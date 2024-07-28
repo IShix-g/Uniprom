@@ -17,9 +17,8 @@ namespace Uniprom.Editor
     {
         public const string FtpJsonStringName = "ftpJsonFilePath";
         public const string GoogleJsonKeyPath = "googleJsonKeyPath";
+        public const string BuildInfoPath = "buildInfoPath";
         
-        static readonly string s_eol = Environment.NewLine;
-
 #if UNIPROM_SOURCE_PROJECT
         [MenuItem("Window/Uniprom/Build test of Github Action")]
         static void StartGithubBuildTest()
@@ -133,7 +132,17 @@ namespace Uniprom.Editor
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
-                                        UnipromDebug.Log(GetUnipromSettingsString(exporter));
+                                        if (options.TryGetValue(BuildInfoPath, out var buildInfoPath)
+                                            && !string.IsNullOrEmpty(buildInfoPath))
+                                        {
+                                            var directoryName = Path.GetDirectoryName(Application.dataPath);
+                                            var path = Path.Combine(directoryName, buildInfoPath);
+                                            WriteUnipromSettings(exporter, path);
+                                        }
+                                        else
+                                        {
+                                            UnipromDebug.LogWarning("BuildInfoPath does not exist.");
+                                        }
                                         EditorApplication.Exit(0);
                                     }
                                 }
@@ -154,7 +163,17 @@ namespace Uniprom.Editor
                                     
                                     if (UnipromDebug.IsBatchMode)
                                     {
-                                        UnipromDebug.Log(GetUnipromSettingsString(exporter));
+                                        if (options.TryGetValue(BuildInfoPath, out var buildInfoPath)
+                                            && !string.IsNullOrEmpty(buildInfoPath))
+                                        {
+                                            var directoryName = Path.GetDirectoryName(Application.dataPath);
+                                            var path = Path.Combine(directoryName, buildInfoPath);
+                                            WriteUnipromSettings(exporter, path);
+                                        }
+                                        else
+                                        {
+                                            UnipromDebug.LogWarning("BuildInfoPath does not exist.");
+                                        }
                                         EditorApplication.Exit(0);
                                     }
                                 }
@@ -173,32 +192,42 @@ namespace Uniprom.Editor
             });
         }
 
+        static void WriteUnipromSettings(UnipromSettingsExporter exporter, string path)
+        {
+            var content = GetUnipromSettingsString(exporter);
+            File.WriteAllText(path, content);
+            UnipromDebug.Log("UnipromSettings written to a text file");
+            UnipromDebug.Log(content);
+        }
+
         static string GetUnipromSettingsString(UnipromSettingsExporter exporter)
         {
             var sb = new StringBuilder();
             
-            sb.Append(
-                $"{s_eol}" +
-                $"###########################{s_eol}" +
-                $"#    Uniprom settings     #{s_eol}" +
-                $"###########################{s_eol}" +
-                $"{s_eol}"
-            );
+            sb.Append("\n");
+            sb.Append("###########################\n");
+            sb.Append("#    Uniprom settings     #\n");
+            sb.Append("###########################\n\n");
             sb.Append("Build type: ");
             sb.Append(exporter.Settings.BuildType);
-            sb.Append(s_eol);
-            sb.Append("TestRemoteLoadUrl: ");
-            sb.Append(exporter.TestRemoteLoadUrl);
-            sb.Append(s_eol);
-            sb.Append("ReleaseRemoteLoadUrl: ");
-            sb.Append(exporter.ReleaseRemoteLoadUrl);
-            sb.Append(s_eol);
+            sb.Append("\n");
+            if (exporter.Settings.BuildType == UnipromBuildType.Test)
+            {
+                sb.Append("RemoteLoadUrl: ");
+                sb.Append(exporter.TestRemoteLoadUrl);
+            }
+            else
+            {
+                sb.Append("RemoteLoadUrl: ");
+                sb.Append(exporter.ReleaseRemoteLoadUrl);
+            }
+            sb.Append("\n");
             sb.Append("OverridePlayerVersion: ");
             sb.Append(exporter.OverridePlayerVersion);
-            sb.Append(s_eol);
+            sb.Append("\n");
             sb.Append("Languages: ");
             sb.Append(exporter.CuvImporter.Languages.Select(x => x.ToString()).Aggregate((a, b) => a + ", " + b));
-            sb.Append(s_eol);
+            sb.Append("\n");
             sb.Append("Client: ");
             {
                 var type = exporter.CuvImporter.Client.GetType();
@@ -207,7 +236,7 @@ namespace Uniprom.Editor
                     : type.Name;
                 sb.Append(name);
             }
-            sb.Append(s_eol);
+            sb.Append("\n");
             sb.Append("Output: ");
             {
                 var type = exporter.CuvImporter.Output.GetType();
@@ -216,8 +245,8 @@ namespace Uniprom.Editor
                     : type.Name;
                 sb.Append(name);
             }
-            sb.Append(s_eol);
-            sb.Append(s_eol);
+            sb.Append("\n");
+            sb.Append("\n");
             
             return sb.ToString();
         }

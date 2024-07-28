@@ -165,9 +165,26 @@ jobs:
           buildMethod: ${{ needs.set-value.outputs.BUILD_METHOD }}
           allowDirtyBuild: true
           manualExit: true
-          customParameters: -ftpJsonFilePath ftp_config.json -googleJsonKeyPath ${{ needs.set-value.outputs.GOOGLE_JSON_KEY_PATH }}
+          customParameters: -ftpJsonFilePath ftp_config.json -buildInfoPath build_info.text -googleJsonKeyPath ${{ needs.set-value.outputs.GOOGLE_JSON_KEY_PATH }}
       - name: Upload artifacts - ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.targetPlatform }}_${{ inputs.build-mode }}
           path: ./${{ needs.set-value.outputs.LOAD_DIR }}/${{ matrix.targetPlatform }}/*
+      - name: Annotate with build info
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          annotation=$(jq -c . /github/workspace/build_info.text)
+          
+          check_run_id=$(curl --silent -X GET \
+                  -H 'accept: application/vnd.github.v3+json' \
+                  -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+                  "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/check-runs" | jq '.check_runs | .[0] | .id')
+          
+          curl --silent -X POST \
+              -H 'accept: application/vnd.github.v3+json' \
+              -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H 'Content-Type: application/json' \
+              -d "${annotation}" \
+              "https://api.github.com/repos/${GITHUB_REPOSITORY}/check-runs/${check_run_id}/annotations"
