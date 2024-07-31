@@ -8,6 +8,9 @@ using UnityEngine.AddressableAssets;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine.Networking;
+using Uniprom.Addressable.Editor;
+using UnityEditor.AddressableAssets.Build.DataBuilders;
 #endif
 
 namespace Uniprom
@@ -27,7 +30,7 @@ namespace Uniprom
         public UnipromBuildType BuildType => _buildType;
         public IUnipromReference Reference => _reference ??= _scriptableObject as IUnipromReference;
         public string RemoteCatalogUrl => GetCatalogPath(_remoteLoadUrl, _assetsCatalogVersion);
-        
+
         IUnipromReference _reference;
         
         internal void Set(
@@ -45,43 +48,79 @@ namespace Uniprom
             AssetDatabase.SaveAssetIfDirty(this);
 #endif
         }
-
+        
         public IEnumerator Initialize()
         {
-#if !UNIPROM_SOURCE_PROJECT
-            var loadCatalogHandle = Addressables.LoadContentCatalogAsync(RemoteCatalogUrl, true);
-            yield return loadCatalogHandle;
+#if UNIPROM_SOURCE_PROJECT && UNITY_EDITOR
+            AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
+            
+            var request = UnityWebRequest.Head(RemoteCatalogUrl);
+            yield return request.SendWebRequest();
+
+            var hasCatalog = request.result == UnityWebRequest.Result.Success
+                             && request.responseCode != 404;
+            Debug.Log(hasCatalog ? "Loading RemoteCatalog" : "Using Locale's RemoteCatalog");
+
+            if(hasCatalog)
 #endif
-            
-            var downloadSizeHandle = Addressables.GetDownloadSizeAsync(Label);
+            {
+                var loadCatalogHandle = Addressables.LoadContentCatalogAsync(RemoteCatalogUrl, true);
+                yield return loadCatalogHandle;
+            }
+
+            var label = Label + "_" + Reference.FindLanguage(Application.systemLanguage);
+            var downloadSizeHandle = Addressables.GetDownloadSizeAsync(label);
             yield return downloadSizeHandle;
-            
+
+#if DEBUG
+            Debug.Log("Addressables assets download size: " +  ((downloadSizeHandle.Result / 1024f) / 1024f) + "MB | Label: " + label);
+#endif
+
             if (downloadSizeHandle.Result > 0)
             {
-                var downloadDependencies = Addressables.DownloadDependenciesAsync(Label, true);
+                var downloadDependencies = Addressables.DownloadDependenciesAsync(label, true);
                 yield return downloadDependencies;
             }
-            
+
             yield return Reference.Initialize();
         }
         
         public async Task InitializeAsync()
         {
-#if !UNIPROM_SOURCE_PROJECT
-            var loadCatalogHandle = Addressables.LoadContentCatalogAsync(RemoteCatalogUrl, true);
-            await loadCatalogHandle.Task;
-#endif
+#if UNIPROM_SOURCE_PROJECT && UNITY_EDITOR
+            AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
+
+            var request = UnityWebRequest.Head(RemoteCatalogUrl);
+            await Task.Yield();
+            request.SendWebRequest();
+
+            while (!request.isDone)
+            {
+                await Task.Delay(100);
+            }
             
-            var downloadSizeHandle = Addressables.GetDownloadSizeAsync(Label);
+            var hasCatalog = request.result == UnityWebRequest.Result.Success
+                             && request.responseCode != 404;
+            Debug.Log(hasCatalog ? "Loading RemoteCatalog" : "Using Locale's RemoteCatalog");
+
+            if(hasCatalog)
+#endif
+            {
+                var loadCatalogHandle = Addressables.LoadContentCatalogAsync(RemoteCatalogUrl, true);
+                await loadCatalogHandle.Task;
+            }
+
+            var label = Label + "_" + Reference.FindLanguage(Application.systemLanguage);
+            var downloadSizeHandle = Addressables.GetDownloadSizeAsync(label);
             await downloadSizeHandle.Task;
 
 #if DEBUG
-            Debug.Log("Addressables assets download size:" + downloadSizeHandle.Result);
+            Debug.Log("Addressables assets download size: " +  ((downloadSizeHandle.Result / 1024f) / 1024f) + "MB | Label: " + label);
 #endif
             
             if (downloadSizeHandle.Result > 0)
             {
-                var downloadDependencies = Addressables.DownloadDependenciesAsync(Label, true);
+                var downloadDependencies = Addressables.DownloadDependenciesAsync(label, true);
                 await downloadDependencies.Task;
             }
             

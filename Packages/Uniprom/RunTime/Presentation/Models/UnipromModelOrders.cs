@@ -24,7 +24,7 @@ namespace Uniprom
 
         public static UnipromModelOrders Default
             => new (UnipromModelOrderType.Random,
-                UnipromModelOrderType.InSequence,
+                UnipromModelOrderType.InReverse,
                 UnipromModelOrderType.Random,
                 UnipromModelOrderType.Random);
         

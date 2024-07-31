@@ -15,7 +15,7 @@ namespace Uniprom
         
         public override UnipromIconModel[] CreateModels()
         {
-            Manager.GetModelList(Manager.ModelOrders.Wall, 5, _reusableList);
+            Manager.GetModelList(Manager.ModelOrders.Wall, 20, _reusableList);
             var models = new UnipromIconModel[_reusableList.Count];
             for (var i = 0; i < _reusableList.Count; i++)
             {

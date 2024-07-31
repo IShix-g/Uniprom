@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: 1056a016df1d3492f8664aa13fb140c9
     m_Address: Assets/Uniprom/UnipromModelsCustomGoogleSheetCuvModelList_English.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UnipromItems_English
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9f5b00c0dba834f46b6d95e541f8c884, type: 2}
   m_SchemaSet:

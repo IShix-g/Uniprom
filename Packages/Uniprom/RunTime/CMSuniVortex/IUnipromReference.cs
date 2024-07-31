@@ -11,7 +11,7 @@ namespace Uniprom
         int ContentsLength { get; }
         bool IsInitialized { get; }
         bool IsLoading { get; }
-        SystemLanguage Language { get; }
+        SystemLanguage FindLanguage(SystemLanguage language);
         IEnumerator Initialize(Action onLoaded = default);
         IEnumerator Initialize(SystemLanguage language, Action onLoaded = default);
         Task InitializeAsync();

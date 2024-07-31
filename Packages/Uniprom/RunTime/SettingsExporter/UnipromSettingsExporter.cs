@@ -49,9 +49,10 @@ namespace Uniprom
                 BuildCompressionMode = BundledAssetGroupSchema.BundleCompressionMode.LZ4,
                 UpdateRestriction = AddressableCuvSettings.UpdateRestrictionType.CanChangePostRelease,
                 RetryCount = 2,
-                Labels = new []{ UnipromSettings.Label }
+                ListLabels = new []{ UnipromSettings.Label + "_" + AddressableCuvSettings.LanguagePlaceholder },
+                ContentsLabels = new []{ UnipromSettings.Label + "_" + AddressableCuvSettings.LanguagePlaceholder }
             };
-        
+
         [SerializeField, Tooltip("[Test] Specify the Url of the server on which to load Addressable assets.")]
         string _testRemoteLoadUrl;
         [SerializeField, Tooltip("[Production] Specify the Url of the server on which to load Addressable assets.")]
@@ -292,11 +293,8 @@ namespace Uniprom
             SendToTestServer(asset.text)
                 .SafeContinueWith(task =>
                 {
-                    if (task.Status == TaskStatus.RanToCompletion)
-                    {
-                        AddressableHelper.ChangePlayMode<BuildScriptPackedPlayMode>();
-                    }
-                    else if(task.Exception != default)
+                    if(task.Status != TaskStatus.RanToCompletion
+                            && task.Exception != default)
                     {
                         UnipromDebug.LogError("SendToTestServer error: " + task.Exception.ToString());
                     }
@@ -342,11 +340,8 @@ namespace Uniprom
             SendToReleaseServer(asset.text)
                 .SafeContinueWith(task =>
             {
-                if (task.Status == TaskStatus.RanToCompletion)
-                {
-                    AddressableHelper.ChangePlayMode<BuildScriptPackedPlayMode>();
-                }
-                else if(task.Exception != default)
+                if(task.Status != TaskStatus.RanToCompletion
+                        && task.Exception != default)
                 {
                     UnipromDebug.LogError("SendToReleaseServer error: " + task.Exception.ToString());
                 }

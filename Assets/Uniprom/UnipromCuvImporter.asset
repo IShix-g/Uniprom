@@ -15,16 +15,16 @@ MonoBehaviour:
   _buildPath: Assets/Uniprom/
   _languages: 0a00000016000000
   _client:
-    rid: 3445371893955690522
+    rid: 3445372058760904708
   _output:
-    rid: 3445371893955690523
+    rid: 3445372058760904710
   _modelListGuilds:
   - 1056a016df1d3492f8664aa13fb140c9
   - 7d6c9f79d393d4c5fbb0a9b9d00efa66
   references:
     version: 2
     RefIds:
-    - rid: 3445371893955690522
+    - rid: 3445372058760904708
       type: {class: UnipromModelsCustomGoogleSheetCuvAddressableClient, ns: Uniprom.GoogleSheet, asm: UniProm}
       data:
         _sheetUrl: https://docs.google.com/spreadsheets/d/1djptZlGNu4i-t_ZwXxa4ClEgpNk1gC-BnAIbd6vjwk4/edit?gid=0#gid=0
@@ -32,20 +32,24 @@ MonoBehaviour:
         _addressableSettings:
           AddressableType: 1
           CustomGroupName: 
-          Labels:
-          - UnipromItems
+          ListLabels:
+          - UnipromItems_[language]
+          ContentsLabels:
+          - UnipromItems_[language]
           BuildCompressionMode: 1
           BundlePackingMode: 1
           UpdateRestriction: 0
           RetryCount: 2
-    - rid: 3445371893955690523
+    - rid: 3445372058760904710
       type: {class: UnipromModelsCustomGoogleSheetCuvAddressableOutput, ns: Uniprom.GoogleSheet, asm: UniProm}
       data:
         _addressableSettings:
           AddressableType: 1
           CustomGroupName: 
-          Labels:
-          - UnipromItems
+          ListLabels:
+          - UnipromItems_[language]
+          ContentsLabels:
+          - UnipromItems_[language]
           BuildCompressionMode: 1
           BundlePackingMode: 1
           UpdateRestriction: 0
