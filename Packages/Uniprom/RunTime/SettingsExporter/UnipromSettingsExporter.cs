@@ -23,7 +23,8 @@ namespace Uniprom
 {
     public sealed class UnipromSettingsExporter : ScriptableObject
     {
-        public const string ExporterPath = "Assets/Uniprom/UnipromSettingsExporter.asset";
+        public const string RootPath = "Assets/Uniprom/";
+        public const string ExporterPath = RootPath + "UnipromSettingsExporter.asset";
         public const string ImporterName = "UnipromCuvImporter.asset";
         public const string SourceProjectSymbol = "UNIPROM_SOURCE_PROJECT";
         public const string ReleaseProfileName = "Uniprom-Release";
@@ -73,7 +74,7 @@ namespace Uniprom
         public string TestFtpSettingPath => _testFtpSettingPath;
         public UnipromSettings Settings => _settings;
         public bool IsSendingFiles { get; private set; }
-
+        
         public static UnipromSettingsExporter GetInstance()
             => AssetDatabase.LoadAssetAtPath<UnipromSettingsExporter>(ExporterPath);
 
@@ -86,13 +87,14 @@ namespace Uniprom
 
         public void CreateImporterIfNeeded()
         {
-            if (_cuvImporter == default)
+            if (_cuvImporter != default)
             {
-                var path = GetImporterPath();
-                if (!string.IsNullOrEmpty(path))
-                {
-                    _cuvImporter = AssetDatabaseHelper.CreateOrLoadAsset<UnipromCuvImporter>(path);
-                }
+                return;
+            }
+            var path = GetImporterPath();
+            if (!string.IsNullOrEmpty(path))
+            {
+                _cuvImporter = AssetDatabaseHelper.CreateOrLoadAsset<UnipromCuvImporter>(path);
             }
         }
 
@@ -212,7 +214,7 @@ namespace Uniprom
         
         public static void CopyToInterstitialPrefabIfNeeded()
         {
-            var path = GetInterstitialPrefabPath();
+            var path = GetDefaultInterstitialPrefabPath();
             if (AssetDatabaseHelper.IsAttachedToPrefab<IUnipromInterstitialView>(path))
             {
                 return;
@@ -229,7 +231,7 @@ namespace Uniprom
         
         public static void CopyToWallPrefabIfNeeded()
         {
-            var path = GetWallPrefabPath();
+            var path = GetDefaultWallPrefabPath();
             if (AssetDatabaseHelper.IsAttachedToPrefab<IUnipromWallView>(path))
             {
                 return;
@@ -246,7 +248,7 @@ namespace Uniprom
         
         static void CopyToSampleSceneIfNeeded()
         {
-            var path = GetSampleScenePath();
+            var path = GetDefaultSampleScenePath();
             AssetDatabaseHelper.CreateDirectory(path);
             AssetDatabase.CopyAsset(SamplePackageScenePath, path);
             AssetDatabase.Refresh();
@@ -388,7 +390,7 @@ namespace Uniprom
             {
                 AssetDatabase.GetAssetPath(_reference),
                 AssetDatabase.GetAssetPath(_settings),
-                GetSampleScenePath()
+                GetDefaultSampleScenePath()
             };
             var savePath = Path.Combine(directory, "UnipromInitSettings.unitypackage");
             AssetDatabase.ExportPackage(assetPaths.ToArray(), savePath, ExportPackageOptions.Interactive);
@@ -418,23 +420,19 @@ namespace Uniprom
             return Path.Combine(dir, ImporterName);
         }
 
-        public static string GetSettingsPath()
-        {
-            var dir = Path.GetDirectoryName(ExporterPath);
-            return Path.Combine(dir, "Resources", UnipromSettings.SettingsName + ".asset");
-        }
+        public static string GetSettingsPath() => Path.Combine(RootPath, "Resources", UnipromSettings.SettingsName + ".asset");
+
+        public static string GetDefaultInterstitialPrefabPath() => GetInterstitialPrefabPath(RootPath);
+        
+        public static string GetDefaultWallPrefabPath() => GetWallPrefabPath(RootPath);
+        
+        public static string GetDefaultSampleScenePath() => GetSampleScenePath(RootPath);
         
         static string GetInterstitialPrefabPath(string rootPath) => Path.Combine(rootPath, "Prefabs", InterstitialPrefabName);
         
         static string GetWallPrefabPath(string rootPath) => Path.Combine(rootPath, "Prefabs", WallPrefabName);
         
         static string GetSampleScenePath(string rootPath) => Path.Combine(rootPath, SampleSceneName);
-
-        public static string GetInterstitialPrefabPath() => GetInterstitialPrefabPath(Path.GetDirectoryName(ExporterPath));
-        
-        public static string GetWallPrefabPath() => GetWallPrefabPath(Path.GetDirectoryName(ExporterPath));
-        
-        public static string GetSampleScenePath() => GetSampleScenePath(Path.GetDirectoryName(ExporterPath));
 #endif
     }
 }

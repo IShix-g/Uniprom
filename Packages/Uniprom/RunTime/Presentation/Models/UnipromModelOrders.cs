@@ -1,10 +1,17 @@
 
-using System;
-
 namespace Uniprom
 {
-    public readonly struct UnipromModelOrders : IEquatable<UnipromModelOrders>
+    public sealed class UnipromModelOrders
     {
+        static UnipromModelOrders s_default;
+
+        public static UnipromModelOrders Default
+            => s_default ??= new UnipromModelOrders(
+                UnipromModelOrderType.Random,
+                UnipromModelOrderType.InReverse,
+                UnipromModelOrderType.Random,
+                UnipromModelOrderType.Random);
+        
         public readonly UnipromModelOrderType Interstitial;
         public readonly UnipromModelOrderType Wall;
         public readonly UnipromModelOrderType Native;
@@ -21,17 +28,5 @@ namespace Uniprom
             Native = native;
             NativeIcon = nativeIcon;
         }
-
-        public static UnipromModelOrders Default
-            => new (UnipromModelOrderType.Random,
-                UnipromModelOrderType.InReverse,
-                UnipromModelOrderType.Random,
-                UnipromModelOrderType.Random);
-        
-        public bool Equals(UnipromModelOrders other) => Interstitial == other.Interstitial && Wall == other.Wall && Native == other.Native && NativeIcon == other.NativeIcon;
-        public override bool Equals(object obj) => obj is UnipromModelOrders other && Equals(other);
-        public override int GetHashCode() => HashCode.Combine((int) Interstitial, (int) Wall, (int) Native, (int) NativeIcon);
-        public static bool operator ==(UnipromModelOrders lhs, UnipromModelOrders rhs) => lhs.Equals(rhs);
-        public static bool operator !=(UnipromModelOrders lhs, UnipromModelOrders rhs) => !(lhs == rhs);
     }
 }

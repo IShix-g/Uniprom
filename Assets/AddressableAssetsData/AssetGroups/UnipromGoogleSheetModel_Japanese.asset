@@ -17,23 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f8f034ddcfe7849c5ad61d20ff2cfbae
   m_SerializeEntries:
-  - m_GUID: 7d6c9f79d393d4c5fbb0a9b9d00efa66
-    m_Address: Assets/Uniprom/UnipromModelsCustomGoogleSheetCuvModelList_Japanese.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnipromItems_Japanese
-  - m_GUID: 43a722318c5c545b3800a9b624a5e76d
-    m_Address: Assets/Uniprom/downloadid=1-5OFOUWThjdcKbB5VRLOyiy1_ggJPqE_.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnipromItems_English
-    - UnipromItems_Japanese
-  - m_GUID: 3f86ca53b347a4d9096497bf3418d7b2
-    m_Address: Assets/Uniprom/downloadid=1d3zwMGLrr7SqvnYpA9nEefnDUouju_15.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnipromItems_English
-    - UnipromItems_Japanese
   - m_GUID: c98a91ee9501e47a793b19dc5a51631c
     m_Address: Assets/Uniprom/downloadid=1NrMgeVg2V8hZH6eZukM1MIr1FFB8vFAE.png
     m_ReadOnly: 0
@@ -94,6 +77,10 @@ MonoBehaviour:
     m_SerializedLabels:
     - UnipromItems_English
     - UnipromItems_Japanese
+  - m_GUID: 7d6c9f79d393d4c5fbb0a9b9d00efa66
+    m_Address: Assets/Uniprom/UnipromModelsCustomGoogleSheetCuvModelList_Japanese.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9f5b00c0dba834f46b6d95e541f8c884, type: 2}
   m_SchemaSet:

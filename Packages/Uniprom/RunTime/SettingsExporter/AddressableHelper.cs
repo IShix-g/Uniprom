@@ -11,7 +11,6 @@ using UnityEditor.AddressableAssets.Build.DataBuilders;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.Exceptions;
-using ArgumentException = System.ArgumentException;
 
 namespace Uniprom.Addressable.Editor
 {
@@ -248,6 +247,21 @@ namespace Uniprom.Addressable.Editor
             var entries = new List<AddressableAssetEntry> { entry };
             group.SetDirty(AddressableAssetSettings.ModificationEvent.EntryMoved, entries, false, true);
             settings.SetDirty(AddressableAssetSettings.ModificationEvent.EntryMoved, entries, true, false);
+        }
+
+        public static HashSet<AddressableAssetGroup> GetGroups(AddressableAssetSettings settings, HashSet<string> groupNames = default)
+        {
+            var groups = new HashSet<AddressableAssetGroup>();
+            foreach (var group in settings.groups)
+            {
+                if (groupNames != default
+                    && !groupNames.Add(group.Name))
+                {
+                    continue;
+                }
+                groups.Add(group);
+            }
+            return groups;
         }
         
         public static bool IsInstalled()

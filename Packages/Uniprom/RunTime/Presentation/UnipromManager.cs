@@ -89,13 +89,15 @@ namespace Uniprom
             }
             
             Instance._companyName = companyName;
-            Instance._excludeAppKeys = excludeAppKeys ?? new HashSet<string>();
+            Instance._excludeAppKeys = excludeAppKeys ?? new HashSet<string>()
+            {
 #if UNITY_IOS
-            Instance._excludeAppKeys.Add(Application.identifier);
+                Application.identifier,
 #else
-            Instance._excludeAppKeys.Add(Application.productName);
+                Application.productName
 #endif
-            Instance.ModelOrders = modelOrders != default ? modelOrders : UnipromModelOrders.Default;
+            };
+            Instance.ModelOrders = modelOrders ?? UnipromModelOrders.Default;
             Instance._interstitial = interstitialViewClient ?? new DefaultUnipromInterstitialViewClient();
             Instance._interstitial.Initialize(Instance);
             Instance._wall = wallViewClient ?? new DefaultUnipromWallViewClient();

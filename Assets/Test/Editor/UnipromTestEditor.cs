@@ -6,6 +6,7 @@ using Uniprom.Addressable.Editor;
 using Uniprom.Editor;
 using UnityEditor;
 using UnityEditor.AddressableAssets.Build.DataBuilders;
+using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,6 +15,16 @@ namespace Tests
 {
     public sealed class UnipromTestEditor
     {
+        // TODO : Addressables Groupに含まれるPrefabの影響で再生しても問題が出るのをなんとかしたい。
+        [MenuItem("Tests/Get All Group")]
+        static void GetAllGroup()
+        {
+            var settings = AddressableHelper.GetSettings();
+            var defaultGroupName = settings.DefaultGroup.Name;
+            var groups = AddressableHelper.GetGroups(settings, new HashSet<string>() { AddressableAssetSettings.PlayerDataGroupName, defaultGroupName });
+            Debug.Log(groups.Select(x => x.Name).Aggregate((a, b) => a + "\n" + b));
+        }
+        
         [MenuItem("Tests/Build Asset Test - Release")]
         static void BuildAssetTestRelease()
         {

@@ -4,7 +4,7 @@ using System;
 namespace Uniprom
 {
     [Serializable]
-    public struct UnipromViewShowStatus
+    public readonly struct UnipromViewShowStatus
     {
         public readonly string AppKey;
         public readonly UnipromViewType ViewType;

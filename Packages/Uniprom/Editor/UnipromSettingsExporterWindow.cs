@@ -14,7 +14,7 @@ namespace Uniprom.Editor
         public static void ShowWindow()
         {
             var window = GetWindow<UnipromSettingsExporterWindow>("Uniprom Settings Exporter");
-            window.minSize = new Vector2(480, 900);
+            window.minSize = new Vector2(480, 600);
             window.Show();
         }
         
