@@ -29,27 +29,28 @@ namespace Uniprom
         public static void SafeContinueWith<TResult>(
             this Task<TResult> @this,
             Action<Task<TResult>> continuationAction,
-            CancellationToken cancellationToken= default)
+            CancellationToken cancellationToken = default)
         {
             var context = SynchronizationContext.Current;
             @this.ConfigureAwait(false)
-                 .GetAwaiter()
-                 .OnCompleted(() =>
-            {
-                if (cancellationToken.IsCancellationRequested)
+                .GetAwaiter()
+                .OnCompleted(() =>
                 {
-                    return;
-                }
-                
-                if (SynchronizationContext.Current == context)
-                {
-                    continuationAction(@this);
-                }
-                else
-                {
-                    context.Post(state => continuationAction(@this), default);
-                }
-            });
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    if (context != null
+                        && SynchronizationContext.Current != context)
+                    {
+                        context.Post(state => continuationAction(@this), null);
+                    }
+                    else
+                    {
+                        continuationAction(@this);
+                    }
+                });
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -60,23 +61,24 @@ namespace Uniprom
         {
             var context = SynchronizationContext.Current;
             @this.ConfigureAwait(false)
-                 .GetAwaiter()
-                 .OnCompleted(() =>
-            {
-                if (cancellationToken.IsCancellationRequested)
+                .GetAwaiter()
+                .OnCompleted(() =>
                 {
-                    return;
-                }
-
-                if (SynchronizationContext.Current == context)
-                {
-                    continuationAction(@this);
-                }
-                else
-                {
-                    context.Post(state => continuationAction(@this), default);
-                }
-            });
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        return;
+                    }
+        
+                    if (context != null
+                        && SynchronizationContext.Current != context)
+                    {
+                        context.Post(state => continuationAction(@this), null);
+                    }
+                    else
+                    {
+                        continuationAction(@this);
+                    }
+                });
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
