@@ -14,36 +14,35 @@ namespace Uniprom.Editor
             => Path.HasExtension(path)
                || Directory.GetFiles(path).Length > 0;
         
-        public static void CreateDirectory(string path) 
+        public static void CreateDirectory(string path)
         {
             if (!path.StartsWith("Assets"))
             {
-                throw new ArgumentException("Specify a path starting with Asset.");
+                Debug.LogError("The path must start with 'Assets/' ");
+                return;
             }
 
-            if (Path.HasExtension(path))
+            path = Path.HasExtension(path) ? Path.GetDirectoryName(path) : path;
+            path = path.Replace("\\", "/");
+
+            if (string.IsNullOrEmpty(path)
+                || AssetDatabase.IsValidFolder(path))
             {
-                path = Path.GetDirectoryName(path);
+                return;
             }
-            
+    
             var folders = path.Split('/');
-            var parentFolder = string.Empty;
-
-            foreach (var folder in folders.Where(f => !string.IsNullOrEmpty(f)))
+            var parentFolder = folders[0];
+    
+            for (var i = 1; i < folders.Length; i++)
             {
-                if (string.IsNullOrEmpty(parentFolder))
+                var newFolder = parentFolder + "/" + folders[i];
+                Debug.Log(newFolder + " : " + AssetDatabase.IsValidFolder(newFolder));
+                if (!AssetDatabase.IsValidFolder(newFolder))
                 {
-                    parentFolder = folder;
+                    AssetDatabase.CreateFolder(parentFolder, folders[i]);
                 }
-                else
-                {
-                    var newFolder = Path.Combine(parentFolder, folder);
-                    if (!AssetDatabase.IsValidFolder(newFolder)) 
-                    {
-                        AssetDatabase.CreateFolder(parentFolder, folder);
-                    }
-                    parentFolder = newFolder;   
-                }
+                parentFolder = newFolder;
             }
         }
         
