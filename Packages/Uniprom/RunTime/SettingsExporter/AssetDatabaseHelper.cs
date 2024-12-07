@@ -37,7 +37,6 @@ namespace Uniprom.Editor
             for (var i = 1; i < folders.Length; i++)
             {
                 var newFolder = parentFolder + "/" + folders[i];
-                Debug.Log(newFolder + " : " + AssetDatabase.IsValidFolder(newFolder));
                 if (!AssetDatabase.IsValidFolder(newFolder))
                 {
                     AssetDatabase.CreateFolder(parentFolder, folders[i]);
