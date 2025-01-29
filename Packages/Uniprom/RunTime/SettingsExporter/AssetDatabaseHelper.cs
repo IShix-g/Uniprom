@@ -23,7 +23,7 @@ namespace Uniprom.Editor
             }
 
             path = Path.HasExtension(path) ? Path.GetDirectoryName(path) : path;
-            path = path.Replace("\\", "/");
+            path = path?.Replace("\\", "/");
 
             if (string.IsNullOrEmpty(path)
                 || AssetDatabase.IsValidFolder(path))
@@ -111,13 +111,17 @@ namespace Uniprom.Editor
             if (Path.HasExtension(path))
             {
                 path = Path.GetDirectoryName(path);
+                path = path?.Replace("\\", "/");
             }
-            return Directory.GetFiles(path, "*", SearchOption.AllDirectories)
-                .Where(x => !string.IsNullOrEmpty(x))
-                .Where(x => !x.EndsWith(".meta"))
-                .Where(x => !x.EndsWith(".DS_Store"))
-                .Select(x => x.Replace(@"\", "/"))
-                .ToArray();
+
+            return !string.IsNullOrEmpty(path)
+                ? Directory.GetFiles(path, "*", SearchOption.AllDirectories)
+                    .Where(x => !string.IsNullOrEmpty(x))
+                    .Where(x => !x.EndsWith(".meta"))
+                    .Where(x => !x.EndsWith(".DS_Store"))
+                    .Select(x => x.Replace(@"\", "/"))
+                    .ToArray()
+                : Array.Empty<string>();
         }
     }
 }
