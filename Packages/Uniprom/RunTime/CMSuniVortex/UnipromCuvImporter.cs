@@ -10,6 +10,16 @@ using UnityEditor;
 
 namespace Uniprom.CMSuniVortex
 {
+    [CuvImporter(
+        isShowMenu : false, 
+        isShowLogo : false, 
+        isEnabledBuildPath : false, 
+        isEnabledLanguages : true, 
+        isEnabledSelectClient : true, 
+        isEnabledImportButton : true, 
+        isEnabledSelectOutput : true, 
+        isEnabledOutputButton : true
+    )]
     public sealed class UnipromCuvImporter : CuvImporter
     {
         UnipromSettingsExporter _settingsExporter;

@@ -1,4 +1,4 @@
-
+#if ENABLE_CMSUNIVORTEX
 using System.Collections.Generic;
 using System.Linq;
 using Uniprom;
@@ -170,3 +170,4 @@ namespace Tests
         }
     }
 }
+#endif

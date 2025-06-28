@@ -1,4 +1,4 @@
-
+#if ENABLE_CMSUNIVORTEX
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -42,3 +42,4 @@ namespace Uniprom.Editor
         }
     }
 }
+#endif

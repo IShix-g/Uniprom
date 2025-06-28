@@ -1,4 +1,4 @@
-
+#if ENABLE_CMSUNIVORTEX
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -73,3 +73,4 @@ namespace Uniprom.Editor
         }
     }
 }
+#endif

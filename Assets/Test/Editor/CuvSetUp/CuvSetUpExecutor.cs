@@ -1,4 +1,4 @@
-
+#if ENABLE_CMSUNIVORTEX
 using Uniprom;
 using Uniprom.GoogleSheet;
 using UnityEditor;
@@ -42,3 +42,4 @@ namespace Test
         }
     }
 }
+#endif

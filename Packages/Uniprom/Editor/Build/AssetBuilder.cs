@@ -6,10 +6,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CMSuniVortex;
-using Uniprom.GoogleSheet;
 using UnityEditor;
 using UnityEngine;
+
+#if ENABLE_CMSUNIVORTEX
+using CMSuniVortex;
+using Uniprom.GoogleSheet;
+#endif
 
 namespace Uniprom.Editor
 {
@@ -18,7 +21,7 @@ namespace Uniprom.Editor
         public const string FtpJsonStringName = "ftpJsonFilePath";
         public const string GoogleJsonKeyPath = "googleJsonKeyPath";
         
-#if UNIPROM_SOURCE_PROJECT
+#if UNIPROM_SOURCE_PROJECT && ENABLE_CMSUNIVORTEX
         [MenuItem("Window/Uniprom/Build test of Github Action")]
         static void StartGithubBuildTest()
         {
@@ -46,6 +49,7 @@ namespace Uniprom.Editor
 
         public static void Build(bool isRelease, Dictionary<string, string> options)
         {
+#if ENABLE_CMSUNIVORTEX
             UnipromDebug.IsBatchMode = Application.isBatchMode;
             var exporter = UnipromSettingsExporter.GetInstance();
             if (exporter.CuvImporter == default)
@@ -169,6 +173,7 @@ namespace Uniprom.Editor
                     throw;
                 }
             });
+#endif
         }
 
         static void WriteUnipromSettings(UnipromSettingsExporter exporter)
@@ -179,6 +184,7 @@ namespace Uniprom.Editor
 
         static string GetUnipromSettingsString(UnipromSettingsExporter exporter)
         {
+#if ENABLE_CMSUNIVORTEX
             var sb = new StringBuilder();
             
             sb.Append("\n");
@@ -226,6 +232,9 @@ namespace Uniprom.Editor
             sb.Append("\n");
             
             return sb.ToString();
+#else
+            return string.Empty;
+#endif
         }
     }
 }

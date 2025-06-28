@@ -8,6 +8,7 @@ namespace Uniprom.Editor
     {    
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
+#if ENABLE_CMSUNIVORTEX
             if (importedAssets.Length == 0)
             {
                 return;
@@ -33,6 +34,7 @@ namespace Uniprom.Editor
                 }
                 return;
             }
+#endif
         }
     }
 }

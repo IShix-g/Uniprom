@@ -1,9 +1,11 @@
 
+using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
-using JetBrains.Annotations;
+
 #if ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
 using Uniprom.Addressable.Editor;
 #endif
@@ -13,6 +15,12 @@ namespace Uniprom.Editor
     [CustomEditor(typeof(UnipromSettingsExporter))]
     public sealed class UnipromSettingsEditor : UnityEditor.Editor
     {
+        const string _packageUrl = "https://raw.githubusercontent.com/IShix-g/Uniprom/main/Packages/Uniprom/package.json";
+        const string _gitUrl = "https://github.com/IShix-g/Uniprom";
+        const string _gitInstallUrl = _gitUrl + ".git?path=Packages/Uniprom";
+        const string _packagePath = "Packages/com.ishix.uniprom/";
+        const string _gitCuvInstallUrl =  "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#1.0.0";
+        const string _cuvPackagePath = "Packages/com.ishix.cmsunivortex/";
         static readonly string[] s_propertiesToExclude = { "m_Script", "_reference", "_settings", "_releaseFtpSettingPath", "_testFtpSettingPath" };
 
         static string PackageSaveDir
@@ -25,12 +33,19 @@ namespace Uniprom.Editor
         SerializedProperty _settingsProp;
         SerializedProperty _releaseFtpPathProp;
         SerializedProperty _testFtpPathProp;
+        SerializedProperty _scriptProp;
         UnipromSettingsExporter _exporter;
         UnityEditor.Editor _cuvImporterEditor;
         Texture2D _logo;
         Texture2D _buildIcon;
         Texture2D _unityIcon;
         Texture2D _ftpIcon;
+        CancellationTokenSource _tokenSource;
+        string _currentVersion;
+        bool _isNowLoading;
+        bool _isCheckedCuvVersion;
+        bool _isNeedUpdateCuvVersion;
+        readonly PackageInstaller _packageInstaller = new ();
 
         void OnEnable()
         {
@@ -44,8 +59,16 @@ namespace Uniprom.Editor
             _buildIcon = GetTexture("UnipromBuildIcon");
             _unityIcon = GetTexture("UnipromUnityIcon");
             _ftpIcon = GetTexture("UnipromFtpIcon");
+            _scriptProp = serializedObject.FindProperty("m_Script");
+            _currentVersion = "v" + CheckVersion.GetCurrent(_packagePath);
+            _isCheckedCuvVersion = false;
         }
 
+        void OnDisable()
+        {
+            _tokenSource.SafeCancelAndDispose();
+        }
+        
         void SetProperties()
         {
             _referenceProp = serializedObject.FindProperty(s_propertiesToExclude[1]);
@@ -56,7 +79,6 @@ namespace Uniprom.Editor
         
         public override void OnInspectorGUI()
         {
-#if !ENABLE_ADDRESSABLES || !UNITY_IOS && !UNITY_ANDROID || !UNIPROM_SOURCE_PROJECT || !ENABLE_CMSUNIVORTEX
             GUILayout.BeginVertical(GUI.skin.box);
             {
                 var style = new GUIStyle(GUI.skin.label)
@@ -66,10 +88,15 @@ namespace Uniprom.Editor
                 };
                 GUILayout.Label(_logo, style, GUILayout.MinWidth(430), GUILayout.Height(75));
             }
+            {
+                var style = new GUIStyle(GUI.skin.label)
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                };
+                EditorGUILayout.LabelField(_currentVersion, style);
+            }
             GUILayout.EndVertical();
-            GUILayout.Space(10);
-#endif
-
+            
 #if !ENABLE_ADDRESSABLES
             EditorGUILayout.HelpBox("This plugin requires Addressables.", MessageType.Error);
             return;
@@ -97,14 +124,73 @@ namespace Uniprom.Editor
                 {
                     padding = new RectOffset(0, 0, 10, 10)
                 };
-                if (GUILayout.Button("Install CMSuniVortex.\nGetting started", style))
+                
+                if (!_isNowLoading
+                    && GUILayout.Button("Install CMSuniVortex.", style))
                 {
-                    Application.OpenURL("https://github.com/IShix-g/CMSuniVortex?tab=readme-ov-file#getting-started");
+                    _isNowLoading = true;
+                    _tokenSource = new CancellationTokenSource();
+                    _packageInstaller.Install(
+                            new []{ _gitCuvInstallUrl },
+                            _tokenSource.Token
+                        )
+                        .Handled(() => _isNowLoading = false);
+                }
+                else if(_isNowLoading)
+                {
+                    GUILayout.Button("Now Installing...", style);
                 }
             }
             return;
 #else
 
+            if (!_isCheckedCuvVersion)
+            {
+                _isCheckedCuvVersion = true;
+                var current = CheckVersion.GetCurrent(_cuvPackagePath);
+                var request = CheckVersion.GetVersionFromUrl(_gitCuvInstallUrl);
+                _isNeedUpdateCuvVersion = current != request;
+                if (_isNeedUpdateCuvVersion)
+                {
+                    Debug.LogWarning("CMSuniVortex version v" + current + " -> v" + request);
+                }
+            }
+
+            if (_isNeedUpdateCuvVersion)
+            {
+                EditorGUILayout.HelpBox("CMSuniVortex needs to be updated.", MessageType.Error);
+                var style = new GUIStyle(GUI.skin.button)
+                {
+                    padding = new RectOffset(0, 0, 10, 10)
+                };
+                
+                if (!_isNowLoading
+                    && GUILayout.Button("Update CMSuniVortex.", style))
+                {
+                    _isNowLoading = true;
+                    _tokenSource = new CancellationTokenSource();
+                    _packageInstaller.Install(
+                            new []{ _gitCuvInstallUrl },
+                            _tokenSource.Token
+                        )
+                        .ContinueOnMainThread(onSuccess: task =>
+                        {
+                            _isNeedUpdateCuvVersion = true;
+                            _isNeedUpdateCuvVersion = false;
+                        },
+                        onCompleted: () => _isNowLoading = false);
+                }
+                else if(_isNowLoading)
+                {
+                    GUILayout.Button("Now Installing...", style);
+                }
+                return;
+            }
+            
+            GUILayout.Space(10);
+            ShowMenu();
+            GUILayout.Space(10);
+            
             serializedObject.UpdateIfRequiredOrScript();
             
             if (_exporter.CuvImporter != default)
@@ -131,19 +217,13 @@ namespace Uniprom.Editor
             GUILayout.Space(20);
             GUILayout.Box(string.Empty, new [] {GUILayout.ExpandWidth(true), GUILayout.Height(3)});
             GUILayout.Space(20);
-            
-            GUILayout.BeginVertical(GUI.skin.box);
-            {
-                var style = new GUIStyle(GUI.skin.label)
-                {
-                    padding = new RectOffset(5, 5, 5, 5),
-                    alignment = TextAnchor.MiddleCenter,
-                };
-                GUILayout.Label(_logo, style, GUILayout.MinWidth(430), GUILayout.Height(75));
-            }
-            GUILayout.EndVertical();
-            GUILayout.Space(5);
 
+            using (new EditorGUI.DisabledScope(true))
+            {
+                EditorGUILayout.PropertyField(_scriptProp, true);
+            }
+            GUILayout.Space(10);
+            
             EditorGUILayout.HelpBox("This is a Uniprom source project.", MessageType.Info);
             
             GUILayout.Space(5);
@@ -360,6 +440,64 @@ namespace Uniprom.Editor
             serializedObject.ApplyModifiedProperties();
         }
 
+        void ShowMenu()
+        {
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Github"))
+            {
+                Application.OpenURL(_gitUrl);
+            }
+
+            if (!_isNowLoading
+                && GUILayout.Button("Check for Update"))
+            {
+                _isNowLoading = true;
+                CheckVersion.GetVersionOnServer(_packageUrl)
+                    .ContinueOnMainThread(onSuccess : request =>
+                        {
+                            var version = request?.Result;
+                            if (string.IsNullOrEmpty(version))
+                            {
+                                return;
+                            }
+                            var comparisonResult = 0;
+                            if (!string.IsNullOrEmpty(version))
+                            {
+                                var current = new Version(_currentVersion.TrimStart('v').Trim());
+                                var server = new Version(version.Trim());
+                                comparisonResult = current.CompareTo(server);
+                                version = "v" + version;
+                            }
+                                
+                            if (comparisonResult >= 0)
+                            {
+                                EditorUtility.DisplayDialog("You have the latest version.", "Editor: " + _currentVersion + " | GitHub: " + version + "\nThe current version is the latest release.", "Close");
+                            }
+                            else
+                            {
+                                var isOpen = EditorUtility.DisplayDialog(_currentVersion + " -> " + version, "There is a newer version " + version + ".", "Update", "Close");
+    
+                                if (isOpen)
+                                {
+                                    _isNowLoading = true;
+                                    _tokenSource = new CancellationTokenSource();
+                                    _packageInstaller.Install(
+                                            new []{ _gitInstallUrl },
+                                            _tokenSource.Token
+                                        )
+                                        .Handled(() => _isNowLoading = false);
+                                }
+                            }
+                        },
+                    onCompleted : () => _isNowLoading = false);
+            }
+            else if (_isNowLoading)
+            {
+                GUILayout.Button("Now Loading...");
+            }
+            GUILayout.EndHorizontal();
+        }
+
 #if ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
         void CreateCuvImporterEditor()
         {
@@ -372,7 +510,6 @@ namespace Uniprom.Editor
         }
 #endif
         
-        [CanBeNull]
         static Texture2D GetTexture(string textureName)
         {
             var guids = AssetDatabase.FindAssets("t:Texture2D " + textureName);

@@ -10,7 +10,7 @@ namespace Uniprom.Editor
         UnityEditor.Editor _editor;
         Vector2 _scrollPos;
         
-        [MenuItem("Window/Uniprom/open Settings Exporter")]
+        [MenuItem("Window/Uniprom/open Settings Exporter", false, 1)]
         public static void ShowWindow()
         {
             var window = GetWindow<UnipromSettingsExporterWindow>("Uniprom Settings Exporter");
