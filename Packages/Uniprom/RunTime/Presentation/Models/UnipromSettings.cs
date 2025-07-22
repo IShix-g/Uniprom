@@ -26,7 +26,7 @@ namespace Uniprom
         [SerializeField] string _assetsCatalogVersion;
         [SerializeField] ScriptableObject _scriptableObject;
         
-        public bool IsInitialized => Reference.IsInitialized;
+        public bool IsInitialized => Reference.IsInitializedLocalize;
         public UnipromBuildType BuildType => _buildType;
         public IUnipromReference Reference => _reference ??= _scriptableObject as IUnipromReference;
         public string RemoteCatalogUrl => GetCatalogPath(_remoteLoadUrl, _assetsCatalogVersion);
@@ -82,7 +82,7 @@ namespace Uniprom
                 yield return downloadDependencies;
             }
 
-            yield return Reference.Initialize();
+            yield return Reference.WaitForLoadLocalizationCo();
         }
         
         public async Task InitializeAsync()
@@ -124,7 +124,7 @@ namespace Uniprom
                 await downloadDependencies.Task;
             }
             
-            await Reference.InitializeAsync();
+            await Reference.WaitForLoadLocalizationAsync();
         }
         
         public static UnipromSettings Current

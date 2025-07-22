@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace Uniprom
 {
     [DisplayName("Uniprom - Cockpit Client")]
-    public sealed class UnipromModelsCockpitCuvAddressableClient : CockpitCuvAddressableClient<UnipromCockpitModel, UnipromModelsCockpitCuvModelList>
+    public sealed class UnipromModelsCockpitCuvAddressableClient : CockpitCuvAddressableLocalizedClient<UnipromCockpitModel, UnipromModelsCockpitCuvModelList>
     {
         protected override JsonConverter<UnipromCockpitModel> CreateConverter()
             => new CuvModelConverter<UnipromCockpitModel>();

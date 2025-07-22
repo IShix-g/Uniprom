@@ -209,7 +209,14 @@ namespace Uniprom.Editor
             sb.Append(exporter.OverridePlayerVersion);
             sb.Append("\n");
             sb.Append("Languages: ");
-            sb.Append(exporter.CuvImporter.Languages.Select(x => x.ToString()).Aggregate((a, b) => a + ", " + b));
+            if (exporter.CuvImporter.Client is ICuvLocalizedClient localizedClient)
+            {
+                sb.Append(localizedClient.GetLanguages().Select(x => x.ToString()).Aggregate((a, b) => a + ", " + b));
+            }
+            else
+            {
+                sb.Append("Not localized client");
+            }
             sb.Append("\n");
             sb.Append("Client: ");
             {

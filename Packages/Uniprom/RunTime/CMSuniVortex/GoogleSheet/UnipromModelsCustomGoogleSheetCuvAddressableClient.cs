@@ -6,7 +6,7 @@ using CMSuniVortex.GoogleSheet;
 namespace Uniprom.GoogleSheet
 {
     [DisplayName("Uniprom - Google Sheet Client")]
-    public sealed class UnipromModelsCustomGoogleSheetCuvAddressableClient : CustomGoogleSheetCuvAddressableClient<UnipromGoogleSheetModel, UnipromModelsCustomGoogleSheetCuvModelList>
+    public sealed class UnipromModelsCustomGoogleSheetCuvAddressableClient : CustomGoogleSheetCuvAddressableLocalizedClient<UnipromGoogleSheetModel, UnipromModelsCustomGoogleSheetCuvModelList>
     {
         protected override void OnSelect(string assetPath)
         {

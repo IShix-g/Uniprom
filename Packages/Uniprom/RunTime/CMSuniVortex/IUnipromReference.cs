@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -9,15 +10,13 @@ namespace Uniprom
     public interface IUnipromReference
     {
         int ContentsLength { get; }
-        bool IsInitialized { get; }
+        bool IsInitializedLocalize { get; }
         bool IsLoading { get; }
         SystemLanguage FindLanguage(SystemLanguage language);
-        IEnumerator Initialize(Action onLoaded = default);
-        IEnumerator Initialize(SystemLanguage language, Action onLoaded = default);
-        Task InitializeAsync();
-        Task InitializeAsync(SystemLanguage language);
-        IUnipromModel GetModelById(string id);
-        bool TryGetModelById(string id, out IUnipromModel model);
+        IEnumerator WaitForLoadLocalizationCo(Action onReady = default);
+        Task WaitForLoadLocalizationAsync(CancellationToken token = default);
+        IUnipromModel GetModelByKey(string id);
+        bool TryGetModelByKey(string id, out IUnipromModel model);
         IUnipromModel GetModelByIndex(int index);
     }
 }
