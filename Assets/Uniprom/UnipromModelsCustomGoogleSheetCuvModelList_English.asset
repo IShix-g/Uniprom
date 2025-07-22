@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4c6d1cd230248949f382083bd17a34, type: 3}
   m_Name: UnipromModelsCustomGoogleSheetCuvModelList_English
   m_EditorClassIdentifier: 
-  _language: 10
+  _cuvId: English
   _models:
   - Key: com.ishix.catDetective
     AppName: Mystery Whiskers

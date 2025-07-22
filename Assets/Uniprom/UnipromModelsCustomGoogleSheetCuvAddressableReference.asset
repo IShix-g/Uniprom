@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: UnipromModelsCustomGoogleSheetCuvAddressableReference
   m_EditorClassIdentifier: 
   _modelLists:
-  - Language: 10
+  - CuvId: English
     List:
       m_AssetGUID: 1056a016df1d3492f8664aa13fb140c9
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
-  - Language: 22
+  - CuvId: Japanese
     List:
       m_AssetGUID: 7d6c9f79d393d4c5fbb0a9b9d00efa66
       m_SubObjectName: 

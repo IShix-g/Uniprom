@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4c6d1cd230248949f382083bd17a34, type: 3}
   m_Name: UnipromModelsCustomGoogleSheetCuvModelList_Japanese
   m_EditorClassIdentifier: 
-  _language: 22
+  _cuvId: Japanese
   _models:
   - Key: com.ishix.catDetective
     AppName: "\u8B0E\u306E\u3072\u3052"
