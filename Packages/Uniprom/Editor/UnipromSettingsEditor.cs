@@ -511,14 +511,6 @@ namespace Uniprom.Editor
 #endif
         
         static Texture2D GetTexture(string textureName)
-        {
-            var guids = AssetDatabase.FindAssets("t:Texture2D " + textureName);
-            foreach (var guid in guids)
-            {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            }
-            return default;
-        }
+            => AssetDatabase.LoadAssetAtPath<Texture2D>(_packagePath + "Editor/Textures/" + textureName + ".png");
     }
 }
