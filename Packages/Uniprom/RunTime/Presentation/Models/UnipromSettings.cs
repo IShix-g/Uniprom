@@ -92,13 +92,7 @@ namespace Uniprom
             AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
 
             var request = UnityWebRequest.Head(RemoteCatalogUrl);
-            await Task.Yield();
-            request.SendWebRequest();
-
-            while (!request.isDone)
-            {
-                await Task.Delay(100);
-            }
+            await request.SendWebRequest();
             
             var hasCatalog = request.result == UnityWebRequest.Result.Success
                              && request.responseCode != 404;
