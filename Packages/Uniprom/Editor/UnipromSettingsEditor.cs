@@ -19,7 +19,7 @@ namespace Uniprom.Editor
         const string _gitUrl = "https://github.com/IShix-g/Uniprom";
         const string _gitInstallUrl = _gitUrl + ".git?path=Packages/Uniprom";
         const string _packagePath = "Packages/com.ishix.uniprom/";
-        const string _gitCuvInstallUrl =  "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.0.0";
+        const string _gitCuvInstallUrl =  "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.0.9";
         const string _cuvPackagePath = "Packages/com.ishix.cmsunivortex/";
         static readonly string[] s_propertiesToExclude = { "m_Script", "_reference", "_settings", "_releaseFtpSettingPath", "_testFtpSettingPath" };
 
@@ -149,7 +149,7 @@ namespace Uniprom.Editor
                 _isCheckedCuvVersion = true;
                 var current = CheckVersion.GetCurrent(_cuvPackagePath);
                 var request = CheckVersion.GetVersionFromUrl(_gitCuvInstallUrl);
-                _isNeedUpdateCuvVersion = current != request;
+                _isNeedUpdateCuvVersion = IsVersionUpdated(current, request);
                 if (_isNeedUpdateCuvVersion)
                 {
                     Debug.LogWarning("CMSuniVortex version v" + current + " -> v" + request);
@@ -439,7 +439,7 @@ namespace Uniprom.Editor
 
             serializedObject.ApplyModifiedProperties();
         }
-
+        
         void ShowMenu()
         {
             GUILayout.BeginHorizontal();
@@ -512,5 +512,12 @@ namespace Uniprom.Editor
         
         static Texture2D GetTexture(string textureName)
             => AssetDatabase.LoadAssetAtPath<Texture2D>(_packagePath + "Editor/Textures/" + textureName + ".png");
+        
+        bool IsVersionUpdated(string current, string request)
+        {
+            var currentVersion = new Version(current);
+            var requestVersion = new Version(request);
+            return currentVersion < requestVersion;
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace Uniprom
         SystemLanguage FindLanguage(SystemLanguage language);
         IEnumerator WaitForLoadLocalizationCo(Action onReady = default);
         Task WaitForLoadLocalizationAsync(CancellationToken token = default);
+        IEnumerator InitializeLocalizeCo(Action onReady = default);
+        Task InitializeLocalizeAsync(CancellationToken token = default);
         IUnipromModel GetModelByKey(string id);
         bool TryGetModelByKey(string id, out IUnipromModel model);
         IUnipromModel GetModelByIndex(int index);

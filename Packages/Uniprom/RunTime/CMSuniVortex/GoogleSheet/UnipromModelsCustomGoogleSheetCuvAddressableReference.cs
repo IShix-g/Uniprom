@@ -3,8 +3,11 @@ using CMSuniVortex.GoogleSheet;
 
 namespace Uniprom.GoogleSheet
 {
-    public sealed class UnipromModelsCustomGoogleSheetCuvAddressableReference : CustomGoogleSheetCuvAddressableReference<UnipromGoogleSheetModel, UnipromModelsCustomGoogleSheetCuvModelList>, IUnipromReference
+    public sealed class UnipromModelsCustomGoogleSheetCuvAddressableReference 
+        : CustomGoogleSheetCuvAddressableReference<UnipromGoogleSheetModel, UnipromModelsCustomGoogleSheetCuvModelList>, IUnipromReference
     {
+        public override bool EnableAutoLocalization => false;
+
         public IUnipromModel GetModelByKey(string key) => GetByKey(key);
 
         public bool TryGetModelByKey(string key, out IUnipromModel model)

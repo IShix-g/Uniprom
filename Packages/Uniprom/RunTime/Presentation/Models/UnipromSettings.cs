@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -49,7 +50,7 @@ namespace Uniprom
 #endif
         }
         
-        public IEnumerator Initialize()
+        public IEnumerator Initialize(Action onReady = default)
         {
 #if UNIPROM_SOURCE_PROJECT && UNITY_EDITOR
             AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
@@ -82,10 +83,10 @@ namespace Uniprom
                 yield return downloadDependencies;
             }
 
-            yield return Reference.WaitForLoadLocalizationCo();
+            yield return Reference.InitializeLocalizeCo(onReady);
         }
         
-        public async Task InitializeAsync()
+        public async Task InitializeAsync(CancellationToken token = default)
         {
 #if UNIPROM_SOURCE_PROJECT && UNITY_EDITOR
             AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
@@ -124,7 +125,7 @@ namespace Uniprom
                 await downloadDependencies.Task;
             }
             
-            await Reference.WaitForLoadLocalizationAsync();
+            await Reference.InitializeLocalizeAsync(token);
         }
         
         public static UnipromSettings Current
