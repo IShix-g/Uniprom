@@ -82,7 +82,7 @@ namespace Tests
             var guid = AssetDatabase.AssetPathToGUID(path);
             if (guid != default)
             {
-                AddressableHelper.AddToDefaultByGuid(guid, UnipromSettingsExporter.InterstitialAddressableKey);
+                AddressableHelper.AddToDefaultByGuid(guid, UnipromExporter.InterstitialAddressableKey);
             }
             Debug.Log(AssetDatabaseHelper.IsAttachedToPrefab<IUnipromInterstitialView>(path));
         }
