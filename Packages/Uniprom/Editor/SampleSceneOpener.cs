@@ -1,4 +1,4 @@
-
+#if ENABLE_CMSUNIVORTEX
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -13,7 +13,7 @@ namespace Uniprom.Editor
         [MenuItem(_menuName)]
         public static void Open()
         {
-            var path = UnipromSettingsExporter.GetDefaultSampleScenePath();
+            var path = UnipromExporter.GetDefaultSampleScenePath();
 
             if (!EditorUtility.DisplayDialog("Open a sample scene", "May I open a sample scene? \nPath: " + path, "Open", "Close"))
             {
@@ -37,8 +37,9 @@ namespace Uniprom.Editor
         [MenuItem(_menuName, isValidateFunction:true)]
         public static bool IsValid()
         {
-            var path = UnipromSettingsExporter.GetDefaultSampleScenePath();
+            var path = UnipromExporter.GetDefaultSampleScenePath();
             return File.Exists(path);
         }
     }
 }
+#endif

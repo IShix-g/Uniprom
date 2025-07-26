@@ -6,10 +6,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CMSuniVortex;
-using Uniprom.GoogleSheet;
 using UnityEditor;
 using UnityEngine;
+
+#if ENABLE_CMSUNIVORTEX
+using CMSuniVortex;
+using Uniprom.GoogleSheet;
+#endif
 
 namespace Uniprom.Editor
 {
@@ -18,11 +21,11 @@ namespace Uniprom.Editor
         public const string FtpJsonStringName = "ftpJsonFilePath";
         public const string GoogleJsonKeyPath = "googleJsonKeyPath";
         
-#if UNIPROM_SOURCE_PROJECT
+#if UNIPROM_SOURCE_PROJECT && ENABLE_CMSUNIVORTEX
         [MenuItem("Window/Uniprom/Build test of Github Action")]
         static void StartGithubBuildTest()
         {
-            var exporter = UnipromSettingsExporter.GetInstance();
+            var exporter = UnipromExporter.GetInstance();
             var options = new Dictionary<string, string> { {FtpJsonStringName, exporter.TestFtpSettingPath} };
             if (exporter.CuvImporter.Client is UnipromModelsCustomGoogleSheetCuvAddressableClient client)
             {
@@ -46,8 +49,9 @@ namespace Uniprom.Editor
 
         public static void Build(bool isRelease, Dictionary<string, string> options)
         {
+#if ENABLE_CMSUNIVORTEX
             UnipromDebug.IsBatchMode = Application.isBatchMode;
-            var exporter = UnipromSettingsExporter.GetInstance();
+            var exporter = UnipromExporter.GetInstance();
             if (exporter.CuvImporter == default)
             {
                 UnipromDebug.LogError("CuvImporter does not exist. Please complete the setup.");
@@ -169,16 +173,18 @@ namespace Uniprom.Editor
                     throw;
                 }
             });
+#endif
         }
 
-        static void WriteUnipromSettings(UnipromSettingsExporter exporter)
+        static void WriteUnipromSettings(UnipromExporter exporter)
         {
             var content = GetUnipromSettingsString(exporter);
             UnipromDebug.Log(content);
         }
 
-        static string GetUnipromSettingsString(UnipromSettingsExporter exporter)
+        static string GetUnipromSettingsString(UnipromExporter exporter)
         {
+#if ENABLE_CMSUNIVORTEX
             var sb = new StringBuilder();
             
             sb.Append("\n");
@@ -203,7 +209,14 @@ namespace Uniprom.Editor
             sb.Append(exporter.OverridePlayerVersion);
             sb.Append("\n");
             sb.Append("Languages: ");
-            sb.Append(exporter.CuvImporter.Languages.Select(x => x.ToString()).Aggregate((a, b) => a + ", " + b));
+            if (exporter.CuvImporter.Client is ICuvLocalizedClient localizedClient)
+            {
+                sb.Append(localizedClient.GetLanguages().Select(x => x.ToString()).Aggregate((a, b) => a + ", " + b));
+            }
+            else
+            {
+                sb.Append("Not localized client");
+            }
             sb.Append("\n");
             sb.Append("Client: ");
             {
@@ -226,6 +239,9 @@ namespace Uniprom.Editor
             sb.Append("\n");
             
             return sb.ToString();
+#else
+            return string.Empty;
+#endif
         }
     }
 }

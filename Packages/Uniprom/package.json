@@ -1,6 +1,6 @@
 {
   "name": "com.ishix.uniprom",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "displayName": "Uniprom",
   "description": "System for easy implementation of advertising for your own apps.",
   "unity": "2021.3",
@@ -14,7 +14,7 @@
     "tool"
   ],
   "dependencies": {
-    "com.unity.addressables": "1.19.19"
+    "com.unity.addressables": "1.25.1"
   },
   "license": "MIT",
   "repository": {

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: UnipromCuvImporter
   m_EditorClassIdentifier: 
   _buildPath: Assets/Uniprom/
-  _languages: 0a00000016000000
   _client:
     rid: 3445372058760904708
   _output:
@@ -29,6 +28,8 @@ MonoBehaviour:
       data:
         _sheetUrl: https://docs.google.com/spreadsheets/d/1djptZlGNu4i-t_ZwXxa4ClEgpNk1gC-BnAIbd6vjwk4/edit?gid=0#gid=0
         _jsonKeyPath: Assets/Uniprom/light-operator-426308-a9-a87f12062c59.json
+        _keyName: Key
+        _languages: 0a00000016000000
         _addressableSettings:
           AddressableType: 1
           CustomGroupName: 

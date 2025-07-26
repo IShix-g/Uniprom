@@ -3,18 +3,21 @@ using CMSuniVortex.Cockpit;
 
 namespace Uniprom
 {
-    public sealed class UnipromModelsCockpitCuvAddressableReference : CockpitCuvAddressableReference<UnipromCockpitModel, UnipromModelsCockpitCuvModelList>, IUnipromReference
+    public sealed class UnipromModelsCockpitCuvAddressableReference 
+        : CockpitCuvAddressableReference<UnipromCockpitModel, UnipromModelsCockpitCuvModelList>, IUnipromReference
     {
-        public IUnipromModel GetModelById(string id) => GetById(id);
+        public override bool EnableAutoLocalization => false;
+        
+        public IUnipromModel GetModelByKey(string key) => GetByKey(key);
 
-        public bool TryGetModelById(string id, out IUnipromModel model)
+        public bool TryGetModelByKey(string id, out IUnipromModel model)
         {
-            var isSuccess = TryGetById(id, out var result);
+            var isSuccess = TryGetByKey(id, out var result);
             model = result;
             return isSuccess;
         }
 
-        public IUnipromModel GetModelByIndex(int index) => GetByIndex(index);
+        public IUnipromModel GetModelByIndex(int index) => ActiveLocalizedList[index];
     }
 }
 #endif

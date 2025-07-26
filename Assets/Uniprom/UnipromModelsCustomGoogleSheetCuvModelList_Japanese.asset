@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4c6d1cd230248949f382083bd17a34, type: 3}
   m_Name: UnipromModelsCustomGoogleSheetCuvModelList_Japanese
   m_EditorClassIdentifier: 
-  _language: 22
+  _cuvId: Japanese
   _models:
   - Key: com.ishix.catDetective
     AppName: "\u8B0E\u306E\u3072\u3052"
@@ -23,11 +23,13 @@ MonoBehaviour:
       m_AssetGUID: f51351bf0e74e4b78b480f1a9f7e48c4
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     Icon:
       m_AssetGUID: 9046926376d0648faa429021d2de7bb7
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     OptionText: 
   - Key: com.ishix.giantCat
@@ -39,11 +41,13 @@ MonoBehaviour:
       m_AssetGUID: 0df4220eaa27f4bbb963d014158042e9
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     Icon:
       m_AssetGUID: 2e4c6d6aec21b4661a83cdb3f84ac7b8
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     OptionText: 
   - Key: com.ishix.meteor
@@ -55,11 +59,13 @@ MonoBehaviour:
       m_AssetGUID: 3595233c91aab486cbf7e0b4d75196c1
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     Icon:
       m_AssetGUID: c7c3cfd0b97664d68ac5af6dca1976a4
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     OptionText: 
   - Key: com.ishix.pirateCat
@@ -71,11 +77,13 @@ MonoBehaviour:
       m_AssetGUID: dd36611c3be9d4bbc8fa3742f1eb5ed0
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     Icon:
       m_AssetGUID: 8452c64f128d249bdb9e5ce5cbfb9c8e
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     OptionText: 
   - Key: com.ishix.catProfessor
@@ -87,12 +95,32 @@ MonoBehaviour:
       m_AssetGUID: 66b7049a68bff4417b81c79f2873f934
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     Icon:
       m_AssetGUID: c98a91ee9501e47a793b19dc5a51631c
       m_SubObjectName: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     OptionText: 
+  - Key: com.ishix.armorClad
+    AppName: Armor Clad
+    AppDescription: "\u30D5\u30EB\u30A2\u30FC\u30DE\u30FC\u306B\u8EAB\u3092\u5305\u3093\u3060\u732B\u3068\u4E00\u7DD2\u306B\u3001\u58EE\u5927\u306A\u5192\u967A\u306B\u51FA\u304B\u3051\u3088\u3046\uFF01"
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: 3f86ca53b347a4d9096497bf3418d7b2
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 43a722318c5c545b3800a9b624a5e76d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  ModifiedDate: 8/5/2024 6:23:34 AM +00:00
   SheetID: 1djptZlGNu4i-t_ZwXxa4ClEgpNk1gC-BnAIbd6vjwk4
-  ModifiedDate: 7/31/2024 8:02:53 AM +00:00

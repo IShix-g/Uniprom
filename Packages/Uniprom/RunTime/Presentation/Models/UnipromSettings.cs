@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -26,7 +27,7 @@ namespace Uniprom
         [SerializeField] string _assetsCatalogVersion;
         [SerializeField] ScriptableObject _scriptableObject;
         
-        public bool IsInitialized => Reference.IsInitialized;
+        public bool IsInitialized => Reference.IsInitializedLocalize;
         public UnipromBuildType BuildType => _buildType;
         public IUnipromReference Reference => _reference ??= _scriptableObject as IUnipromReference;
         public string RemoteCatalogUrl => GetCatalogPath(_remoteLoadUrl, _assetsCatalogVersion);
@@ -49,7 +50,7 @@ namespace Uniprom
 #endif
         }
         
-        public IEnumerator Initialize()
+        public IEnumerator Initialize(Action onReady = default)
         {
 #if UNIPROM_SOURCE_PROJECT && UNITY_EDITOR
             AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
@@ -82,22 +83,16 @@ namespace Uniprom
                 yield return downloadDependencies;
             }
 
-            yield return Reference.Initialize();
+            yield return Reference.InitializeLocalizeCo(onReady);
         }
         
-        public async Task InitializeAsync()
+        public async Task InitializeAsync(CancellationToken token = default)
         {
 #if UNIPROM_SOURCE_PROJECT && UNITY_EDITOR
             AddressableHelper.ChangePlayMode<BuildScriptFastMode>();
 
             var request = UnityWebRequest.Head(RemoteCatalogUrl);
-            await Task.Yield();
-            request.SendWebRequest();
-
-            while (!request.isDone)
-            {
-                await Task.Delay(100);
-            }
+            await request.SendWebRequest();
             
             var hasCatalog = request.result == UnityWebRequest.Result.Success
                              && request.responseCode != 404;
@@ -124,7 +119,7 @@ namespace Uniprom
                 await downloadDependencies.Task;
             }
             
-            await Reference.InitializeAsync();
+            await Reference.InitializeLocalizeAsync(token);
         }
         
         public static UnipromSettings Current

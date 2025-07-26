@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace Uniprom
 {
     [DisplayName("Uniprom - Cockpit Client")]
-    public sealed class UnipromModelsCockpitCuvAddressableClient : CockpitCuvAddressableClient<UnipromCockpitModel, UnipromModelsCockpitCuvModelList>
+    public sealed class UnipromModelsCockpitCuvAddressableClient : CockpitCuvAddressableLocalizedClient<UnipromCockpitModel, UnipromModelsCockpitCuvModelList>
     {
         protected override JsonConverter<UnipromCockpitModel> CreateConverter()
             => new CuvModelConverter<UnipromCockpitModel>();
@@ -16,7 +16,7 @@ namespace Uniprom
         {
 #if UNITY_EDITOR
             base.OnSelect(assetPath);
-            SetSettings(UnipromSettingsExporter.DefaultCuvSettings);
+            SetSettings(UnipromExporter.DefaultCuvSettings);
 #endif
         }
     }

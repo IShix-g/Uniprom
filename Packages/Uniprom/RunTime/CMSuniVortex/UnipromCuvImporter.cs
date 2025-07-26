@@ -10,11 +10,21 @@ using UnityEditor;
 
 namespace Uniprom.CMSuniVortex
 {
+    [CuvImporter(
+        isShowMenu : false, 
+        isShowLogo : false, 
+        isEnabledBuildPath : false, 
+        isEnabledLanguages : true, 
+        isEnabledSelectClient : true, 
+        isEnabledImportButton : true, 
+        isEnabledSelectOutput : true, 
+        isEnabledOutputButton : true
+    )]
     public sealed class UnipromCuvImporter : CuvImporter
     {
-        UnipromSettingsExporter _settingsExporter;
+        UnipromExporter _exporter;
 
-        public void SetSettings(UnipromSettingsExporter settingsExporter) => _settingsExporter = settingsExporter;
+        public void SetSettings(UnipromExporter exporter) => _exporter = exporter;
         
         protected override void OnOutputted(ICuvOutput output, string[] listGuids)
         {
@@ -24,10 +34,10 @@ namespace Uniprom.CMSuniVortex
             switch (output)
             {
                 case UnipromModelsCockpitCuvAddressableOutput cockpit:
-                    _settingsExporter.SetReference(cockpit.GetReference());
+                    _exporter.SetReference(cockpit.GetReference());
                     break;
                 case UnipromModelsCustomGoogleSheetCuvAddressableOutput googleSheet:
-                    _settingsExporter.SetReference(googleSheet.GetReference());
+                    _exporter.SetReference(googleSheet.GetReference());
                     break;
             }
 #endif

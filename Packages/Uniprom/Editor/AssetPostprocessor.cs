@@ -8,12 +8,13 @@ namespace Uniprom.Editor
     {    
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
+#if ENABLE_CMSUNIVORTEX
             if (importedAssets.Length == 0)
             {
                 return;
             }
             
-            var settingsPath = UnipromSettingsExporter.GetSettingsPath();
+            var settingsPath = UnipromExporter.GetSettingsPath();
             foreach(var assetPath in importedAssets)
             {
                 if (assetPath != settingsPath)
@@ -22,8 +23,8 @@ namespace Uniprom.Editor
                 }
                 try
                 {
-                    UnipromSettingsExporter.CopyToInterstitialPrefabIfNeeded();
-                    UnipromSettingsExporter.CopyToWallPrefabIfNeeded();
+                    UnipromExporter.CopyToInterstitialPrefabIfNeeded();
+                    UnipromExporter.CopyToWallPrefabIfNeeded();
                     break;
                 }
                 catch (Exception e)
@@ -33,6 +34,7 @@ namespace Uniprom.Editor
                 }
                 return;
             }
+#endif
         }
     }
 }

@@ -21,10 +21,10 @@ using AddressableHelper = Uniprom.Addressable.Editor.AddressableHelper;
 
 namespace Uniprom
 {
-    public sealed class UnipromSettingsExporter : ScriptableObject
+    public sealed class UnipromExporter : ScriptableObject
     {
         public const string RootPath = "Assets/Uniprom/";
-        public const string ExporterPath = RootPath + "UnipromSettingsExporter.asset";
+        public const string ExporterPath = RootPath + "UnipromExporter.asset";
         public const string ImporterName = "UnipromCuvImporter.asset";
         public const string SourceProjectSymbol = "UNIPROM_SOURCE_PROJECT";
         public const string ReleaseProfileName = "Uniprom-Release";
@@ -75,8 +75,8 @@ namespace Uniprom
         public UnipromSettings Settings => _settings;
         public bool IsSendingFiles { get; private set; }
         
-        public static UnipromSettingsExporter GetInstance()
-            => AssetDatabase.LoadAssetAtPath<UnipromSettingsExporter>(ExporterPath);
+        public static UnipromExporter GetInstance()
+            => AssetDatabase.LoadAssetAtPath<UnipromExporter>(ExporterPath);
 
         public void SetReference(ScriptableObject reference)
         {

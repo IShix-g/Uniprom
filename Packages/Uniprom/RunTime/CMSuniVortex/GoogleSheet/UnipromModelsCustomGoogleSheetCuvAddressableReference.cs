@@ -3,18 +3,21 @@ using CMSuniVortex.GoogleSheet;
 
 namespace Uniprom.GoogleSheet
 {
-    public sealed class UnipromModelsCustomGoogleSheetCuvAddressableReference : CustomGoogleSheetCuvAddressableReference<UnipromGoogleSheetModel, UnipromModelsCustomGoogleSheetCuvModelList>, IUnipromReference
+    public sealed class UnipromModelsCustomGoogleSheetCuvAddressableReference 
+        : CustomGoogleSheetCuvAddressableReference<UnipromGoogleSheetModel, UnipromModelsCustomGoogleSheetCuvModelList>, IUnipromReference
     {
-        public IUnipromModel GetModelById(string id) => GetById(id);
+        public override bool EnableAutoLocalization => false;
 
-        public bool TryGetModelById(string id, out IUnipromModel model)
+        public IUnipromModel GetModelByKey(string key) => GetByKey(key);
+
+        public bool TryGetModelByKey(string key, out IUnipromModel model)
         {
-            var isSuccess = TryGetById(id, out var result);
+            var isSuccess = TryGetByKey(key, out var result);
             model = result;
             return isSuccess;
         }
 
-        public IUnipromModel GetModelByIndex(int index) => GetByIndex(index);
+        public IUnipromModel GetModelByIndex(int index) => ActiveLocalizedList[index];
     }
 }
 #endif
