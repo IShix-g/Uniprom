@@ -87,7 +87,7 @@ namespace Uniprom.Editor
             {
                 path = Path.GetDirectoryName(path);
             }
-            var paths = path.Split('/');
+            var paths = path.Split(new[] { Path.DirectorySeparatorChar, '/' }, StringSplitOptions.RemoveEmptyEntries);
             var currPath = $"ftp://{_info.ServerAddress}/{_info.ServerBaseDirectory}";
 
             foreach (var subPath in paths)
