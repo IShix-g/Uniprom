@@ -14,7 +14,7 @@ namespace Uniprom.Editor
                 return;
             }
             
-            var settingsPath = UnipromSettingsExporter.GetSettingsPath();
+            var settingsPath = UnipromExporter.GetSettingsPath();
             foreach(var assetPath in importedAssets)
             {
                 if (assetPath != settingsPath)
@@ -23,8 +23,8 @@ namespace Uniprom.Editor
                 }
                 try
                 {
-                    UnipromSettingsExporter.CopyToInterstitialPrefabIfNeeded();
-                    UnipromSettingsExporter.CopyToWallPrefabIfNeeded();
+                    UnipromExporter.CopyToInterstitialPrefabIfNeeded();
+                    UnipromExporter.CopyToWallPrefabIfNeeded();
                     break;
                 }
                 catch (Exception e)

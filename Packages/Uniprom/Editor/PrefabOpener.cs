@@ -13,7 +13,7 @@ namespace Uniprom.Editor
         [MenuItem(_interstitialMenuName)]
         public static void OpenInterstitial()
         {
-            var path = UnipromSettingsExporter.GetDefaultInterstitialPrefabPath();
+            var path = UnipromExporter.GetDefaultInterstitialPrefabPath();
 
             if (!EditorUtility.DisplayDialog("Open a Interstitial prefab", "May I open a Interstitial prefab? \nPath: " + path, "Open", "Close"))
             {
@@ -37,14 +37,14 @@ namespace Uniprom.Editor
         [MenuItem(_interstitialMenuName, isValidateFunction:true)]
         public static bool IsValidInterstitial()
         {
-            var path = UnipromSettingsExporter.GetDefaultInterstitialPrefabPath();
+            var path = UnipromExporter.GetDefaultInterstitialPrefabPath();
             return File.Exists(path);
         }
 
         [MenuItem(_wallMenuName)]
         public static void OpenWall()
         {
-            var path = UnipromSettingsExporter.GetDefaultWallPrefabPath();
+            var path = UnipromExporter.GetDefaultWallPrefabPath();
 
             if (!EditorUtility.DisplayDialog("Open a Wall prefab", "May I open a Wall prefab? \nPath: " + path, "Open", "Close"))
             {
@@ -68,7 +68,7 @@ namespace Uniprom.Editor
         [MenuItem(_wallMenuName, isValidateFunction:true)]
         public static bool IsValidWall()
         {
-            var path = UnipromSettingsExporter.GetDefaultWallPrefabPath();
+            var path = UnipromExporter.GetDefaultWallPrefabPath();
             return File.Exists(path);
         }
     }

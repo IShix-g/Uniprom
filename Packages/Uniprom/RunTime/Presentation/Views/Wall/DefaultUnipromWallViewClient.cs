@@ -27,7 +27,7 @@ namespace Uniprom
         
         public override async Task<IUnipromWallView> CreatePrefabAsync(RectTransform parent)
         {
-            var key = UnipromSettingsExporter.WallAddressableKey;
+            var key = UnipromExporter.WallAddressableKey;
             var handle = Addressables.InstantiateAsync(key, parent);
             await handle.Task;
             if (handle.Status == AsyncOperationStatus.Succeeded)

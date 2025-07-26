@@ -12,7 +12,7 @@ using Uniprom.Addressable.Editor;
 
 namespace Uniprom.Editor
 {
-    [CustomEditor(typeof(UnipromSettingsExporter))]
+    [CustomEditor(typeof(UnipromExporter))]
     public sealed class UnipromSettingsEditor : UnityEditor.Editor
     {
         const string _packageUrl = "https://raw.githubusercontent.com/IShix-g/Uniprom/main/Packages/Uniprom/package.json";
@@ -34,7 +34,7 @@ namespace Uniprom.Editor
         SerializedProperty _releaseFtpPathProp;
         SerializedProperty _testFtpPathProp;
         SerializedProperty _scriptProp;
-        UnipromSettingsExporter _exporter;
+        UnipromExporter _exporter;
         UnityEditor.Editor _cuvImporterEditor;
         Texture2D _logo;
         Texture2D _buildIcon;
@@ -51,7 +51,7 @@ namespace Uniprom.Editor
         {
 #if ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
             SetProperties();
-            _exporter = (UnipromSettingsExporter) target;
+            _exporter = (UnipromExporter) target;
             _exporter.ResolveReference();
             EditorApplication.delayCall += () => { _cuvImporterEditor = CreateEditor(_exporter.CuvImporter); };
 #endif
@@ -112,8 +112,8 @@ namespace Uniprom.Editor
                 };
                 if (GUILayout.Button("This project is a source project.", style))
                 {
-                    AssetDatabaseHelper.AddSymbol(BuildTargetGroup.Android, UnipromSettingsExporter.SourceProjectSymbol);
-                    AssetDatabaseHelper.AddSymbol(BuildTargetGroup.iOS, UnipromSettingsExporter.SourceProjectSymbol);
+                    AssetDatabaseHelper.AddSymbol(BuildTargetGroup.Android, UnipromExporter.SourceProjectSymbol);
+                    AssetDatabaseHelper.AddSymbol(BuildTargetGroup.iOS, UnipromExporter.SourceProjectSymbol);
                 }
             }
             return;
@@ -306,7 +306,7 @@ namespace Uniprom.Editor
                     if (_exporter.CanIStartBuild())
                     {
                         _exporter.BuildTest();
-                        var path = AddressableHelper.GetRemoteBuildPathByProfileName(UnipromSettingsExporter.TestProfileName);
+                        var path = AddressableHelper.GetRemoteBuildPathByProfileName(UnipromExporter.TestProfileName);
                         Debug.Log("Addressables remote path:" + path);
                         ProcessHelper.OpenFolder(path);
                         SetProperties();
@@ -320,7 +320,7 @@ namespace Uniprom.Editor
                     if (_exporter.CanIStartBuild())
                     {
                         _exporter.BuildRelease();
-                        var path = AddressableHelper.GetRemoteBuildPathByProfileName(UnipromSettingsExporter.ReleaseProfileName);
+                        var path = AddressableHelper.GetRemoteBuildPathByProfileName(UnipromExporter.ReleaseProfileName);
                         Debug.Log("Addressables remote path:" + path);
                         ProcessHelper.OpenFolder(path);
                         SetProperties();

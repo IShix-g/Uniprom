@@ -25,7 +25,7 @@ namespace Uniprom.Editor
         [MenuItem("Window/Uniprom/Build test of Github Action")]
         static void StartGithubBuildTest()
         {
-            var exporter = UnipromSettingsExporter.GetInstance();
+            var exporter = UnipromExporter.GetInstance();
             var options = new Dictionary<string, string> { {FtpJsonStringName, exporter.TestFtpSettingPath} };
             if (exporter.CuvImporter.Client is UnipromModelsCustomGoogleSheetCuvAddressableClient client)
             {
@@ -51,7 +51,7 @@ namespace Uniprom.Editor
         {
 #if ENABLE_CMSUNIVORTEX
             UnipromDebug.IsBatchMode = Application.isBatchMode;
-            var exporter = UnipromSettingsExporter.GetInstance();
+            var exporter = UnipromExporter.GetInstance();
             if (exporter.CuvImporter == default)
             {
                 UnipromDebug.LogError("CuvImporter does not exist. Please complete the setup.");
@@ -176,13 +176,13 @@ namespace Uniprom.Editor
 #endif
         }
 
-        static void WriteUnipromSettings(UnipromSettingsExporter exporter)
+        static void WriteUnipromSettings(UnipromExporter exporter)
         {
             var content = GetUnipromSettingsString(exporter);
             UnipromDebug.Log(content);
         }
 
-        static string GetUnipromSettingsString(UnipromSettingsExporter exporter)
+        static string GetUnipromSettingsString(UnipromExporter exporter)
         {
 #if ENABLE_CMSUNIVORTEX
             var sb = new StringBuilder();

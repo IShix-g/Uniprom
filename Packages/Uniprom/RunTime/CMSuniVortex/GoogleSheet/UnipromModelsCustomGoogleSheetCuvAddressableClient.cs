@@ -12,7 +12,7 @@ namespace Uniprom.GoogleSheet
         {
 #if UNITY_EDITOR
             base.OnSelect(assetPath);
-            SetSettings(UnipromSettingsExporter.DefaultCuvSettings);
+            SetSettings(UnipromExporter.DefaultCuvSettings);
 #endif
         }
     }

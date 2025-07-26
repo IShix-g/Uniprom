@@ -16,7 +16,7 @@ namespace Uniprom
         {
 #if UNITY_EDITOR
             base.OnSelect(assetPath);
-            SetSettings(UnipromSettingsExporter.DefaultCuvSettings);
+            SetSettings(UnipromExporter.DefaultCuvSettings);
 #endif
         }
     }

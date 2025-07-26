@@ -18,7 +18,7 @@ namespace Uniprom
         
         public override async Task<IUnipromInterstitialView> CreatePrefabAsync(RectTransform parent)
         {
-            var key = UnipromSettingsExporter.InterstitialAddressableKey;
+            var key = UnipromExporter.InterstitialAddressableKey;
             var handle = Addressables.InstantiateAsync(key, parent);
             await handle.Task;
             if (handle.Status == AsyncOperationStatus.Succeeded)
