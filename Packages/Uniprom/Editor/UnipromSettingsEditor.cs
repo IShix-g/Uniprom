@@ -46,6 +46,12 @@ namespace Uniprom.Editor
         bool _isCheckedCuvVersion;
         bool _isNeedUpdateCuvVersion;
         readonly PackageInstaller _packageInstaller = new ();
+        
+#if ENABLE_BINARY_CATALOG
+        readonly bool _enableBinaryCatalog = true;
+#else
+        readonly bool _enableBinaryCatalog = false;
+#endif
 
         void OnEnable()
         {
@@ -299,9 +305,15 @@ namespace Uniprom.Editor
             }
             GUILayout.Space(5);
             
+            if (_enableBinaryCatalog)
+            {
+                EditorGUILayout.HelpBox("Binary catalog feature is not supported. If you need binary catalog functionality, please upgrade to Unity 6 or above. Always make a backup before upgrading.", MessageType.Error);
+            }
+            
             EditorGUI.BeginDisabledGroup(_exporter.CuvImporter == default
                                          || !_exporter.CuvImporter.IsBuildCompleted
-                                         || _exporter.IsSendingFiles);
+                                         || _exporter.IsSendingFiles
+                                         || _enableBinaryCatalog);
             
             {
                 var content = new GUIContent("Build - Test (" + UnipromSettings.GetPlatform() + ")", _buildIcon);
@@ -368,7 +380,8 @@ namespace Uniprom.Editor
                                          || !_exporter.CuvImporter.IsBuildCompleted
                                          || _exporter.IsSendingFiles
                                          || !_exporter.HasSettings()
-                                         || _exporter.GetBuildType() != UnipromBuildType.Test);
+                                         || _exporter.GetBuildType() != UnipromBuildType.Test
+                                         || _enableBinaryCatalog);
             
             {
                 var content = new GUIContent("Send to Test (" + UnipromSettings.GetPlatform() + ")", _ftpIcon);
@@ -391,7 +404,8 @@ namespace Uniprom.Editor
                                          || !_exporter.CuvImporter.IsBuildCompleted
                                          || _exporter.IsSendingFiles
                                          || !_exporter.HasSettings()
-                                         || _exporter.GetBuildType() != UnipromBuildType.Release);
+                                         || _exporter.GetBuildType() != UnipromBuildType.Release
+                                         || _enableBinaryCatalog);
             
             {
                 var content = new GUIContent("Send to Release (" + UnipromSettings.GetPlatform() + ")", _ftpIcon);
@@ -418,7 +432,8 @@ namespace Uniprom.Editor
 
             EditorGUI.BeginDisabledGroup(_exporter.CuvImporter == default
                                          || !_exporter.CuvImporter.IsBuildCompleted
-                                         || _exporter.IsSendingFiles);
+                                         || _exporter.IsSendingFiles
+                                         || _enableBinaryCatalog);
             {
                 var content = new GUIContent("Export - Uniprom init settings", _unityIcon);
                 if (GUILayout.Button(content, GUILayout.Height(38))
