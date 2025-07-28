@@ -21,7 +21,7 @@ namespace Uniprom.Editor
         const string _packagePath = "Packages/com.ishix.uniprom/";
         const string _gitCuvInstallUrl =  "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.0.14";
         const string _cuvPackagePath = "Packages/com.ishix.cmsunivortex/";
-        static readonly string[] s_propertiesToExclude = { "m_Script", "_reference", "_settings", "_releaseFtpSettingPath", "_testFtpSettingPath" };
+        static readonly string[] s_propertiesToExclude = { "m_Script", "_reference", "_settings", "_releaseRemoteLoadUrl", "_testRemoteLoadUrl", "_releaseFtpSettingPath", "_testFtpSettingPath" };
 
         static string PackageSaveDir
         {
@@ -31,6 +31,8 @@ namespace Uniprom.Editor
 
         SerializedProperty _referenceProp;
         SerializedProperty _settingsProp;
+        SerializedProperty _testRemoteLoadUrlProp;
+        SerializedProperty _releaseRemoteLoadUrlProp;
         SerializedProperty _releaseFtpPathProp;
         SerializedProperty _testFtpPathProp;
         SerializedProperty _scriptProp;
@@ -83,8 +85,10 @@ namespace Uniprom.Editor
         {
             _referenceProp = serializedObject.FindProperty(s_propertiesToExclude[1]);
             _settingsProp = serializedObject.FindProperty(s_propertiesToExclude[2]);
-            _releaseFtpPathProp = serializedObject.FindProperty(s_propertiesToExclude[3]);
-            _testFtpPathProp = serializedObject.FindProperty(s_propertiesToExclude[4]);
+            _releaseRemoteLoadUrlProp = serializedObject.FindProperty(s_propertiesToExclude[3]);
+            _testRemoteLoadUrlProp = serializedObject.FindProperty(s_propertiesToExclude[4]);
+            _releaseFtpPathProp = serializedObject.FindProperty(s_propertiesToExclude[5]);
+            _testFtpPathProp = serializedObject.FindProperty(s_propertiesToExclude[6]);
         }
         
         public override void OnInspectorGUI()
@@ -369,10 +373,24 @@ namespace Uniprom.Editor
             GUILayout.Space(5);
             EditorGUILayout.HelpBox("Please ensure not to publicly share your FTP configuration files. Take caution not to include them in repositories such as Git.", MessageType.Info);
             GUILayout.Space(5);
-            
+
             {
-                var label = new GUIContent("FTP Settings path");
-                EditorGUILayout.PropertyField(_testFtpPathProp, label);
+                var style = new GUIStyle(GUI.skin.label)
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                    fontStyle = FontStyle.Bold,
+                    padding = new RectOffset(0, 0, 3, 5)
+                };
+                GUILayout.Label("- Test -", style);
+
+                {
+                    var label = new GUIContent("Remote Load Url");
+                    EditorGUILayout.PropertyField(_testRemoteLoadUrlProp, label);
+                }
+                {
+                    var label = new GUIContent("FTP Settings path");
+                    EditorGUILayout.PropertyField(_testFtpPathProp, label);
+                }
             }
             GUILayout.Space(5);
             
@@ -395,8 +413,22 @@ namespace Uniprom.Editor
             
             GUILayout.Space(10);
             {
-                var label = new GUIContent("FTP Settings path");
-                EditorGUILayout.PropertyField(_releaseFtpPathProp, label);
+                var style = new GUIStyle(GUI.skin.label)
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                    fontStyle = FontStyle.Bold,
+                    padding = new RectOffset(0, 0, 3, 5)
+                };
+                GUILayout.Label("- Release -", style);
+
+                {
+                    var label = new GUIContent("Remote Load Url");
+                    EditorGUILayout.PropertyField(_releaseRemoteLoadUrlProp, label);
+                }
+                {
+                    var label = new GUIContent("FTP Settings path");
+                    EditorGUILayout.PropertyField(_releaseFtpPathProp, label);
+                }
             }
             GUILayout.Space(5);
             
