@@ -95,15 +95,27 @@ namespace Uniprom.Editor
         
         public static void AddSymbol(BuildTargetGroup group, string symbol)
         {
-            var symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+            var symbols = default(string);
+#if UNITY_2023_1_OR_NEWER
+            var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(group);
+            symbols = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+#else
+            symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+#endif
             var symbolsList = symbols.Split(';').ToList();
 
-            if (!symbolsList.Contains(symbol))
+            if (symbolsList.Contains(symbol))
             {
-                symbolsList.Add(symbol);
-                symbols = string.Join(";", symbolsList.ToArray());
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(group, symbols);
+                return;
             }
+            symbolsList.Add(symbol);
+            symbols = string.Join(";", symbolsList.ToArray());
+#if UNITY_2023_1_OR_NEWER
+            PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, symbols);
+#else
+            symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, symbols);
+#endif
         }
         
         public static string[] GetAllAssetsPath(string path)
