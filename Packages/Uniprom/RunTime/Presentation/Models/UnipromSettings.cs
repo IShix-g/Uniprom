@@ -134,8 +134,18 @@ namespace Uniprom
         }
         [NonSerialized] static UnipromSettings s_current;
 
-        public static string GetCatalogPath(string remoteUrl, string catalogVersion) 
-            => Path.Combine(remoteUrl, GetPlatform(), $"catalog_{catalogVersion}.json");
+        public static string GetCatalogPath(string remoteUrl, string catalogVersion)
+        {
+            var extension = default(string);
+#if !ENABLE_JSON_CATALOG && UNITY_6000_0_OR_NEWER || ENABLE_BINARY_CATALOG
+            // binary
+            extension = ".bin";
+#else
+            // json
+            extension = ".json";
+#endif
+            return Path.Combine(remoteUrl, GetPlatform(), $"catalog_{catalogVersion}{extension}");
+        }
         
         public static string GetPlatform()
         {

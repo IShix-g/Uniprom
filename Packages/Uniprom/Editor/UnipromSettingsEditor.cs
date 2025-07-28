@@ -19,9 +19,9 @@ namespace Uniprom.Editor
         const string _gitUrl = "https://github.com/IShix-g/Uniprom";
         const string _gitInstallUrl = _gitUrl + ".git?path=Packages/Uniprom";
         const string _packagePath = "Packages/com.ishix.uniprom/";
-        const string _gitCuvInstallUrl =  "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.0.9";
+        const string _gitCuvInstallUrl =  "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.0.14";
         const string _cuvPackagePath = "Packages/com.ishix.cmsunivortex/";
-        static readonly string[] s_propertiesToExclude = { "m_Script", "_reference", "_settings", "_releaseFtpSettingPath", "_testFtpSettingPath" };
+        static readonly string[] s_propertiesToExclude = { "m_Script", "_reference", "_settings", "_releaseRemoteLoadUrl", "_testRemoteLoadUrl", "_releaseFtpSettingPath", "_testFtpSettingPath" };
 
         static string PackageSaveDir
         {
@@ -31,6 +31,8 @@ namespace Uniprom.Editor
 
         SerializedProperty _referenceProp;
         SerializedProperty _settingsProp;
+        SerializedProperty _testRemoteLoadUrlProp;
+        SerializedProperty _releaseRemoteLoadUrlProp;
         SerializedProperty _releaseFtpPathProp;
         SerializedProperty _testFtpPathProp;
         SerializedProperty _scriptProp;
@@ -46,9 +48,19 @@ namespace Uniprom.Editor
         bool _isCheckedCuvVersion;
         bool _isNeedUpdateCuvVersion;
         readonly PackageInstaller _packageInstaller = new ();
+        
+#if ENABLE_BINARY_CATALOG
+        readonly bool _enableBinaryCatalog = true;
+#else
+        readonly bool _enableBinaryCatalog = false;
+#endif
 
         void OnEnable()
         {
+            if (target == default)
+            {
+                return;
+            }
 #if ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
             SetProperties();
             _exporter = (UnipromExporter) target;
@@ -73,8 +85,10 @@ namespace Uniprom.Editor
         {
             _referenceProp = serializedObject.FindProperty(s_propertiesToExclude[1]);
             _settingsProp = serializedObject.FindProperty(s_propertiesToExclude[2]);
-            _releaseFtpPathProp = serializedObject.FindProperty(s_propertiesToExclude[3]);
-            _testFtpPathProp = serializedObject.FindProperty(s_propertiesToExclude[4]);
+            _releaseRemoteLoadUrlProp = serializedObject.FindProperty(s_propertiesToExclude[3]);
+            _testRemoteLoadUrlProp = serializedObject.FindProperty(s_propertiesToExclude[4]);
+            _releaseFtpPathProp = serializedObject.FindProperty(s_propertiesToExclude[5]);
+            _testFtpPathProp = serializedObject.FindProperty(s_propertiesToExclude[6]);
         }
         
         public override void OnInspectorGUI()
@@ -291,13 +305,19 @@ namespace Uniprom.Editor
                     alignment = TextAnchor.MiddleCenter,
                     fontSize = 13
                 };
-                GUILayout.Label("Current Build : " + _exporter.GetBuildType() + " (" + UnipromSettings.GetPlatform() + ")", style, GUILayout.ExpandWidth(true));
+                GUILayout.Label("Current Build : " + (_exporter.HasSettings() ? _exporter.GetBuildType() : "---") + " (" + UnipromSettings.GetPlatform() + ")", style, GUILayout.ExpandWidth(true));
             }
             GUILayout.Space(5);
             
+            if (_enableBinaryCatalog)
+            {
+                EditorGUILayout.HelpBox("Binary catalog feature is not supported. If you need binary catalog functionality, please upgrade to Unity 6 or above. Always make a backup before upgrading.", MessageType.Error);
+            }
+            
             EditorGUI.BeginDisabledGroup(_exporter.CuvImporter == default
                                          || !_exporter.CuvImporter.IsBuildCompleted
-                                         || _exporter.IsSendingFiles);
+                                         || _exporter.IsSendingFiles
+                                         || _enableBinaryCatalog);
             
             {
                 var content = new GUIContent("Build - Test (" + UnipromSettings.GetPlatform() + ")", _buildIcon);
@@ -353,17 +373,33 @@ namespace Uniprom.Editor
             GUILayout.Space(5);
             EditorGUILayout.HelpBox("Please ensure not to publicly share your FTP configuration files. Take caution not to include them in repositories such as Git.", MessageType.Info);
             GUILayout.Space(5);
-            
+
             {
-                var label = new GUIContent("FTP Settings path");
-                EditorGUILayout.PropertyField(_testFtpPathProp, label);
+                var style = new GUIStyle(GUI.skin.label)
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                    fontStyle = FontStyle.Bold,
+                    padding = new RectOffset(0, 0, 3, 5)
+                };
+                GUILayout.Label("- Test -", style);
+
+                {
+                    var label = new GUIContent("Remote Load Url");
+                    EditorGUILayout.PropertyField(_testRemoteLoadUrlProp, label);
+                }
+                {
+                    var label = new GUIContent("FTP Settings path");
+                    EditorGUILayout.PropertyField(_testFtpPathProp, label);
+                }
             }
             GUILayout.Space(5);
             
             EditorGUI.BeginDisabledGroup(_exporter.CuvImporter == default
                                          || !_exporter.CuvImporter.IsBuildCompleted
                                          || _exporter.IsSendingFiles
-                                         || _exporter.GetBuildType() != UnipromBuildType.Test);
+                                         || !_exporter.HasSettings()
+                                         || _exporter.GetBuildType() != UnipromBuildType.Test
+                                         || _enableBinaryCatalog);
             
             {
                 var content = new GUIContent("Send to Test (" + UnipromSettings.GetPlatform() + ")", _ftpIcon);
@@ -377,15 +413,31 @@ namespace Uniprom.Editor
             
             GUILayout.Space(10);
             {
-                var label = new GUIContent("FTP Settings path");
-                EditorGUILayout.PropertyField(_releaseFtpPathProp, label);
+                var style = new GUIStyle(GUI.skin.label)
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                    fontStyle = FontStyle.Bold,
+                    padding = new RectOffset(0, 0, 3, 5)
+                };
+                GUILayout.Label("- Release -", style);
+
+                {
+                    var label = new GUIContent("Remote Load Url");
+                    EditorGUILayout.PropertyField(_releaseRemoteLoadUrlProp, label);
+                }
+                {
+                    var label = new GUIContent("FTP Settings path");
+                    EditorGUILayout.PropertyField(_releaseFtpPathProp, label);
+                }
             }
             GUILayout.Space(5);
             
             EditorGUI.BeginDisabledGroup(_exporter.CuvImporter == default
                                          || !_exporter.CuvImporter.IsBuildCompleted
                                          || _exporter.IsSendingFiles
-                                         || _exporter.GetBuildType() != UnipromBuildType.Release);
+                                         || !_exporter.HasSettings()
+                                         || _exporter.GetBuildType() != UnipromBuildType.Release
+                                         || _enableBinaryCatalog);
             
             {
                 var content = new GUIContent("Send to Release (" + UnipromSettings.GetPlatform() + ")", _ftpIcon);
@@ -412,7 +464,8 @@ namespace Uniprom.Editor
 
             EditorGUI.BeginDisabledGroup(_exporter.CuvImporter == default
                                          || !_exporter.CuvImporter.IsBuildCompleted
-                                         || _exporter.IsSendingFiles);
+                                         || _exporter.IsSendingFiles
+                                         || _enableBinaryCatalog);
             {
                 var content = new GUIContent("Export - Uniprom init settings", _unityIcon);
                 if (GUILayout.Button(content, GUILayout.Height(38))

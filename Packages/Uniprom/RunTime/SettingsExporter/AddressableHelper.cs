@@ -100,10 +100,42 @@ namespace Uniprom.Addressable.Editor
             AddressableAssetSettings.BuildPlayerContent();
         }
 
-        public static ContentCatalogData GetCatalogDataByPath(string catalogPath)
+        public static IEnumerable<string> GetCatalogInternalIdsByPath(string catalogPath)
         {
+#if !ENABLE_JSON_CATALOG && UNITY_6000_0_OR_NEWER
+            // binary
+            var extractedPath = Path.Combine(Application.temporaryCachePath, "catalog.extract.txt");
+            ContentCatalogData.ExtractBinaryCatalog(catalogPath, extractedPath);
+
+            var internalIds = new HashSet<string>();
+            try
+            {
+                var lines = File.ReadLines(extractedPath);
+                foreach (var line in lines)
+                {
+                    if (line.StartsWith("\tInternalId:"))
+                    {
+                        var internalId = line.Replace("\tInternalId: ", "").Trim();
+                        internalIds.Add(internalId);
+                    }
+                }
+                return internalIds;
+            }
+            finally
+            {
+                if (File.Exists(extractedPath))
+                {
+                    File.Delete(extractedPath);
+                }
+            }
+#elif !ENABLE_BINARY_CATALOG
+            // json
             var jsonString = File.ReadAllText(catalogPath);
-            return JsonUtility.FromJson<ContentCatalogData>(jsonString);
+            var catalog = JsonUtility.FromJson<ContentCatalogData>(jsonString);
+            return catalog.InternalIds;
+#else
+            throw new InvalidOperationException("Binary catalog feature is not supported. If you need binary catalog functionality, please upgrade to Unity 6 or above. Always make a backup before upgrading.");
+#endif
         }
         
         public static string[] GetFilesForServerUpload(string remoteLoadUrl, string catalogVersion)
@@ -111,27 +143,25 @@ namespace Uniprom.Addressable.Editor
             remoteLoadUrl = remoteLoadUrl.TrimEnd('/');
             var remoteBuildPath = GetRemoteBuildPath();
             var rootPath = Path.GetDirectoryName(remoteBuildPath);
+
             var catalogPath = UnipromSettings.GetCatalogPath(rootPath, catalogVersion);
+
             if (!File.Exists(catalogPath))
             {
-                throw new OperationException("catalog.json does not exist. path:" + catalogPath + " assetsCatalogVersion:" + catalogVersion + " remoteLoadUrl:" + remoteLoadUrl + " remoteBuildPath:" + remoteBuildPath);
+                throw new OperationException("ContentCatalogData does not exist. Please build if not built yet. path:" + catalogPath + " assetsCatalogVersion:" + catalogVersion + " remoteLoadUrl:" + remoteLoadUrl + " remoteBuildPath:" + remoteBuildPath);
             }
-            var catalog = GetCatalogDataByPath(catalogPath);
-            if (catalog.InternalIds.Length == 0)
-            {
-                return Array.Empty<string>();
-            }
-            
-            var files = catalog.InternalIds
+
+            var internalIds = GetCatalogInternalIdsByPath(catalogPath)
                 .Where(x => x.StartsWith(remoteLoadUrl))
-                .Select(x => x.Replace(remoteLoadUrl, rootPath));
+                .Select(x => x.Replace(remoteLoadUrl, rootPath))
+                .ToHashSet();
             
             return new []
                 {
                     catalogPath,
                     catalogPath.Replace(".json", ".hash")
                 }
-                .Concat(files)
+                .Concat(internalIds)
                 .ToArray();
         }
         

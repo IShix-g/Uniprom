@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
   m_DefaultGroup: 0a79df42e7b6a4df8848179c62abfc34
-  m_CachedHash:
+  m_currentHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
@@ -32,17 +32,20 @@ MonoBehaviour:
   m_ShaderBundleNaming: 0
   m_ShaderBundleCustomNaming: 
   m_MonoScriptBundleNaming: 0
+  m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: da8b0f240a95a4b599a66c33a295f368
   m_RemoteCatalogLoadPath:
     m_Id: 8eb6046721a4141909d41c2ee564c7a0
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
+  m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: 1.0.0
   m_GroupAssets:
-  - {fileID: 11400000, guid: b9bd1250a7a2442b7b801a965d7b2499, type: 2}
   - {fileID: 11400000, guid: 016fce74c271d4ee987fa2460614a231, type: 2}
+  - {fileID: 11400000, guid: b9bd1250a7a2442b7b801a965d7b2499, type: 2}
   - {fileID: 11400000, guid: 521411d52dba74009b9a9135f5fd8ae5, type: 2}
   - {fileID: 11400000, guid: ef65e0d747d2042219a388b4905689b9, type: 2}
   m_BuildSettings:
@@ -56,59 +59,59 @@ MonoBehaviour:
       m_Id: 90a74edc65801401ab0630af8d3ada57
       m_ProfileName: Default
       m_Values:
-      - m_Id: 685c91758e47644f6b0d22c1c84af568
-        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: 64c52c982476941df87f5e8e75192bfd
-        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 11fbb81e1b3884d028f82e16b91a0419
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
-      - m_Id: da8b0f240a95a4b599a66c33a295f368
-        m_Value: ServerData/[BuildTarget]
+      - m_Id: 64c52c982476941df87f5e8e75192bfd
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 685c91758e47644f6b0d22c1c84af568
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: 8eb6046721a4141909d41c2ee564c7a0
         m_Value: http://[PrivateIpAddress]:[HostingServicePort]
-    - m_InheritedParent: 
-      m_Id: 36370ac10337840a2a1501c0f10c65d6
-      m_ProfileName: Uniprom-Test
-      m_Values:
-      - m_Id: 685c91758e47644f6b0d22c1c84af568
-        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: 64c52c982476941df87f5e8e75192bfd
-        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
-      - m_Id: 11fbb81e1b3884d028f82e16b91a0419
-        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: da8b0f240a95a4b599a66c33a295f368
-        m_Value: _UnipromTestServerData/[BuildTarget]
-      - m_Id: 8eb6046721a4141909d41c2ee564c7a0
-        m_Value: https://devx.myonick.biz/uniprom/addressables/test/[BuildTarget]
+        m_Value: ServerData/[BuildTarget]
     - m_InheritedParent: 
       m_Id: 1e8cc28fcce5c4095a9904f1fa131bc0
       m_ProfileName: Uniprom-Release
       m_Values:
-      - m_Id: 685c91758e47644f6b0d22c1c84af568
-        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: 64c52c982476941df87f5e8e75192bfd
-        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 11fbb81e1b3884d028f82e16b91a0419
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
-      - m_Id: da8b0f240a95a4b599a66c33a295f368
-        m_Value: _UnipromReleaseServerData/[BuildTarget]
+      - m_Id: 64c52c982476941df87f5e8e75192bfd
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 685c91758e47644f6b0d22c1c84af568
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: 8eb6046721a4141909d41c2ee564c7a0
         m_Value: https://devx.myonick.biz/uniprom/addressables/release/[BuildTarget]
+      - m_Id: da8b0f240a95a4b599a66c33a295f368
+        m_Value: _UnipromReleaseServerData/[BuildTarget]
+    - m_InheritedParent: 
+      m_Id: 36370ac10337840a2a1501c0f10c65d6
+      m_ProfileName: Uniprom-Test
+      m_Values:
+      - m_Id: 11fbb81e1b3884d028f82e16b91a0419
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 64c52c982476941df87f5e8e75192bfd
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 685c91758e47644f6b0d22c1c84af568
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: 8eb6046721a4141909d41c2ee564c7a0
+        m_Value: https://devx.myonick.biz/uniprom/addressables/test/[BuildTarget]
+      - m_Id: da8b0f240a95a4b599a66c33a295f368
+        m_Value: _UnipromTestServerData/[BuildTarget]
     m_ProfileEntryNames:
-    - m_Id: 685c91758e47644f6b0d22c1c84af568
-      m_Name: BuildTarget
+    - m_Id: 11fbb81e1b3884d028f82e16b91a0419
+      m_Name: Local.LoadPath
       m_InlineUsage: 0
     - m_Id: 64c52c982476941df87f5e8e75192bfd
       m_Name: Local.BuildPath
       m_InlineUsage: 0
-    - m_Id: 11fbb81e1b3884d028f82e16b91a0419
-      m_Name: Local.LoadPath
-      m_InlineUsage: 0
-    - m_Id: da8b0f240a95a4b599a66c33a295f368
-      m_Name: Remote.BuildPath
+    - m_Id: 685c91758e47644f6b0d22c1c84af568
+      m_Name: BuildTarget
       m_InlineUsage: 0
     - m_Id: 8eb6046721a4141909d41c2ee564c7a0
       m_Name: Remote.LoadPath
+      m_InlineUsage: 0
+    - m_Id: da8b0f240a95a4b599a66c33a295f368
+      m_Name: Remote.BuildPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
@@ -136,4 +139,6 @@ MonoBehaviour:
     m_HostingServiceInfos: []
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
-    m_RegisteredServiceTypeRefs: []
+    m_RegisteredServiceTypeRefs:
+    - UnityEditor.AddressableAssets.HostingServices.HttpHostingService, Unity.Addressables.Editor
+    m_PingTimeoutInMilliseconds: 5000
