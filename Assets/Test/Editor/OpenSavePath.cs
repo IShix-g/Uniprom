@@ -7,7 +7,7 @@ namespace Editor
 {
     public class OpenSavePath : EditorWindow
     {
-        [MenuItem("Tools/open persistent")]
+        [MenuItem("Tools/open path/persistent")]
         public static void Open()
         {
             if (Application.platform == RuntimePlatform.OSXEditor)
@@ -20,7 +20,7 @@ namespace Editor
             }
         }
 
-        [MenuItem("Tools/open temporary cache")]
+        [MenuItem("Tools/open path/temporary cache")]
         public static void OpenTmp()
         {
             if (Application.platform == RuntimePlatform.OSXEditor)
@@ -33,7 +33,7 @@ namespace Editor
             }
         }
 		
-        [MenuItem("Tools/open default cache")]
+        [MenuItem("Tools/open path/default cache")]
         public static void OpenCache()
         {
             var cachePath = Caching.defaultCache.path;
