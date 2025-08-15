@@ -1,21 +1,21 @@
 #if ENABLE_ADDRESSABLES && ENABLE_CMSUNIVORTEX
-using CMSuniVortex.Cockpit;
+using CMSuniVortex.Excel;
 
-namespace Uniprom
+namespace Uniprom.Excel
 {
-    public sealed class UnipromModelsCockpitCuvAddressableReference 
-        : CockpitCuvAddressableReference<
-            UnipromCockpitModel,
-            UnipromModelsCockpitCuvModelList>,
+    public sealed class UnipromModelsExcelCuvAddressableReference
+        : ExcelCuvAddressableReference<
+            UnipromExcelModel,
+            UnipromModelsExcelCuvModelList>,
           IUnipromReference
     {
         public override bool EnableAutoLocalization => false;
-        
+
         public IUnipromModel GetModelByKey(string key) => GetByKey(key);
 
-        public bool TryGetModelByKey(string id, out IUnipromModel model)
+        public bool TryGetModelByKey(string key, out IUnipromModel model)
         {
-            var isSuccess = TryGetByKey(id, out var result);
+            var isSuccess = TryGetByKey(key, out var result);
             model = result;
             return isSuccess;
         }

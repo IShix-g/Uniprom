@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "com.ishix.cmsunivortex": {
-      "version": "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.0.14",
+      "version": "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.1.7",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.1",
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "27f747ed0c0ccdfc3e675f569c1c3ca3a17203d3"
+      "hash": "0c06ed50bdf7742842417d9e3c67de4c9b8aa3c1"
     },
     "com.ishix.uniprom": {
       "version": "file:Uniprom",

@@ -4,7 +4,10 @@ using CMSuniVortex.GoogleSheet;
 namespace Uniprom.GoogleSheet
 {
     public sealed class UnipromModelsCustomGoogleSheetCuvAddressableReference 
-        : CustomGoogleSheetCuvAddressableReference<UnipromGoogleSheetModel, UnipromModelsCustomGoogleSheetCuvModelList>, IUnipromReference
+        : CustomGoogleSheetCuvAddressableReference<
+            UnipromGoogleSheetModel,
+            UnipromModelsCustomGoogleSheetCuvModelList>,
+          IUnipromReference
     {
         public override bool EnableAutoLocalization => false;
 
