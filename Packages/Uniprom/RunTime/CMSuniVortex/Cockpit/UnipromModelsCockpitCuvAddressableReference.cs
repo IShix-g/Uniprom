@@ -4,7 +4,10 @@ using CMSuniVortex.Cockpit;
 namespace Uniprom
 {
     public sealed class UnipromModelsCockpitCuvAddressableReference 
-        : CockpitCuvAddressableReference<UnipromCockpitModel, UnipromModelsCockpitCuvModelList>, IUnipromReference
+        : CockpitCuvAddressableReference<
+            UnipromCockpitModel,
+            UnipromModelsCockpitCuvModelList>,
+          IUnipromReference
     {
         public override bool EnableAutoLocalization => false;
         

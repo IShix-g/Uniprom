@@ -6,10 +6,11 @@ using CMSuniVortex.Cockpit;
 namespace Uniprom
 {
     [DisplayName("Uniprom - Cockpit Output")]
-    public sealed class UnipromModelsCockpitCuvAddressableOutput : CockpitCuvAddressableOutput<
-        UnipromCockpitModel,
-        UnipromModelsCockpitCuvModelList,
-        UnipromModelsCockpitCuvAddressableReference>
+    public sealed class UnipromModelsCockpitCuvAddressableOutput
+        : CockpitCuvAddressableOutput<
+            UnipromCockpitModel,
+            UnipromModelsCockpitCuvModelList,
+            UnipromModelsCockpitCuvAddressableReference>
     {
         public override void Select(string buildPath)
         {
