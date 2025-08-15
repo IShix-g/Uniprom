@@ -19,7 +19,7 @@ namespace Uniprom.Editor
         const string _gitUrl = "https://github.com/IShix-g/Uniprom";
         const string _gitInstallUrl = _gitUrl + ".git?path=Packages/Uniprom";
         const string _packagePath = "Packages/com.ishix.uniprom/";
-        const string _gitCuvInstallUrl =  "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.0.14";
+        const string _gitCuvInstallUrl =  "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.1.7";
         const string _cuvPackagePath = "Packages/com.ishix.cmsunivortex/";
         static readonly string[] s_propertiesToExclude = { "m_Script", "_reference", "_settings", "_releaseRemoteLoadUrl", "_testRemoteLoadUrl", "_releaseFtpSettingPath", "_testFtpSettingPath" };
 
