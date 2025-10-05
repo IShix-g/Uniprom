@@ -16,7 +16,7 @@ namespace Uniprom
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static CancellationToken GetDestroyCancellationToken(this GameObject @this)
         {
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_2023_1_OR_NEWER
             return @this.destroyCancellationToken;
 #else
             return @this.TryGetComponent<LifetimeCancellationToken>(out var script)
