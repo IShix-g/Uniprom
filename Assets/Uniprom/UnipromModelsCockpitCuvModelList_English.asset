@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c7ba33d331074f67bdee9ed32e477f9, type: 3}
+  m_Name: UnipromModelsCockpitCuvModelList_English
+  m_EditorClassIdentifier: 
+  _cuvId: English
+  _models:
+  - Key: com.ishix.catProfessor
+    CockpitID: 6932e77bfa52bf49b90d7211
+    ModifiedDate: 2025-12-06T10:56:00.0000000+09:00
+    AppName: Cat-astrophysics Chronicle
+    AppDescription: As a cat professor studying the stars, unlock the secrets of
+      the universe and gain new knowledge.
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: 779cec7aa9555431da8d60af33a67f66
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 12dff95e05a3d49c8b224b4136b769bf
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.pirateCat
+    CockpitID: 6932e7b25f507d1f0f06bf41
+    ModifiedDate: 2025-12-06T10:56:07.0000000+09:00
+    AppName: Whiskered Waves
+    AppDescription: As a pirate cat, become fantasy and adventure on the waves of
+      the pavement.
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: 2e816046439ac4bf08fe3f9a98b760b3
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 68ce6e29520244b1eb569ab1ba2fd196
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.meteor
+    CockpitID: 6932e7e7f41de6eeec051e00
+    ModifiedDate: 2025-12-06T10:56:15.0000000+09:00
+    AppName: Meteor Meow
+    AppDescription: Explore the universe with acceleration and bring life to unknown
+      planets.
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: a9b2636c0f13d4a628917dd2acb5c8e1
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: d7eab7f1ba1e04362b9e08b3be3f2805
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.giantCat
+    CockpitID: 6932e820dd73938efe0f8e70
+    ModifiedDate: 2025-12-06T10:56:30.0000000+09:00
+    AppName: Giant Whisker World
+    AppDescription: Explore the world from the perspective of a giant cat. What will
+      you find?
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: e23218dffed8c4b8c8b173f90363e1de
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: 90b1b8d3df4374c23ba560d3c0d95cfd
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    OptionText: 
+  - Key: com.ishix.catDetective
+    CockpitID: 6932e85544b716d9500cfdb0
+    ModifiedDate: 2025-12-06T10:56:38.0000000+09:00
+    AppName: Mystery Whiskers
+    AppDescription: This is a mystery-solving adventure game featuring Cat Detective
+      Chronicle.
+    IOSUrl: https://www.apple.com/app-store/
+    AndroidUrl: https://play.google.com/store/apps?hl=en
+    Interstitial:
+      m_AssetGUID: 513500a0aaf43489a8d355ba9120aa65
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Icon:
+      m_AssetGUID: bc1973d9dd562401fb30dcdcd6ad634a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    OptionText: 

@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UnipromCockpitModel_Japanese
+  m_EditorClassIdentifier: 
+  m_GroupName: UnipromCockpitModel_Japanese
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 4f971f6a8b081476cacf2b3864aed984
+  m_SerializeEntries:
+  - m_GUID: 12dff95e05a3d49c8b224b4136b769bf
+    m_Address: Assets/Uniprom/icon5_uid_6932e53605e68.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e816046439ac4bf08fe3f9a98b760b3
+    m_Address: Assets/Uniprom/interstitial4_uid_6932e535c4192.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 513500a0aaf43489a8d355ba9120aa65
+    m_Address: Assets/Uniprom/interstitial1_uid_6932e5356cde9.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5964e2a1cbe8845d7957806587b7cd61
+    m_Address: Assets/Uniprom/UnipromModelsCockpitCuvModelList_Japanese.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68ce6e29520244b1eb569ab1ba2fd196
+    m_Address: Assets/Uniprom/icon4_uid_6932e535084e4.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 779cec7aa9555431da8d60af33a67f66
+    m_Address: Assets/Uniprom/interstitial5_uid_6932e535d619c.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90b1b8d3df4374c23ba560d3c0d95cfd
+    m_Address: Assets/Uniprom/icon2_uid_6932e53505ce4.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a9b2636c0f13d4a628917dd2acb5c8e1
+    m_Address: Assets/Uniprom/interstitial3_uid_6932e535741cf.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc1973d9dd562401fb30dcdcd6ad634a
+    m_Address: Assets/Uniprom/icon1_uid_6932e53505ce4.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7eab7f1ba1e04362b9e08b3be3f2805
+    m_Address: Assets/Uniprom/icon3_uid_6932e53607214.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e23218dffed8c4b8c8b173f90363e1de
+    m_Address: Assets/Uniprom/interstitial2_uid_6932e5357f984.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    - UnipromItems_Japanese
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9f5b00c0dba834f46b6d95e541f8c884, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: dfe6050615acd445cad4d09a0e191d7b, type: 2}
+    - {fileID: 11400000, guid: cb700e09b2d7a4507b3d6ac91509ff40, type: 2}
