@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e764a63872ae47e08595f9d9303bf90, type: 3}
+  m_Name: UnipromModelsCockpitCuvAddressableReference
+  m_EditorClassIdentifier: 
+  _modelLists:
+  - CuvId: English
+    List:
+      m_AssetGUID: 6090cdacaf66148ef8c53d97250647bc
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - CuvId: Japanese
+    List:
+      m_AssetGUID: 5964e2a1cbe8845d7957806587b7cd61
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0

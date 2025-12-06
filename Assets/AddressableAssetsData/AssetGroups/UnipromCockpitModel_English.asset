@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UnipromCockpitModel_English
+  m_EditorClassIdentifier: 
+  m_GroupName: UnipromCockpitModel_English
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 48fd5ac04a13d4843beae8721ec881f0
+  m_SerializeEntries:
+  - m_GUID: 6090cdacaf66148ef8c53d97250647bc
+    m_Address: Assets/Uniprom/UnipromModelsCockpitCuvModelList_English.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnipromItems_English
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9f5b00c0dba834f46b6d95e541f8c884, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5991bbadd9941478384c80f0b9ca564d, type: 2}
+    - {fileID: 11400000, guid: dfc6e4f1d0f1f46cb8d7487151f37b66, type: 2}
