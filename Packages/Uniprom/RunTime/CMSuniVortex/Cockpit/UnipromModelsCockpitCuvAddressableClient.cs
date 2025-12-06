@@ -20,6 +20,8 @@ namespace Uniprom
 #if UNITY_EDITOR
             base.OnSelect(assetPath);
             SetSettings(UnipromExporter.DefaultCuvSettings);
+            KeyName = "Identifier";
+            UseI18nCode = true;
 #endif
         }
     }

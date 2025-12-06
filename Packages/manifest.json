@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.ishix.cmsunivortex": "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.1.7",
+    "com.ishix.cmsunivortex": "https://github.com/IShix-g/CMSuniVortex.git?path=Packages/CMSuniVortex#2.2.2",
     "com.unity.ai.navigation": "1.1.6",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.2d": "2.0.1",

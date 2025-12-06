@@ -14,22 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buildPath: Assets/Uniprom/
   _client:
-    rid: 3445372058760904708
+    rid: 1699858307978887169
   _output:
-    rid: 3445372058760904710
+    rid: 1699858307978887170
   _modelListGuilds:
-  - 1056a016df1d3492f8664aa13fb140c9
-  - 7d6c9f79d393d4c5fbb0a9b9d00efa66
+  - 6090cdacaf66148ef8c53d97250647bc
+  - 5964e2a1cbe8845d7957806587b7cd61
   references:
     version: 2
     RefIds:
-    - rid: 3445372058760904708
-      type: {class: UnipromModelsCustomGoogleSheetCuvAddressableClient, ns: Uniprom.GoogleSheet, asm: UniProm}
+    - rid: 1699858307978887169
+      type: {class: UnipromModelsCockpitCuvAddressableClient, ns: Uniprom, asm: UniProm}
       data:
-        _sheetUrl: https://docs.google.com/spreadsheets/d/1djptZlGNu4i-t_ZwXxa4ClEgpNk1gC-BnAIbd6vjwk4/edit?gid=0#gid=0
-        _jsonKeyPath: Assets/Uniprom/light-operator-426308-a9-a87f12062c59.json
-        _keyName: Key
+        _baseUrl: https://ishix.happy.nu/cockpit/
+        _apiKey: API-d5d3654c72ab75d35e31f143f853a8c0882cab7d
+        _modelName: UnipromModel
+        _keyName: Identifier
         _languages: 0a00000016000000
+        _useI18nCode: 1
         _addressableSettings:
           AddressableType: 1
           CustomGroupName: 
@@ -41,8 +43,8 @@ MonoBehaviour:
           BundlePackingMode: 1
           UpdateRestriction: 0
           RetryCount: 2
-    - rid: 3445372058760904710
-      type: {class: UnipromModelsCustomGoogleSheetCuvAddressableOutput, ns: Uniprom.GoogleSheet, asm: UniProm}
+    - rid: 1699858307978887170
+      type: {class: UnipromModelsCockpitCuvAddressableOutput, ns: Uniprom, asm: UniProm}
       data:
         _addressableSettings:
           AddressableType: 1
@@ -55,4 +57,4 @@ MonoBehaviour:
           BundlePackingMode: 1
           UpdateRestriction: 0
           RetryCount: 2
-        _reference: {fileID: 11400000, guid: eecea2ac021c946a193495271e29ed9f, type: 2}
+        _reference: {fileID: 11400000, guid: 81ae963f3abe14908a8993dd1cad7d8f, type: 2}
