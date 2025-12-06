@@ -34,7 +34,10 @@ namespace Uniprom.Editor
             {
                 _scrollPos = GUILayout.BeginScrollView(_scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height));
                 GUILayout.BeginVertical(new GUIStyle() { padding = new RectOffset(5, 5, 5, 5) });
-                _editor.OnInspectorGUI();
+                if (_editor != null)
+                {
+                    _editor.OnInspectorGUI();
+                }
                 GUILayout.EndVertical();
                 GUILayout.EndScrollView();
             }
