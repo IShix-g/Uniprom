@@ -15,8 +15,8 @@ jobs:
     uses: IShix-g/Unity-GitHubActions/.github/workflows/reusable-check-last-run-status-age.yaml@v1
     with:
       workflow-id: ${{ matrix.workflow_id }}
-      min-day: 0
-      max-day: 1
+      min-day: 1
+      max-day: 2
 
     strategy:
       fail-fast: false
