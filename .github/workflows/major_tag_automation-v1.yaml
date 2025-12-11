@@ -1,7 +1,6 @@
 name: Major Tag Automation (V1)
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: "00 17 * * *"
 
